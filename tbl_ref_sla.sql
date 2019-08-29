@@ -22,8 +22,10 @@ create table sladb.dbo.tbl_ref_sla(sla_id nvarchar(1) primary key,
 								   sla_min_days int,
 								   sla_max_days int);
 
-insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-	values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
-		  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
-		  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
-		  ('N', 'No SLA', null, null);
+begin transaction
+	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
+		values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
+			  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
+			  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
+			  ('N', 'No SLA', null, null);
+commit;

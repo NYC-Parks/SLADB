@@ -17,9 +17,9 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_season_date_type(season_date_type int identity(1,1) primary key,
-													season_date_type_desc nvarchar(10));
+create table sladb.dbo.tbl_ref_sla_season_dat_type(season_date_type int identity(1,1) primary key,
+												   season_date_type_desc nvarchar(10));
 
 insert into sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_desc)
 	values('Start'),
-		   ('End')
+		  ('End')

@@ -17,17 +17,20 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num int not null unique,
-												   season_day_name_desc nvarchar(9) primary key,
-												   season_day_name_ndays int not null);
+create table sladb.dbo.tbl_ref_sla_season_date(season_date_ref_id int identity(1,1) primary key,
+											   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
+											   season_date_ref_fixed bit not null,
+											   season_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
+											   season_date_ref_day_number int null,
+											   season_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
+											   season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id),
+											   season_date_type int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type));
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num, season_day_name_desc, season_day_name_ndays)
-		values(1, 'Sunday', 0),
-			  (2, 'Monday', 6),
-			  (3, 'Tuesday', 5),
-			  (4, 'Wednesday', 4),
-			  (5, 'Thursday', 3),
-			  (6, 'Friday', 2),
-			  (7, 'Saturday', 1)
-commit;
+
+insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
+	values('Field and Court Season', 1, 'April', 15, 1),
+		  ('Playgrounds and Pools'),
+		  ('Year Round');
+
+insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_name, season_day_rank, season_active)
+	values('Beach Season', 0, 'May', 'Sunday', '2', 1)

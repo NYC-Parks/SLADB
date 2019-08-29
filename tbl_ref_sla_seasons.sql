@@ -17,17 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num int not null unique,
-												   season_day_name_desc nvarchar(9) primary key,
-												   season_day_name_ndays int not null);
+create table sladb.dbo.tbl_ref_sla_seasons(sla_season_id int identity primary key,
+										   sla_season_desc nvarchar(128));
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num, season_day_name_desc, season_day_name_ndays)
-		values(1, 'Sunday', 0),
-			  (2, 'Monday', 6),
-			  (3, 'Tuesday', 5),
-			  (4, 'Wednesday', 4),
-			  (5, 'Thursday', 3),
-			  (6, 'Friday', 2),
-			  (7, 'Saturday', 1)
-commit;
+insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
+	values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
+		  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
+		  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
+		  ('N', 'No SLA', null, null);
