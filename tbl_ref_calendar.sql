@@ -20,5 +20,5 @@
 create table sladb.dbo.tbl_ref_calendar(ref_date date primary key,
 										month_name nvarchar(9),
 										day_name nvarchar(9),
-										day_rank int);
+										day_rank nvarchar(5));
 

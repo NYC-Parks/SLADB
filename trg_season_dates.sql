@@ -17,96 +17,103 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create trigger sladb.dbo.trg_season_dates 
-on sladb.dbo.tbl_ref_sla_season_date
-after insert, update as
+use sladb
+go
 
+create procedure dbo.sp_season_dates as
+begin
 
-/*Initialize the variables that are being used to create the output table*/
-declare @year int = year(getdate()),
-		@i int,
-		@n int,
-		@fixed bit,
-		@actual_date date, @observed_date date;
+	/*Initialize the variables that are being used to create the output table*/
+	declare @year int = year(getdate()),
+			@i int,
+			@n int,
+			@fixed bit,
+			@start_actual date, @start_adjusted date,
+			@end_actual date, @end_adjusted date;
 
+	declare @alldates table(row_id int identity(1,1),
+							season_date_ref_id int,
+							season_id int,
+							season_date_ref_fixed bit,
+							season_date_month_name_desc nvarchar(9),
+							season_date_ref_day_number int,
+							season_date_day_name_desc nvarchar(9),
+							season_day_rank_id nvarchar(5),
+							season_date_type_id int);
+	
+	/*Create a table variable that holds the actual holiday date and the observed date*/
+	declare @dates_ref table (season_id int,
+							  actual_date date,
+							  adjusted_date date,
+							  season_date_type_id int);
 
-	/*Create the table variable that holds the values from the calendar reference table that are needed to assign holiday dates.*/
-	declare @dates table(year_date date not null,
-						 month_name nvarchar(9) not null,
-						 day_name nvarchar(9) not null,
-						 day_rank nvarchar(3) not null);
+	insert into @alldates(season_date_ref_id, season_id, season_date_ref_fixed, 
+						  start_date_month_name_desc, start_date_ref_day_number, start_date_day_name_desc, start_day_rank_id,
+						  end_date_month_name_desc, end_date_ref_day_number, end_date_day_name_desc, end_day_rank_id)
+		select l.season_date_ref_id, 
+			   l.season_id, 
+			   l.season_date_ref_fixed, 
+			   l.start_date_month_name_desc, 
+			   l.start_date_ref_day_number, 
+			   l.start_date_day_name_desc, 
+			   l.start_day_rank_id,
+			   l.end_date_month_name_desc, 
+			   l.end_date_ref_day_number, 
+			   l.end_date_day_name_desc, 
+			   l.end_day_rank_id,
+			   r.season_year_round
+		 from sladb.dbo.tbl_ref_sla_season_definition as l
+		 inner join
+			  sladb.dbo.tbl_sla_season as r
+		 on l.season_id = r.season_id
+		 /*Exclude Seasons that are no longer active.*/
+		 where r.season_active = 1;
 
 	/*Set the inner loop value to start at 1*/
 	set @i = 1;	
 	/*Set the number of iterations to the number of SLA seasons*/
-	set @n = (select count(*) from sladb.dbo.tbl_ref_sla_season_date);
+	set @n = (select count(*) from @alldates);
 
-	/*Create a table variable that holds the actual holiday date and the observed date*/
-	declare @dates_ref table (actual_date date,
-							  observed_date date);
-
-	/*Delete all records from the dates table variable*/		
-	delete from @dates;
-
-		/*Insert the values into the dates table variable from the calendar reference table*/
-		insert into @dates
-			select ref_date as year_date,
-					month_name,
-					day_name,
-					/*Calculate the rank of day names by months*/
-					dense_rank() over (partition by month_name, day_name order by ref_date, month_name, day_name) as day_rank
-			from (select ref_date, 
-						 /*Weekday name of reference date*/
-						 datename(weekday, ref_date) as day_name, 
-						 /*Month name of reference date*/
-						 datename(month, ref_date) month_name 
-					from sladb.dbo.tbl_ref_calendar
-					/*Subset to the year of the current iteration*/
-					where year(ref_date) = @year) as t
-					order by ref_date;
-
-			/*Iterate through the holidays where i is less than or equal to the number of holidays*/
+			/*Iterate through the dates where i is less than or equal to the number of dates*/
 			while @i <= @n
 			begin/*Start the i loop*/
-				/*Select the fixed value from holidays table variable where the id is equal to i*/
-				set @fixed = (select season_date_ref_fixed as fixed from sladb.dbo.tbl_ref_sla_season_date where season_date_ref_id = @i);
+				/*Select the fixed value from table variable where the id is equal to i*/
+				set @fixed = (select season_date_ref_fixed as fixed from @alldates where row_id = @i);
 
-				/*If the holiday is not fixed (ex: 2nd Monday of Month) then insert the following records*/
-				if @fixed = 0
+				/*If the SLA season is year round fixed then insert the following records*/
+				if @fixed = 1
 					begin
 						/*Insert the holiday date values into the dates reference table*/
 						insert into @dates_ref
-							/*Luckily the actual and observed dates will always be equal for these holidays because they always occur on weekdays.*/
-							select r.year_date as actual_date,
-								   r.year_date as observed_date
-							from sladb.dbo.tbl_ref_sla_season_date as l
+							/**/
+							select l.season_id,
+								   r.ref_date as actual_date,
+								   dateadd(day, season_day_name_ndays, r.ref_date) as adjusted_date,
+								   l.season_date_type_id
+							from (select *
+								  from @alldates
+								  where row_id = @i) as l
 							inner join
-								(select *,
-										/*Take the highest value for the rank of the day names in each month and assign it a value of max*/
-										case when last_value(day_rank) over (partition by month_name, day_name order by month_name, day_name) = day_rank then 'max'
-										/*Otherwise cast the rank as its value*/
-												else cast(day_rank as nvarchar(3)) 
-										end as day_rank2
-								 from @dates) as r
+								(select *
+								 from sladb.dbo.tbl_ref_calendar) as r
 							/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
 							on l.season_date_month_name_desc = r.month_name and
 							   l.season_date_day_name_desc = r.day_name and
-							  (l.season_day_rank_id = r.day_rank2 or 
-							   l.season_day_rank_id = r.day_rank)
-							where season_date_ref_id = @i;
+							   l.season_day_rank_id = r.day_rank
+							inner join
+								 sladb.dbo.tbl_ref_sla_season_day_name as r2
+							on l.season_date_day_name_desc = r.day_name;
 
-							/*Set the actual holiday date from the dates reference table*/
-							set @actual_date = (select actual_date from @dates_ref);
-							/*Set the observed holiday date from the dates reference table*/
-							set @observed_date = (select observed_date from @dates_ref);
+						begin transaction 
+							insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_type_id)
+								
 						
-						/*Delete the records in the dates_ref table*/
-						delete from @dates_ref;
+						commit;
 
 						/*Update the values in the holidays table with the actual and observed dates for a given holiday based on i being equal to the id*/
 						update @holidays
 							set actual_date = @actual_date,
-								observed_date = @observed_date
+								adjusted_date = @adjusted_date
 							where id = @i;
 					end;
 
@@ -161,4 +168,4 @@ declare @year int = year(getdate()),
 				/*Set the iteration to the next step*/
 				set @year = @year + 1;
 			end;/*End the year loop*/
-/*end;*/
+end;

@@ -25,11 +25,14 @@ set nocount on;
 begin
 	declare @calendar table(ref_date date not null);
 	declare @dates_interim table(ref_date date,
+								 ref_year int,
 								 month_name nvarchar(9),
 								 day_name nvarchar(9),
 								 day_rank nvarchar(5));
 	declare @start_date date = datefromparts(year(getdate()), 01, 01);
-	declare @end_date date = datefromparts(year(getdate()), 12, 31);
+	--declare @end_date date = datefromparts(year(getdate()), 12, 31);
+	--declare @start_date date = datefromparts(2014, 01, 01);
+	declare @end_date date = datefromparts(year(getdate()) + 1, 12, 31);
 	declare @i int, @n int, @date date;
 
 	set @i = 0;
@@ -44,13 +47,15 @@ begin
 		set @i = @i + 1;
 		end;
 		
-		insert into @dates_interim(ref_date, month_name, day_name, day_rank)
+		insert into @dates_interim(ref_date, ref_year, month_name, day_name, day_rank)
 			select ref_date,
+				   ref_year,
 				   month_name,
 				   day_name,
 				   /*Calculate the rank of day names by months*/
-				   dense_rank() over (partition by month_name, day_name order by ref_date, month_name, day_name) as day_rank2
+				   dense_rank() over (partition by ref_year, month_name, day_name order by ref_date, ref_year, month_name, day_name) as day_rank
 			from (select ref_date, 
+						year(ref_date) as ref_year,
 						/*Weekday name of reference date*/
 						datename(weekday, ref_date) as day_name, 
 						/*Month name of reference date*/
@@ -66,18 +71,18 @@ begin
 				   month_name,
 				   day_name,
 				   /*Calculate the rank of day names by months*/
-				   case when last_value(day_rank2) over (partition by month_name, day_name order by month_name, day_name) = day_rank2 then 'last'
+				   case when last_value(day_rank) over (partition by ref_year, month_name, day_name order by ref_year, month_name, day_name) = day_rank then 'last'
 						/*Otherwise cast the rank as its value*/
-						else cast(day_rank2 as nvarchar(5)) 
+						else cast(day_rank as nvarchar(5)) 
 				   end as day_rank
 			from (select ref_date, 
+						 ref_year,
 						 /*Weekday name of reference date*/
 						 datename(weekday, ref_date) as day_name, 
 						 /*Month name of reference date*/
-						 datename(month, ref_date) month_name 
-				  from @calendar) as t
+						 datename(month, ref_date) month_name,
+						 day_rank 
+				  from @dates_interim) as t
 				  order by ref_date;
 	commit;
 end;
-
-/*Take the highest value for the rank of the day names in each month and assign it a value of max*/

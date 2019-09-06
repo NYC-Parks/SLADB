@@ -19,4 +19,5 @@
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_sla_season(season_id int identity(1,1) primary key,
 									  season_desc nvarchar(128),
+									  season_year_round bit not null,
 									  season_active bit not null);

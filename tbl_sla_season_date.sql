@@ -17,7 +17,12 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+--drop table sladb.dbo.tbl_sla_season_date;
+
 create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) primary key,
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
-										   season_start_date date not null,
-										   season_end_date date not null);
+										   date_start date not null,
+										   date_start_adj date not null,
+										   date_end date not null,
+										   date_end_adj date not null,
+										   season_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
