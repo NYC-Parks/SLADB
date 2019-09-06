@@ -25,9 +25,7 @@ create table sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id int iden
 insert into sladb.dbo.tbl_ref_sla_season_date_type(season_date_category_id, season_date_type_desc)
 	values(1, 'Season Start'),
 		  (1, 'Season End'),
-		  (2, 'Preseason Start'),
-		  (2, 'Preseason End'),
-		  (2, 'Postseason Start'),
-		  (2, 'Postseason End')
+		  (2, 'Offseason Start'),
+		  (2, 'Offseason End')
 
 

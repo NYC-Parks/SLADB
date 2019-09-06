@@ -24,7 +24,8 @@ create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int iden
 													 season_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
 													 season_date_ref_day_number int null,
 													 season_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
-													 season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id));
+													 season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id),
+													 season_date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
 
 
 insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
