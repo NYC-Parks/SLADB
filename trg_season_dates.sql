@@ -27,7 +27,7 @@ begin
 	declare @year int = year(getdate()),
 			@i int,
 			@n int,
-			@fixed bit,
+			@fixed bit, @year_round bit,
 			@start_actual date, @start_adjusted date,
 			@end_actual date, @end_adjusted date;
 
@@ -39,7 +39,8 @@ begin
 							season_date_ref_day_number int,
 							season_date_day_name_desc nvarchar(9),
 							season_day_rank_id nvarchar(5),
-							season_date_type_id int);
+							season_date_type_id int,
+							season_year_round bit);
 	
 	/*Create a table variable that holds the actual holiday date and the observed date*/
 	declare @dates_ref table (season_id int,
@@ -47,20 +48,16 @@ begin
 							  adjusted_date date,
 							  season_date_type_id int);
 
-	insert into @alldates(season_date_ref_id, season_id, season_date_ref_fixed, 
-						  start_date_month_name_desc, start_date_ref_day_number, start_date_day_name_desc, start_day_rank_id,
-						  end_date_month_name_desc, end_date_ref_day_number, end_date_day_name_desc, end_day_rank_id)
+	insert into @alldates(season_date_ref_id, season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_ref_day_number, 
+						  season_date_day_name_desc, season_day_rank_id, season_year_round)
+
 		select l.season_date_ref_id, 
 			   l.season_id, 
 			   l.season_date_ref_fixed, 
-			   l.start_date_month_name_desc, 
-			   l.start_date_ref_day_number, 
-			   l.start_date_day_name_desc, 
-			   l.start_day_rank_id,
-			   l.end_date_month_name_desc, 
-			   l.end_date_ref_day_number, 
-			   l.end_date_day_name_desc, 
-			   l.end_day_rank_id,
+			   l.season_date_month_name_desc, 
+			   l.season_date_ref_day_number, 
+			   l.season_date_day_name_desc, 
+			   l.season_day_rank_id,
 			   r.season_year_round
 		 from sladb.dbo.tbl_ref_sla_season_definition as l
 		 inner join
@@ -78,10 +75,11 @@ begin
 			while @i <= @n
 			begin/*Start the i loop*/
 				/*Select the fixed value from table variable where the id is equal to i*/
-				set @fixed = (select season_date_ref_fixed as fixed from @alldates where row_id = @i);
+				set @fixed = (select season_date_ref_fixed from @alldates where row_id = @i);
+				set @year_round = (select season_year_round from @alldates where row_id = @i);
 
 				/*If the SLA season is year round fixed then insert the following records*/
-				if @fixed = 1
+				if @fixed = 1 and @year_round = 1
 					begin
 						/*Insert the holiday date values into the dates reference table*/
 						insert into @dates_ref

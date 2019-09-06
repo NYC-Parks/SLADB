@@ -21,14 +21,10 @@
 create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int identity(1,1) primary key,
 													 season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
 													 season_date_ref_fixed bit not null,
-													 start_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
-													 start_date_ref_day_number int null,
-													 start_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
-													 start_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id),
-													 end_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
-													 end_date_ref_day_number int null,
-													 end_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
-													 end_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id));
+													 season_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
+													 season_date_ref_day_number int null,
+													 season_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
+													 season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id));
 
 
 insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
