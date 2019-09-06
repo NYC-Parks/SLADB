@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
  Created Date:  09/04/2019																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified Date: 09/06/2019																							   
 											       																	   
  Project: <Project Name>	
  																							   
@@ -19,7 +19,7 @@
 ***********************************************************************************************************************/
 use sladb
 go
-
+--drop trigger dbo.trg_season_definition
 create trigger dbo.trg_season_definition
 on sladb.dbo.tbl_sla_season
 after insert as 
@@ -51,34 +51,14 @@ after insert as
 				if @year_round = 1
 					begin
 						begin transaction
-							insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, start_date_month_name_desc, start_date_ref_day_number, end_date_month_name_desc, end_date_ref_day_number)
-								values(@season_id, cast(1 as bit), 'December', cast(31 as int), cast(1 as int), 'January', cast(1 as int), cast(2 as int));
+							insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, 
+																	  season_date_ref_day_number, season_date_type_id)
+								values(@season_id, cast(1 as bit), 'December', cast(31 as int), cast(1 as int)), 
+									  (@season_id, cast(1 as bit), 'January', cast(1 as int), cast(2 as int));
 						commit;
 					end;
 
 				set @i = @i + 1;
 			end;
-		/*begin transaction
-			insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_ref_day_number, season_date_type)
-				select season_id,
-					   cast(1 as bit) as season_date_ref_fixed,
-					   'January' as season_date_month_name_desc,
-					   cast(1 as int) as season_date_ref_day_number,
-					   cast(1 as int) as season_date_type
-				from inserted 
-				where season_year_round = 1;
-		commit;
-
-		begin transaction
-			insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_ref_day_number, season_date_type)
-				select season_id,
-					   cast(1 as bit) as season_date_ref_fixed,
-					   'December' as season_date_month_name_desc,
-					   cast(31 as int) as season_date_ref_day_number,
-					   cast(2 as int) as season_date_type
-				from inserted 
-				where season_year_round = 1;
-		commit;*/
-
 
 	end;
