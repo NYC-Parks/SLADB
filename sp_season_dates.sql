@@ -20,12 +20,12 @@
 use sladb
 go
 
-create procedure dbo.sp_season_dates as
-begin
+/*create procedure dbo.sp_season_dates as
+begin*/
 
 	/*Initialize the variables that are being used to create the output table*/
 	declare @year int = year(getdate()),
-			@i int,
+			@i int = 1,
 			@n int,
 			@fixed bit, @year_round bit, @season_id int,
 			@start_actual date, @start_adjusted date,
@@ -84,75 +84,166 @@ begin
 	/*Set the inner loop value to start at 1*/
 	set @i = 1;	
 
-		insert into @seasonids(season_id)
-			select distinct season_id
-			from @alldates;
+	/*Set the number of iterations to the number of SLA seasons*/
+	set @n = (select count(*) from @seasonids);
 
-		/*Set the number of iterations to the number of SLA seasons*/
-		set @n = (select count(*) from @seasonids);
+	--set @season_id = (select row_id from @seasonids);
+	set @season_id = (select season_id from @seasonids where row_id = @i);
 
-		set @season_id = (select row_id from @seasonids);
+		/*Iterate through the dates where i is less than or equal to the number of dates*/
+		while @i <= @n
+		begin/*Start the i loop*/
+			/*Select the fixed value from table variable where the id is equal to i*/
+			set @fixed = (select season_date_ref_fixed from @alldates where row_id = @i);
+			set @year_round = (select season_year_round from @alldates where row_id = @i);
 
-		select * from @alldates where season_id = row_id;
+			/*Delete all records from the date reference table at the start of each iteration.*/
+			delete 
+			from @dates_ref;
 
-			/*Iterate through the dates where i is less than or equal to the number of dates*/
-			while @i <= @n
-			begin/*Start the i loop*/
-				/*Select the fixed value from table variable where the id is equal to i*/
-				set @fixed = (select season_date_ref_fixed from @alldates where row_id = @i);
-				set @year_round = (select season_year_round from @alldates where row_id = @i);
+			/*If the SLA season is year round fixed then insert the following records*/
+			if @fixed = 1 and @year_round = 1
+				begin
+					/*Insert the holiday date values into the dates reference table*/
+					insert into @dates_ref(season_id,
+											actual_date,
+											adjusted_date,
+											date_row,
+											season_date_type_id,
+											season_date_category_id)
+						select l.season_id,
+								r.ref_date as actual_date,
+								dateadd(day, season_day_name_ndays, r.ref_date) as adjusted_date,
+								row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+								l.season_date_type_id,
+								l.season_date_category_id
+						from (select *
+								from @alldates
+								where season_id = @season_id) as l
+						left join
+							(select *
+								from sladb.dbo.tbl_ref_calendar
+								where year(ref_date) = @year) as r
+						/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
+						on l.season_date_month_name_desc = r.month_name and
+							--l.season_date_day_name_desc = r.day_name and
+							l.season_date_ref_day_number = datepart(day, ref_date)
+							--l.season_day_rank_id = r.day_rank
+						left join
+								sladb.dbo.tbl_ref_sla_season_day_name as r2
+						on r2.season_day_name_desc = r.day_name;
 
-				/*If the SLA season is year round fixed then insert the following records*/
-				if @fixed = 1 and @year_round = 1
-					begin
-						/*Insert the holiday date values into the dates reference table*/
-						insert into @dates_ref(season_id,
-											   actual_date,
-											   adjusted_date,
-											   date_row,
-											   season_date_type_id,
-											   season_date_category_id)
+					/*Insert the date values into the season date table.*/
+					--begin transaction 
+						--insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_category_id)
 							select l.season_id,
-									r.ref_date as actual_date,
-									dateadd(day, season_day_name_ndays, r.ref_date) as adjusted_date,
-									row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
-									l.season_date_type_id,
-									l.season_date_category_id
-							from (select *
-								  from @alldates
-								  where season_id = @season_id) as l
-							left join
-								(select *
-								 from sladb.dbo.tbl_ref_calendar) as r
-							/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
-							on l.season_date_month_name_desc = r.month_name and
-								--l.season_date_day_name_desc = r.day_name and
-							   l.season_date_ref_day_number = datepart(day, ref_date)
-							   --l.season_day_rank_id = r.day_rank
-							left join
-									sladb.dbo.tbl_ref_sla_season_day_name as r2
-							on r2.season_day_name_desc = r.day_name;
+								l.actual_date as date_start,
+								l.adjusted_date as date_start_adj,
+								r.actual_date as date_end,
+								r.adjusted_date as date_end_adj,
+								l.season_date_category_id
+							from (select * 
+									from @dates_ref
+									where season_date_type_id = 1) as l
+							full outer join
+									(select * 
+									from @dates_ref
+									where season_date_type_id = 2) as r
+							on l.season_id = r.season_id and
+								l.date_row = r.date_row;	
+					--commit;
+					set @i = @i + 1;
+				end;
 
+			/*If the SLA season is year round fixed then insert the following records*/
+			if @fixed = 1 and @year_round = 0
+				begin
+				/*Insert the holiday date values into the dates reference table*/
+				insert into @dates_ref(season_id,
+										actual_date,
+										adjusted_date,
+										date_row,
+										season_date_type_id,
+										season_date_category_id)
+					select l.season_id,
+							r.ref_date as actual_date,
+							dateadd(day, season_day_name_ndays, r.ref_date) as adjusted_date,
+							row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+							l.season_date_type_id,
+							l.season_date_category_id
+					from (select *
+							from @alldates
+							where season_id = @season_id) as l
+					left join
+						(select *
+							from sladb.dbo.tbl_ref_calendar
+							where year(ref_date) = @year) as r
+					/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
+					on l.season_date_month_name_desc = r.month_name and
+						--l.season_date_day_name_desc = r.day_name and
+						l.season_date_ref_day_number = datepart(day, ref_date)
+						--l.season_day_rank_id = r.day_rank
+					left join
+							sladb.dbo.tbl_ref_sla_season_day_name as r2
+					on r2.season_day_name_desc = r.day_name;
 
-						begin transaction 
-							insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_date_category_id)
-								select l.season_id,
-								   l.actual_date as date_start,
-								   l.adjusted_date as date_start_adj,
-								   r.actual_date as date_end,
-								   r.adjusted_date as date_end_adj,
-								   l.season_date_category_id
-								from (select * 
-									  from @dates_ref
-									  where season_date_type_id = 1) as l
-								full outer join
-									 (select * 
-									  from @dates_ref
-									  where season_date_type_id = 2) as r
-								on l.season_id = r.season_id and
-								   l.date_row = r.date_row;	
-						commit;
-					end;
+										/*Insert the date values into the season date table.*/
+					--begin transaction 
+						--insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_category_id)
+							select l.season_id,
+								l.actual_date as date_start,
+								l.adjusted_date as date_start_adj,
+								r.actual_date as date_end,
+								r.adjusted_date as date_end_adj,
+								l.season_date_category_id
+							from (select * 
+									from @dates_ref
+									where season_date_type_id = 1) as l
+							full outer join
+									(select * 
+									from @dates_ref
+									where season_date_type_id = 2) as r
+							on l.season_id = r.season_id and
+								l.date_row = r.date_row;	
+					--commit;
+
+				end;
+
+			/*If the SLA season is year round fixed then insert the following records*/
+			if @fixed = 1 and @year_round = 0
+				begin
+								/*Insert the holiday date values into the dates reference table*/
+				insert into @dates_ref(season_id,
+										actual_date,
+										adjusted_date,
+										date_row,
+										season_date_type_id,
+										season_date_category_id)
+					select l.season_id,
+							r.ref_date as actual_date,
+							dateadd(day, season_day_name_ndays, r.ref_date) as adjusted_date,
+							row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+							l.season_date_type_id,
+							l.season_date_category_id
+					from (select *
+							from @alldates
+							where season_id = @season_id) as l
+					left join
+						(select *
+							from sladb.dbo.tbl_ref_calendar
+							where year(ref_date) = @year) as r
+					/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
+					on l.season_date_month_name_desc = r.month_name and
+						--l.season_date_day_name_desc = r.day_name and
+						l.season_date_ref_day_number = datepart(day, ref_date)
+						--l.season_day_rank_id = r.day_rank
+					left join
+							sladb.dbo.tbl_ref_sla_season_day_name as r2
+					on r2.season_day_name_desc = r.day_name;
+
+				end;
+				set @i = @i + 1;
+			end;
 
 				/*If the holiday is fixed (ex: July 4) then insert the following records*/
 				else
