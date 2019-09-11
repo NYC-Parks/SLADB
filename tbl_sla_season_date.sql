@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
+ Created Date:  09/06/2019																							   
+ Modified Date: 09/11/2019																							   
 											       																	   
- Project: <Project Name>	
+ Project: Service Level Agreement Database	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -25,4 +25,4 @@ create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) prim
 										   date_start_adj date not null,
 										   date_end date not null,
 										   date_end_adj date not null,
-										   season_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
+										   season_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id));
