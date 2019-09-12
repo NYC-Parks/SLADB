@@ -37,6 +37,13 @@ insert into sladb.dbo.tbl_sla_season(season_desc, season_active, season_year_rou
 	values('Year Round Test', 1, 1),
 		  ('Another Year Round Test', 1, 1)
 
+insert into sladb.dbo.tbl_sla_season(season_desc, season_active, season_year_round)
+	values('Not Fixed or Year Round', 1, 0)
+
+insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_day_name_desc, season_day_rank_id, season_date_type_id)
+	values(4, 0, 'March', 'Sunday', '1', 1),
+		  (4, 0, 'May', 'Saturday', 'last', 2)
+
 select *
 from sladb.dbo.tbl_sla_season
 

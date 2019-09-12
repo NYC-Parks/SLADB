@@ -24,7 +24,7 @@ create view dbo.vw_date_ref_fixed as
 	select l.season_id,
 			r.actual_date,
 			r.adjusted_date,
-			row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+			row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as date_row,
 			l.season_date_type_id,
 			l.season_date_category_id
 	from sladb.dbo.vw_ref_sla_season_definition as l

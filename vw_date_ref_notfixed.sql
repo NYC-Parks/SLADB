@@ -24,12 +24,13 @@ create view dbo.vw_date_ref_notfixed as
 	select l.season_id,
 			r.actual_date,
 			r.adjusted_date,
-			row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+			row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as date_row,
 			l.season_date_type_id,
 			l.season_date_category_id
 	from sladb.dbo.vw_ref_sla_season_definition as l
 	left join
 		 sladb.dbo.vw_season_dates_adjusted as r
-	on l.season_date_day_name_desc = r.day_name and
+	on l.season_date_month_name_desc = r.month_name and
+	   l.season_date_day_name_desc = r.day_name and
 	   l.season_day_rank_id = r.day_rank
 	where l.season_date_ref_fixed = 0

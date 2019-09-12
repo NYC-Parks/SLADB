@@ -29,19 +29,8 @@ begin*/
 			@n int,
 			@fixed bit, @year_round bit, @season_id int,
 			@year_start date, @year_end date,
-			@seas_start date, @seas_end date;
-
-	declare @alldates table(row_id int identity(1,1),
-							season_date_ref_id int,
-							season_id int,
-							season_date_ref_fixed bit,
-							season_date_month_name_desc nvarchar(9),
-							season_date_ref_day_number int,
-							season_date_day_name_desc nvarchar(9),
-							season_day_rank_id nvarchar(5),
-							season_date_type_id int,
-							season_year_round bit,
-							season_date_category_id int);
+			@seas_start date, @seas_end date,
+			@offs_start date, @offs_end date;
 	
 	declare @tbl_season_dates table(season_date_id int,
 									season_id int,
@@ -62,15 +51,9 @@ begin*/
 							  season_date_type_id int,
 							  season_date_category_id int);
 
-	/*Insert the active season records into the alldates table variable*/
-	insert into @alldates(season_date_ref_id, season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_ref_day_number, 
-						  season_date_day_name_desc, season_day_rank_id, season_date_type_id, season_year_round, season_date_category_id)
-		select *
-		from sladb.dbo.vw_ref_sla_season_definition;
-
 	insert into @seasonids(season_id)
 		select distinct season_id
-		from @alldates;
+		from sladb.dbo.vw_ref_sla_season_definition;
 
 	/*Set the inner loop value to start at 1*/
 	set @i = 1;	
@@ -79,86 +62,87 @@ begin*/
 	set @n = (select count(*) from @seasonids);
 
 	--set @season_id = (select row_id from @seasonids);
-	set @season_id = (select season_id from @seasonids where row_id = @i);
-
 		/*Iterate through the dates where i is less than or equal to the number of dates*/
 		while @i <= @n
 		begin/*Start the i loop*/
-			/*Select the fixed value from table variable where the id is equal to i*/
-			set @fixed = (select season_date_ref_fixed from @alldates where row_id = @i);
-			set @year_round = (select season_year_round from @alldates where row_id = @i);
 
-			/*Delete all records from the date reference table at the start of each iteration.*/
-			delete 
-			from @dates_ref;
+			set @season_id = (select season_id from @seasonids where row_id = @i);
+
+			/*Select the fixed value from table variable where the id is equal to i*/
+			set @fixed = (select distinct(season_date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
+			set @year_round = (select distinct(season_year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
+
+			/*Delete all records from the holding table variable.*/
+			delete from @tbl_season_dates;
 
 			/*If the SLA season is year round fixed then insert the following records*/
 			if @fixed = 1
 				begin
-					/*Insert the season date values into the dates reference table*/
-					insert into @dates_ref(season_id,
-										   actual_date,
-										   adjusted_date,
-										   date_row,
-										   season_date_type_id,
-										   season_date_category_id)
-						select *
-						from sladb.dbo.vw_date_ref_fixed
-						where season_id = @season_id;
-
+					insert into @tbl_season_dates
 						select l.season_id,
-								r.actual_date,
-								r.adjusted_date,
-								row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
-								l.season_date_type_id,
+								l.actual_date as date_start,
+								l.adjusted_date as date_start_adj,
+								r.actual_date as date_end,
+								r.adjusted_date as date_end_adj,
 								l.season_date_category_id
-						from (select *
-							  from @alldates
-							  where season_id = @season_id) as l
-						left join
-							 sladb.dbo.vw_season_dates_adjusted as r
-						on l.season_date_month_name_desc = r.month_name and
-						   l.season_date_ref_day_number = r.season_date_ref_day_number
+						from (select * 
+							  from sladb.dbo.vw_date_ref_fixed
+							  where season_id = @season_id and
+									season_date_type_id = 1 and
+									year(actual_date) = @year) as l
+						full outer join
+								(select * 
+								 from sladb.dbo.vw_date_ref_fixed
+								 where season_id = @season_id and
+									   season_date_type_id = 2 and
+									   year(actual_date) = @year) as r
+						on l.season_id = r.season_id and
+						   l.date_row = r.date_row;	
 
 						if @year_round = 1
-						begin;
-						/*Insert the date values into the season date table.*/
-						--begin transaction 
-							--insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_category_id)
-								select l.season_id,
-									l.actual_date as date_start,
-									l.adjusted_date as date_start_adj,
-									r.actual_date as date_end,
-									r.adjusted_date as date_end_adj,
-									l.season_date_category_id
-								from (select * 
-										from @dates_ref
-										where season_date_type_id = 1) as l
-								full outer join
-										(select * 
-										from @dates_ref
-										where season_date_type_id = 2) as r
-								on l.season_id = r.season_id and
-									l.date_row = r.date_row;	
-						--commit;
-						end;
+							begin;
+							/*Insert the date values into the season date table.*/
+							--begin transaction 
+								--insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_category_id)
+									select *
+									from @tbl_season_dates
+							--commit;
+							end;
 
 						else
-						begin
-							set @year_start = datefromparts(@year, 1, 1);
-							set @year_end = datefromparts(@year, 12, 31);
-							/*Set the values for the start and end of the season*/
-							set @seas_start = (select actual_date from @dates_ref where season_date_type_id = 1);
-							set @seas_end = (select actual_date from @dates_ref where season_date_type_id = 1);
+							begin
+								set @year_start = datefromparts(@year, 1, 1);
+								set @year_end = datefromparts(@year, 12, 31);
+								set @seas_start = (select date_start from @tbl_season_dates);
+								set @seas_end = (select date_end from @tbl_season_dates);
+								
+								/*Set the values for the start and end of the season*/
+								set @seas_start = (select actual_date from @dates_ref where season_date_type_id = 1);
+								set @seas_end = (select actual_date from @dates_ref where season_date_type_id = 2);
 
-							if @seas_start >= @year_start
-								begin
-									
-								end;
-							if @seas_end >= @year_end
-								begin
-								end;
-						end;
+								if @seas_start = @year_start
+									begin
+										set @offs_start = dateadd(day, + 1, @seas_end);
+									end;
+								
+								if @seas_end = @year_end
+									begin
+										set @offs_end = dateadd(day, -1, @seas_start)
+									end;
+
+								if @seas_start > @year_start
+									begin
+										set @offs_start = dateadd(day, -1, @seas_start);
+									end;
+
+
+
+								if @seas_start > @year_start
+									begin
+										set @offs_start = dateadd(day, -1, @seas_start);
+									end;
+
+							end;
 						select * from @dates_ref
 
 					--set @i = @i + 1;
