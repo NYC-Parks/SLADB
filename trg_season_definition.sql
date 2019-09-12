@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
  Created Date:  09/04/2019																							   
- Modified Date: 09/06/2019																							   
+ Modified Date: 09/12/2019																							   
 											       																	   
  Project: <Project Name>	
  																							   
@@ -53,8 +53,8 @@ after insert as
 						begin transaction
 							insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, 
 																	  season_date_ref_day_number, season_date_type_id)
-								values(@season_id, cast(1 as bit), 'December', cast(31 as int), cast(1 as int)), 
-									  (@season_id, cast(1 as bit), 'January', cast(1 as int), cast(2 as int));
+								values(@season_id, cast(1 as bit), 'January', cast(1 as int), cast(1 as int)) /*Start Season value*/,
+									  (@season_id, cast(1 as bit), 'December', cast(31 as int), cast(2 as int))/*End Season value*/;
 						commit;
 					end;
 

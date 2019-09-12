@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 09/12/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: Service Level Agreement Database	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,12 +17,28 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
---drop table sladb.dbo.tbl_sla_season_date;
+use sladb
+go
 
-create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) primary key,
-										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
-										   date_start date not null,
-										   date_start_adj date not null,
-										   date_end date not null,
-										   date_end_adj date not null,
-										   season_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id));
+delete from sladb.dbo.tbl_sla_season
+DBCC CHECKIDENT('tbl_ref_sla_season_definition', RESEED, 1)  
+go
+
+truncate table sladb.dbo.tbl_ref_sla_season_definition
+
+DBCC CHECKIDENT('dbo.tbl_sla_season', RESEED, 1)  
+go
+
+/*
+DBCC CHECKIDENT('dbo.tbl_sla_season')  
+go*/
+
+insert into sladb.dbo.tbl_sla_season(season_desc, season_active, season_year_round)
+	values('Year Round Test', 1, 1),
+		  ('Another Year Round Test', 1, 1)
+
+select *
+from sladb.dbo.tbl_sla_season
+
+select *
+from sladb.dbo.tbl_ref_sla_season_definition

@@ -19,7 +19,7 @@
 ***********************************************************************************************************************/
 --drop table sladb.dbo.tbl_ref_sla_season_definition
 create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int identity(1,1) primary key,
-													 season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
+													 season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
 													 season_date_ref_fixed bit not null,
 													 season_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
 													 season_date_ref_day_number int null,

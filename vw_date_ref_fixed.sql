@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 09/12/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  09/12/2019																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: Service Level Agreement Database	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,12 +17,19 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
---drop table sladb.dbo.tbl_sla_season_date;
-
-create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) primary key,
-										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
-										   date_start date not null,
-										   date_start_adj date not null,
-										   date_end date not null,
-										   date_end_adj date not null,
-										   season_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id));
+use sladb
+go
+--drop view dbo.vw_date_ref_fixed
+create view dbo.vw_date_ref_fixed as 
+	select l.season_id,
+			r.actual_date,
+			r.adjusted_date,
+			row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
+			l.season_date_type_id,
+			l.season_date_category_id
+	from sladb.dbo.vw_ref_sla_season_definition as l
+	left join
+		 sladb.dbo.vw_season_dates_adjusted as r
+	on l.season_date_month_name_desc = r.month_name and
+		l.season_date_ref_day_number = r.season_date_ref_day_number
+	where l.season_date_ref_fixed = 1;

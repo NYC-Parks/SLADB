@@ -54,7 +54,7 @@ begin*/
 	declare @seasonids table(season_id int,
 							 row_id int identity(1,1));
 	
-	/*Create a table variable that holds the actual holiday date and the observed date*/
+	/*Create a table variable that will hold the transformed date values.*/
 	declare @dates_ref table (season_id int,
 							  actual_date date,
 							  adjusted_date date,
@@ -62,28 +62,11 @@ begin*/
 							  season_date_type_id int,
 							  season_date_category_id int);
 
+	/*Insert the active season records into the alldates table variable*/
 	insert into @alldates(season_date_ref_id, season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_ref_day_number, 
 						  season_date_day_name_desc, season_day_rank_id, season_date_type_id, season_year_round, season_date_category_id)
-
-		select l.season_date_ref_id, 
-			   l.season_id, 
-			   l.season_date_ref_fixed, 
-			   l.season_date_month_name_desc, 
-			   l.season_date_ref_day_number, 
-			   l.season_date_day_name_desc, 
-			   l.season_day_rank_id,
-			   l.season_date_type_id,
-			   r.season_year_round,
-			   r2.season_date_category_id
-		 from sladb.dbo.tbl_ref_sla_season_definition as l
-		 inner join
-			  sladb.dbo.tbl_sla_season as r
-		 on l.season_id = r.season_id
-		 left join
-			  sladb.dbo.tbl_ref_sla_season_date_type as r2
-		 on l.season_date_type_id = r2.season_date_type_id
-		 /*Exclude Seasons that are no longer active.*/
-		 where r.season_active = 1;
+		select *
+		from sladb.dbo.vw_ref_sla_season_definition;
 
 	insert into @seasonids(season_id)
 		select distinct season_id
@@ -112,16 +95,20 @@ begin*/
 			/*If the SLA season is year round fixed then insert the following records*/
 			if @fixed = 1
 				begin
-					/*Insert the holiday date values into the dates reference table*/
+					/*Insert the season date values into the dates reference table*/
 					insert into @dates_ref(season_id,
 										   actual_date,
 										   adjusted_date,
 										   date_row,
 										   season_date_type_id,
 										   season_date_category_id)
+						select *
+						from sladb.dbo.vw_date_ref_fixed
+						where season_id = @season_id;
+
 						select l.season_id,
-								r.ref_date as actual_date,
-								dateadd(day, r2.season_day_name_ndays, r.ref_date) as adjusted_date,
+								r.actual_date,
+								r.adjusted_date,
 								row_number() over(partition by season_id, season_date_type_id order by season_id, season_date_type_id) as n,
 								l.season_date_type_id,
 								l.season_date_category_id
@@ -129,15 +116,9 @@ begin*/
 							  from @alldates
 							  where season_id = @season_id) as l
 						left join
-							(select *
-							 from sladb.dbo.tbl_ref_calendar
-							 where year(ref_date) = @year) as r
-						/*Join the tables on the month name, the day name and when the day_ranks are equal.*/
+							 sladb.dbo.vw_season_dates_adjusted as r
 						on l.season_date_month_name_desc = r.month_name and
-							l.season_date_ref_day_number = datepart(day, ref_date)
-						left join
-								sladb.dbo.tbl_ref_sla_season_day_name as r2
-						on r2.season_day_name_desc = r.day_name;
+						   l.season_date_ref_day_number = r.season_date_ref_day_number
 
 						if @year_round = 1
 						begin;
@@ -251,56 +232,3 @@ begin*/
 				end;
 				set @i = @i + 1;
 			end;
-
-				/*If the holiday is fixed (ex: July 4) then insert the following records*/
-				else
-					begin
-						/*Insert the holiday date values into the dates reference table*/
-						insert into @dates_ref
-							/*The actual and observed dates of fixed holidays may vary depending on the day of the week on which the holiday falls*/
-							select r.year_date as actual_date,
-									/*When a holiday falls on Saturday then the observed date is Friday, when it falls on a Sunday the observered date
-										is Monday, otherwise the actual and observed dates are equal. This logic is built from the link in the doc block.*/
-									case when r.day_name = 'Saturday' then cast(dateadd(day, -1, r.year_date) as date)
-										when r.day_name = 'Sunday' then cast(dateadd(day, 1, r.year_date) as date)
-										else r.year_date
-									end as observed_date
-							from @holidays as l
-							inner join
-									@dates as r
-							/*Join the tables based the month name and the day number being equal*/
-							on l.month_name = r.month_name and
-								l.day_number = datepart(day, r.year_date)
-							where id = @i;
-
-							/*Set the actual holiday date from the dates reference table*/
-							set @actual_date = (select actual_date from @dates_ref);
-							/*Set the observed holiday date from the dates reference table*/
-							set @observed_date = (select observed_date from @dates_ref);
-						
-						/*Delete the records in the dates_ref table*/
-						delete from @dates_ref;
-
-						/*Update the values in the holidays table with the actual and observed dates for a given holiday based on i being equal to the id*/
-						update @holidays
-							set actual_date = @actual_date,
-								observed_date = @observed_date
-							where id = @i;
-					end;
-				/*Set the iteration to the next step*/
-				set @i = @i + 1;
-			end;/*End the i loop*/
-
-				/*Insert the values from the holiday reference table variable into the permanent table*/
-				begin transaction
-				insert into dwh.dbo.tbl_ref_holiday(name, actual_date, observed_date, floating)
-					select name, 
-						   actual_date, 
-						   observed_date, 
-						   floating 
-					from @holidays
-				commit transaction
-				/*Set the iteration to the next step*/
-				set @year = @year + 1;
-			end;/*End the year loop*/
-end;
