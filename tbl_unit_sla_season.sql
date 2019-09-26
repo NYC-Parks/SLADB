@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 09/17/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
  																							   
@@ -17,12 +17,10 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_unit(unit_id nvarchar(30) primary key,
-									unit_desc nvarchar(80),
-									unit_class nvarchar(8),
-									unit_mrc nvarchar(15),
-									unit_status nvarchar(4),
-									gisobjid numeric(38,0),
-									unit_record datetime,
-								    unit_updated datetime,
-									unit_withdraw datetime);
+create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) primary key,
+										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id),
+										   sla_id int foreign key references sladb.dbo.tbl_ref_sla(sla_id),
+										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
+										   active bit not null,
+										   )
+
