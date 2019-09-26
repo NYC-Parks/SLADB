@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  09/26/2019																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -17,11 +17,37 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) primary key,
-										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id),
-										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_translation(sla_code),
-										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
-										   effective bit not null,
-										   effective_from date not null,
-										   effective_to date);
+use sladb
+go
+create trigger dbo.trg_sla_season_upsert
+on sladb.dbo.tbl_change_request_status after update as
 
+
+	begin transaction
+		--insert into sladb.dbo.tbl_
+		with updates(
+		select unit_id, sla_code, season_id, status_date 
+		from updated as l
+		left join
+			 sladb.dbo.tbl_change_request as r
+		on l.change_request_id = r.change_request_id
+		where l.sla_change_status = 2)
+		
+		merge sladb.dbo.tbl_unit_sla_season as target updates as source
+			on target.unit_id = source.unit_id
+			when target matched
+				update 
+			when target not matched
+				insert(unit_id, sla_code, season_id, effective, effective_from, status_date)
+				values(unit_id, sla_code, season_id, 1, status_date) 
+	commit;
+
+	merge 
+
+
+	select unit_id, sla_code, season_id, status_date 
+	from sladb.dbo.tbl_change_request_status as l
+	left join
+		 sladb.dbo.tbl_change_request as r
+	on l.change_request_id = r.change_request_id
+	where l.sla_change_status = 2
