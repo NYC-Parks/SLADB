@@ -7,8 +7,8 @@
 											       																	   
  Project: <Project Name>	
  																							   
- Tables Used: <Database>.<Schema>.<Table Name1>																							   
- 			  <Database>.<Schema>.<Table Name2>																								   
+ Tables Used: sladb.dbo.tbl_change_request																							   
+ 			  sladb.dbo.tbl_change_request_status																								   
  			  <Database>.<Schema>.<Table Name3>				
 			  																				   
  Description: <Lorem ipsum dolor sit amet, legimus molestiae philosophia ex cum, omnium voluptua evertitur nec ea.     
@@ -25,7 +25,7 @@ on sladb.dbo.tbl_change_request
 for insert as 
 
 	begin transaction
-		insert into tbl_change_request_status(change_request_id, sla_change_status, status_date, status_user)
+		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_date, status_user)
 			select change_request_id,
 				   1, --representing the change request has been submitted
 				   cast(getdate() as date),
