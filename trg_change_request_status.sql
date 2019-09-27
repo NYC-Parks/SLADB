@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
+ Created Date:  09/27/2019																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -19,30 +19,18 @@
 ***********************************************************************************************************************/
 use sladb
 go
---drop trigger dbo.trg_sla_season_upsert
-create trigger dbo.trg_sla_season_upsert
-on sladb.dbo.tbl_change_request_status 
-after insert as
+--drop trigger dbo.trg_change_request_status
+create trigger dbo.trg_change_request_status
+on sladb.dbo.tbl_change_request
+for insert as 
 
-
-	--begin transaction
-
-	begin transaction;
-		with inserts as(
-		select unit_id, sla_code, season_id, status_date 
-		from inserted as l
-		left join
-			 sladb.dbo.tbl_change_request as r
-		on l.change_request_id = r.change_request_id
-		where l.sla_change_status = 2)
-	
-
-		merge sladb.dbo.tbl_unit_sla_season as tgt using inserts as src
-			on (tgt.unit_id = src.unit_id)
-			when matched and effective = 1 and effective_to is null
-				then update set tgt.effective = 0,
-						        tgt.effective_to = cast(getdate() as date)
-			when not matched by target
-				then insert(unit_id, sla_code, season_id, effective, effective_from)
-						values(unit_id, sla_code, season_id, 1, status_date); 
+	begin transaction
+		insert into tbl_change_request_status(change_request_id, sla_change_status, status_date, status_user)
+			select change_request_id,
+				   1, --representing the change request has been submitted
+				   cast(getdate() as date),
+				   '0000000' --where can the ERN be pulled from?
+			from inserted
+		 	
 	commit;
+	 

@@ -17,32 +17,50 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
+/*use msdb ;  
+go  
+exec dbo.sp_delete_job  
+    @job_name = N'job_tbl_ref_sector_district'
+	--@job_id = '4D44FECB-7EFB-4B3C-9480-BF7E5CD5EB0D'
+go */
+
+use msdb ;  
+go  
+exec dbo.sp_add_schedule  
+    @schedule_name = N'Once_Daily_0820',  
+    @freq_type = 4,  
+	@freq_interval = 1,
+    @active_start_time = 082000 ;  
 go
---drop trigger dbo.trg_sla_season_upsert
-create trigger dbo.trg_sla_season_upsert
-on sladb.dbo.tbl_change_request_status 
-after insert as
+
+use msdb ;  
+go  
+
+declare @job_id uniqueidentifier;
+
+/*Create the job*/
+exec dbo.sp_add_job @job_name = N'job_tbl_ref_unit', 
+					@enabled = 1,
+					@description = N'Update the reference table for SLADB units.',
+					@owner_login_name = 'NYCDPR\py_services',
+					@job_id = @job_id output;
+
+exec sp_add_jobserver  
+   @job_id = @job_id,  
+   @server_name = N'(LOCAL)';  
 
 
-	--begin transaction
-
-	begin transaction;
-		with inserts as(
-		select unit_id, sla_code, season_id, status_date 
-		from inserted as l
-		left join
-			 sladb.dbo.tbl_change_request as r
-		on l.change_request_id = r.change_request_id
-		where l.sla_change_status = 2)
-	
-
-		merge sladb.dbo.tbl_unit_sla_season as tgt using inserts as src
-			on (tgt.unit_id = src.unit_id)
-			when matched and effective = 1 and effective_to is null
-				then update set tgt.effective = 0,
-						        tgt.effective_to = cast(getdate() as date)
-			when not matched by target
-				then insert(unit_id, sla_code, season_id, effective, effective_from)
-						values(unit_id, sla_code, season_id, 1, status_date); 
-	commit;
+exec dbo.sp_add_jobstep  
+    @job_id = @job_id,  
+    @step_name = N'sp_merge_ref_unit',  
+    @subsystem = N'TSQL',  
+    @command = N'exec sladb.dbo.sp_merge_ref_unit',
+	@on_success_action = 1,
+	@on_fail_action = 2;/*,   
+    @retry_attempts = 5,  
+    @retry_interval = 5 ;  */
+ 
+ 
+exec sp_attach_schedule  
+   @job_id = @job_id,  
+   @schedule_name = N'Once_Daily_0820';  

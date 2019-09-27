@@ -1,14 +1,14 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management  																					   			          
+ Created Date:  09/20/2019																							   
+ Modified Date: 09/27/2019																							   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
- Tables Used: <Database>.<Schema>.<Table Name1>																							   
- 			  <Database>.<Schema>.<Table Name2>																								   
+ Tables Used: eamprod.dbo.r5objects																							   
+ 			  sladb.dbo.tbl_ref_unit																							   
  			  <Database>.<Schema>.<Table Name3>				
 			  																				   
  Description: <Lorem ipsum dolor sit amet, legimus molestiae philosophia ex cum, omnium voluptua evertitur nec ea.     
@@ -17,51 +17,39 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb go
+use sladb 
+go
 
 create procedure dbo.sp_merge_ref_unit as
+	begin transaction;
+		with ampsunits as(
+		select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
+			   obj_desc,
+			   obj_class,
+			   obj_mrc,
+			   obj_status,
+			   obj_gisobjid,
+			   obj_record,
+			   obj_updated,
+			   obj_withdraw
+		from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
+		where lower(obj_class) in('park', 'plgd', 'zone', 'greenst') and
+			  lower(obj_obtype) not in('c', 'i'))
 
-	if object_id('tempdb..#ampsunits') is not null
-		drop table #ampsunits;
+	merge sladb.dbo.tbl_ref_unit as tgt using ampsunits as src
+	on (tgt.unit_id = src.obj_code)
+	when matched and tgt.unit_updated != src.obj_updated
+		then update set unit_desc = src.obj_desc,
+						unit_class = src.obj_class,
+						unit_mrc = src.obj_mrc,
+						unit_status = src.obj_status,
+						gisobjid = src.obj_gisobjid,
+						unit_updated = src.obj_updated,
+						unit_withdraw = src.obj_withdraw
 
-	select obj_code,
-		   obj_desc,
-		   obj_class,
-		   obj_mrc,
-		   obj_status,
-		   obj_gisobjid,
-		   obj_record,
-		   obj_updated,
-		   obj_withdraw
-	into #ampsunits
-	from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
-	where lower(obj_class) in('park', 'plgd', 'zone', 'greenst') and
-		  lower(obj_obtype) not in('c', 'i')
+	when not matched by target
+		then insert(unit_id, unit_desc, unit_class, unit_mrc, unit_status, gisobjid, unit_record, unit_updated, unit_withdraw)
+			values(src.obj_code, src.obj_desc, src.obj_class, src.obj_mrc, src.obj_status, src.obj_gisobjid, src.obj_record, 
+				   src.obj_updated, src.obj_withdraw);
 
-
-	merge sladb.dbo.tbl_ref_unit as t 
-		using #ampsunits as s
-	on (t.unit_id = s.obj_code)
-	when matched and t.unit_updated != s.obj_updated and t.unit_status != s.obj_status
-		then update set t.unit_updated = s.obj_updated,
-						t.unit_withdraw = s.obj_withdraw,
-						t.unit_status = s.obj_status
-	when not matched by t
-		then insert(unit_id, unit_class, unit_mrc, unit_status, gisobjid, unit_record, unit_updated, unit_withdraw)
-			values(s.obj_code, s.obj_desc, s.obj_class, s.obj_mrc, s.obj_status, s.obj_gisobjid, s.obj_record, s.obj_updated, s.obj_withdraw);
-
-
-
-begin transaction
-insert into sladb.dbo.tbl_ref_unit(unit_id,
-								   unit_desc,
-								   unit_class,
-								   unit_mrc,
-								   unit_status,
-								   gisobjid,
-								   unit_record,
-								   unit_updated,
-								   unit_withdraw)
-
-
-commit;
+	commit;
