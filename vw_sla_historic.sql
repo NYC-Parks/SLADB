@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 09/17/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
  																							   
@@ -17,12 +17,29 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_unit(unit_id nvarchar(30) primary key,
-									unit_desc nvarchar(80),
-									unit_class nvarchar(8),
-									unit_mrc nvarchar(15),
-									unit_status nvarchar(4),
-									gisobjid numeric(38,0),
-									unit_commiss datetime,
-								    unit_updated datetime,
-									unit_withdraw datetime);
+use sladb
+go
+
+create view dbo.vw_sla_historic as(
+select l.unit_id,
+	   date_start_adj, 
+	   coalesce(l.effective_to, r.date_end_adj) as date_end_adj,
+	   r2.sla_in,
+	   r2.sla_off
+from sladb.dbo.tbl_unit_sla_season as l
+left join
+	 sladb.dbo.tbl_sla_season_date as r
+on l.season_id = r.season_id and
+   ((l.effective_from <= r.date_start and
+     l.effective_to between r.date_start and r.date_end) or
+    (l.effective_to is null and 
+	 l.effective_from <= r.date_end) or
+    (l.effective_to <= r.date_start and 
+	 l.effective_to > r.date_end))
+left join
+	 sladb.dbo.tbl_ref_sla_translation as r2
+on l.sla_code = r2.sla_code)
+--where effective_to is not null
+
+
+

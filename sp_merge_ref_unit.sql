@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management  																					   			          
  Created Date:  09/20/2019																							   
- Modified Date: 09/27/2019																							   
+ Modified Date: 09/30/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -29,7 +29,7 @@ create procedure dbo.sp_merge_ref_unit as
 			   obj_mrc,
 			   obj_status,
 			   obj_gisobjid,
-			   obj_record,
+			   obj_commiss,
 			   obj_updated,
 			   obj_withdraw
 		from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
@@ -48,8 +48,9 @@ create procedure dbo.sp_merge_ref_unit as
 						unit_withdraw = src.obj_withdraw
 
 	when not matched by target
-		then insert(unit_id, unit_desc, unit_class, unit_mrc, unit_status, gisobjid, unit_record, unit_updated, unit_withdraw)
-			values(src.obj_code, src.obj_desc, src.obj_class, src.obj_mrc, src.obj_status, src.obj_gisobjid, src.obj_record, 
+		then insert(unit_id, unit_desc, unit_class, unit_mrc, unit_status, gisobjid, unit_commiss, unit_updated, unit_withdraw)
+			values(src.obj_code, src.obj_desc, src.obj_class, src.obj_mrc, src.obj_status, src.obj_gisobjid, src.obj_commiss, 
 				   src.obj_updated, src.obj_withdraw);
 
 	commit;
+
