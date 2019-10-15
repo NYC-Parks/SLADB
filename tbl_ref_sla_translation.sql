@@ -12,42 +12,42 @@
  Description: Create a translation table for SLAs that includes the in season and out of season SLAs. 									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_translation(sla_code int identity(1,1) primary key,
-											   season_category_id foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id),
-											   sla nvarchar(1) foreign key references sladb.dbo.tbl_ref_sla(sla_id));
+create table sladb.dbo.tbl_ref_sla_translation(sla_trans_id int identity(1,1) primary key,				   
+											   sla_id nvarchar(1) foreign key references sladb.dbo.tbl_ref_sla(sla_id),
+											   season_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id),
+											   sla_code int not null,
+											   /*Create a unique constraint to make sure that each sla and season only appear once per combination.*/
+											   constraint unq_sla_code unique (sla_id, season_category_id, sla_code));
 
-declare @sla_in nvarchar(1), @sla_off nvarchar(1), @nsla int, @i int, @j int;
 
 declare @sla_tab table(sla_id nvarchar(1),
+					   season_category_id int,
+					   sla_translation_id int,
 					   row_id int identity(1,1));
 
-insert into @sla_tab(sla_id)
-	select sla_id
-	from sladb.dbo.tbl_ref_sla;
+insert into @sla_tab(sla_id, season_category_id)
+	select sla_id, season_category_id
+	from sladb.dbo.tbl_ref_sla
+	cross join
+		 sladb.dbo.tbl_ref_sla_season_category;
 
-set @nsla = (select count(*) from @sla_tab);
+with combos as(
+select l.*, 
+	   r.sla_id as sla_id2,
+	   row_number() over(partition by l.season_category_id order by l.season_category_id, l.sla_id) as sla_code
+from @sla_tab as l
+cross join
+	 @sla_tab as r
+where l.season_category_id != r.season_category_id)
 
-set @i = 1;
-
-while @i <= @nsla
-	begin
-		set @j = 1;
-		set @sla_in = (select sla_id from @sla_tab where row_id = @i);
-
-		while @j <= @nsla
-			begin
-
-				set @sla_off = (select sla_id from @sla_tab where row_id = @j);
-				set @j = @j + 1;
-
-				begin transaction
-					insert into sladb.dbo.tbl_ref_sla_translation(sla_in, sla_off)
-						values(@sla_in, @sla_off);
-				commit;
-				print @i;
-				print @j;
-		end;
-		set @i = @i + 1;
-	end;
+insert into sladb.dbo.tbl_ref_sla_translation(sla_id,
+											  season_category_id,
+											  sla_code)
+	select case when season_category_id = 1 then sla_id
+			else sla_id2
+		end as sla_id,
+	   season_category_id,
+	   sla_code
+from combos
 
 --truncate table sladb.dbo.tbl_ref_sla_translation
