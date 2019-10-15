@@ -24,9 +24,6 @@ create trigger dbo.trg_sla_season_upsert
 on sladb.dbo.tbl_change_request_status 
 after insert as
 
-
-	--begin transaction
-
 	begin transaction;
 		with inserts as(
 		select unit_id, sla_code, season_id, status_date 
@@ -41,8 +38,8 @@ after insert as
 			on (tgt.unit_id = src.unit_id)
 			when matched and effective = 1 and effective_to is null
 				then update set tgt.effective = 0,
-						        tgt.effective_to = cast(getdate() as date)
+						        tgt.effective_to = (select sladb.dbo.fn_getdate(cast(getdate() as date), 0))
 			when not matched by target
 				then insert(unit_id, sla_code, season_id, effective, effective_from)
-						values(unit_id, sla_code, season_id, 1, status_date); 
+						values(unit_id, sla_code, season_id, 1, sladb.dbo.fn_getdate(status_date, 1)); 
 	commit;

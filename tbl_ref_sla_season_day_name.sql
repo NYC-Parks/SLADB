@@ -19,15 +19,16 @@
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num int not null unique,
 												   season_day_name_desc nvarchar(9) primary key,
-												   season_day_name_ndays int not null);
+												   ndays_sunday int not null,
+												   ndays_saturday int not null);
 
 begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num, season_day_name_desc, season_day_name_ndays)
-		values(1, 'Sunday', 0),
-			  (2, 'Monday', 6),
-			  (3, 'Tuesday', 5),
-			  (4, 'Wednesday', 4),
-			  (5, 'Thursday', 3),
-			  (6, 'Friday', 2),
-			  (7, 'Saturday', 1)
+	insert into sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_num, season_day_name_desc, ndays_sunday, ndays_saturday)
+		values(1, 'Sunday', 0, 6),
+			  (2, 'Monday', 6, 5),
+			  (3, 'Tuesday', 5, 4),
+			  (4, 'Wednesday', 4, 3),
+			  (5, 'Thursday', 3, 2),
+			  (6, 'Friday', 2, 1),
+			  (7, 'Saturday', 1, 0)
 commit;

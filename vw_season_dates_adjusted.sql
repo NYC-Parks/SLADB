@@ -22,7 +22,8 @@ go
 --drop view dbo.vw_season_dates_adjusted
 create view dbo.vw_season_dates_adjusted as
 	select l.ref_date as actual_date,
-		   dateadd(day, r.season_day_name_ndays, l.ref_date) as adjusted_date,
+		   dateadd(day, r.ndays_saturday, l.ref_date) as saturday_adjusted_date,
+		   dateadd(day, r.ndays_sunday, l.ref_date) as sunday_adjusted_date,
 		   l.month_name,
 		   l.day_name,
 		   datepart(day, ref_date) as season_date_ref_day_number,
