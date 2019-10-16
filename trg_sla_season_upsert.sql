@@ -51,13 +51,14 @@ after insert as
 			on l.unit_id = r.unit_id
 			where (r.effective = 1 and r.effective_to is null)
 
-		
+		/*Update if required*/
 		update sladb.dbo.tbl_unit_sla_season
 			set effective = 0,
 				effective_to = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
 			from @updates as u
 			where sladb.dbo.tbl_unit_sla_season.sla_season_id = u.sla_season_id;
-
+	
+		/*Insert new records.*/
 		insert into sladb.dbo.tbl_unit_sla_season(unit_id, 
 												  sla_code, 
 												  season_id,
@@ -66,17 +67,4 @@ after insert as
 			select unit_id, sla_code, season_id, 1 as effective, sladb.dbo.fn_getdate(status_date, 1)
 			from @inserts
 												 
-
-		merge sladb.dbo.tbl_unit_sla_season as tgt using inserts as src
-			on (tgt.unit_id = src.unit_id)
-			when matched and effective = 1 and effective_to is null
-				then update set tgt.effective = 0,
-						        tgt.effective_to = (select sladb.dbo.fn_getdate(cast(getdate() as date), 0))
-
-					insert(unit_id, sla_code, season_id, effective, effective_from)
-						values(unit_id, sla_code, season_id, 1, sladb.dbo.fn_getdate(status_date, 1)); 
-
-			when not matched by target
-				then insert(unit_id, sla_code, season_id, effective, effective_from)
-						values(unit_id, sla_code, season_id, 1, sladb.dbo.fn_getdate(status_date, 1)); 
 	commit;
