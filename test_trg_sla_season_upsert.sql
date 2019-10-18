@@ -17,50 +17,15 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
-go
-
-delete from sladb.dbo.tbl_sla_season
-DBCC CHECKIDENT('tbl_ref_sla_season_definition', RESEED, 1)  
-go
-
-truncate table sladb.dbo.tbl_ref_sla_season_definition
-
-DBCC CHECKIDENT('dbo.tbl_sla_season', RESEED, 1)  
-go
-
-/*
-DBCC CHECKIDENT('dbo.tbl_sla_season')  
-go*/
-
-insert into sladb.dbo.tbl_sla_season(season_desc, season_active, season_year_round)
-	values('Year Round Test', 1, 1),
-		  ('Another Year Round Test', 1, 1)
-
-insert into sladb.dbo.tbl_sla_season(season_desc, season_active, season_year_round)
-	values('Not Fixed or Year Round 2', 1, 0)
-
-insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, season_date_day_name_desc, season_day_rank_id, season_date_type_id)
-	values(4, 0, 'March', 'Sunday', '1', 1),
-		  (4, 0, 'May', 'Saturday', 'last', 2)
-
-select *
-from sladb.dbo.tbl_sla_season
-
-select *
-from sladb.dbo.tbl_ref_sla_season_definition
-
-insert into sladb.dbo.tbl_sla_season(season_desc, effective, year_round)
-	values('Not Fixed or Year Round 2', 1, 1)
-
-insert into sladb.dbo.tbl_sla_season_change(old_season_id, new_season_id)
-	values(2, 9)
-
 select *
 from sladb.dbo.tbl_unit_sla_season
 
-truncate table sladb.dbo.tbl_sla_season_change
-
 update sladb.dbo.tbl_unit_sla_season
 	set effective = 1
-	where sla_season_id <= 150
+	where sla_season_id = 1
+
+insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id)
+	values('B001', 1, 2)
+
+insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_date, status_user)
+	values(5, 2, getdate(), '1549482')

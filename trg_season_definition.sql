@@ -28,23 +28,23 @@ after insert as
 
 		declare @inserted table(row_id int identity(1,1),
 								season_id int,
-								season_year_round bit);
+								year_round bit);
 
 		declare @current table(row_id int identity(1,1),
 							   season_id int,
-							   season_year_round bit);
+							   year_round bit);
 
 
-		insert into @inserted(season_id, season_year_round)
+		insert into @inserted(season_id, year_round)
 			select season_id,
-				   season_year_round 
+				   year_round 
 			from inserted;
 
 		set @n = (select count(*) from @inserted);
 
 		while @i <= @n
 			begin
-				set @year_round = (select season_year_round from @inserted where row_id = @i);
+				set @year_round = (select year_round from @inserted where row_id = @i);
 				set @season_id = (select season_id from @inserted where row_id = @i);
 
 				/*If it is a year round season then insert values for January 1 and December 1*/

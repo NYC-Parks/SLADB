@@ -82,7 +82,7 @@ begin
 
 			/*Select the fixed value from table variable where the id is equal to i*/
 			set @fixed = (select distinct(season_date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
-			set @year1_round = (select distinct(season_year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
+			set @year1_round = (select distinct(year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
 
 			/*Delete all records from the holding table variable.*/
 			delete from @tbl_season_dates;
