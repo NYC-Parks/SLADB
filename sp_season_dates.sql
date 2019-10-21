@@ -20,7 +20,8 @@
 use sladb
 go
 --truncate table sladb.dbo.tbl_sla_season_date
-create procedure dbo.sp_season_dates @year int = null as
+--create procedure dbo.sp_season_dates @year int = null as
+alter procedure dbo.sp_season_dates @year int = null as
 begin
 
 	/*Initialize the variables that are being used to create the output table*/
@@ -290,6 +291,8 @@ begin
 						   date_end_adj, 
 						   season_category_id
 					from @tbl_season_dates
+					/*Add a filter to only insert dates where the starting date is 1 day less than today.*/
+					where date_start = dateadd(d, -1, cast(getdate() as date))
 			commit;
 
 			set @i = @i + 1;

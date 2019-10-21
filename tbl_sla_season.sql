@@ -18,7 +18,7 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_sla_season_change(season_change_id int identity(1,1) primary key,
-											 old_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
-											 new_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
+											 old_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
+											 new_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
 											 constraint unq_season_change unique(old_season_id, new_season_id));
 
