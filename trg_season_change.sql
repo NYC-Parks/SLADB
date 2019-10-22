@@ -15,8 +15,8 @@
 ***********************************************************************************************************************/
 use sladb
 go 
---create trigger dbo.trg_season_change
-alter trigger dbo.trg_season_change
+create trigger dbo.trg_season_change
+--alter trigger dbo.trg_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 

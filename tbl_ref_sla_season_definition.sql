@@ -28,11 +28,11 @@ create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int iden
 													 season_date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
 
 
-insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
+/*insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
 	values('Field and Court Season', 1, 'April', 15, 1),
 		  ('Playgrounds and Pools'),
 		  ('Year Round');
 
 insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_name, season_day_rank, season_active)
-	values('Beach Season', 0, 'May', 'Sunday', '2', 1)
+	values('Beach Season', 0, 'May', 'Sunday', '2', 1)*/
 

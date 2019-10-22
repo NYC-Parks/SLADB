@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
+ Created Date:  10/17/2019																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -17,11 +17,8 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_seasons(sla_season_id int identity primary key,
-										   sla_season_desc nvarchar(128));
+create table sladb.dbo.tbl_sla_season_change(season_change_id int identity(1,1) primary key,
+											 old_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
+											 new_season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
+											 constraint unq_season_change unique(old_season_id, new_season_id));
 
-insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-	values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
-		  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
-		  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
-		  ('N', 'No SLA', null, null);

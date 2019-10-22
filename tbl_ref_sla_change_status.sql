@@ -23,6 +23,6 @@ create table sladb.dbo.tbl_ref_sla_change_status(sla_change_status int identity(
 insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status_desc)
 	values('Submitted'),
 		  ('Approved'),
-		  ('Rejected'),
+		  ('Rejected')/*,
 		  ('Implemented'),
-		  ('Canceled');
+		  ('Canceled')*/;
