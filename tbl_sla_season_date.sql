@@ -21,8 +21,8 @@
 
 create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) primary key,
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
-										   date_start date not null,
-										   date_start_adj date not null,
-										   date_end date not null,
-										   date_end_adj date not null,
+										   effective_from date not null,
+										   effective_from_adj date not null,
+										   effective_to date not null,
+										   effective_to_adj date not null,
 										   season_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id));

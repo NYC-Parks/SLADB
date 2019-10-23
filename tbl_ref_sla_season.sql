@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
+ Created Date:  09/30/2019																							   
+ Modified Date: 10/23/2019																							   
 											       																	   
  Project: <Project Name>	
  																							   
@@ -24,13 +24,13 @@ create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) prim
 										   season_date_day_number int null,
 										   season_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
 										   season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id),
-										   season_date_type int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type));
+										   season_date_type int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
 
 
-insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
+/*insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
 	values('Field and Court Season', 1, 'April', 15, 1),
 		  ('Playgrounds and Pools'),
 		  ('Year Round');
 
 insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_name, season_day_rank, season_active)
-	values('Beach Season', 0, 'May', 'Sunday', '2', 1)
+	values('Beach Season', 0, 'May', 'Sunday', '2', 1)*/

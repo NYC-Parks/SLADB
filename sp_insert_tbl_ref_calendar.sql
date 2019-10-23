@@ -21,6 +21,7 @@ use sladb
 go
 
 create procedure dbo.sp_insert_tbl_ref_calendar as
+--alter procedure dbo.sp_insert_tbl_ref_calendar as
 set nocount on;
 begin
 	declare @calendar table(ref_date date not null);
@@ -29,9 +30,9 @@ begin
 								 month_name nvarchar(9),
 								 day_name nvarchar(9),
 								 day_rank nvarchar(5));
-	declare @start_date date = datefromparts(year(getdate()), 01, 01);
+	--declare @start_date date = datefromparts(year(getdate()), 01, 01);
 	--declare @end_date date = datefromparts(year(getdate()), 12, 31);
-	--declare @start_date date = datefromparts(2014, 01, 01);
+	declare @start_date date = datefromparts(2014, 01, 01);
 	declare @end_date date = datefromparts(year(getdate()) + 1, 12, 31);
 	declare @i int, @n int, @date date;
 

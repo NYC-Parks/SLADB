@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																					   			          
  Created Date:  08/30/2019																							   
- Modified Date: 09/17/2019																							   
+ Modified Date: 10/23/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -36,10 +36,10 @@ begin
 	
 	declare @tbl_season_dates table(season_date_id int identity(1,1),
 									season_id int,
-									date_start date,
-									date_start_adj date,
-									date_end date,
-									date_end_adj date,
+									effective_from date,
+									effective_from_adj date,
+									effective_to date,
+									effective_to_adj date,
 									season_category_id int);
 
 	declare @off_dates_ref table (season_id int,
@@ -100,10 +100,10 @@ begin
 			fixed:
 				insert into @tbl_season_dates
 					select l.season_id,
-						   l.actual_date as date_start,
-						   l.adjusted_date as date_start_adj,
-						   r.actual_date as date_end,
-						   r.adjusted_date as date_end_adj,
+						   l.actual_date as effective_from,
+						   l.adjusted_date as effective_from_adj,
+						   r.actual_date as effective_to,
+						   r.adjusted_date as effective_to_adj,
 						   l.season_date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_fixed
@@ -130,10 +130,10 @@ begin
 			notfixed:
 				insert into @tbl_season_dates
 					select l.season_id,
-							l.actual_date as date_start,
-							l.adjusted_date as date_start_adj,
-							r.actual_date as date_end,
-							r.adjusted_date as date_end_adj,
+							l.actual_date as effective_from,
+							l.adjusted_date as effective_from_adj,
+							r.actual_date as effective_to,
+							r.adjusted_date as effective_to_adj,
 							l.season_date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_notfixed
@@ -161,9 +161,9 @@ begin
 				print 'The not year round labelled section.';
 				set @year1_start = datefromparts(@year1, 1, 1);
 				set @year1_end = datefromparts(@year1, 12, 31);
-				set @seas_start = (select date_start from @tbl_season_dates);
+				set @seas_start = (select effective_from from @tbl_season_dates);
 				print @seas_start
-				set @seas_end = (select date_end from @tbl_season_dates);
+				set @seas_end = (select effective_to from @tbl_season_dates);
 
 				/*If the start of season is equal to the start of the year or the end of a season
 					is equal to the end of the year then set the number of time periods equal to 2.*/
@@ -259,10 +259,10 @@ begin
 
 					insert into @tbl_season_dates
 						select l.season_id,
-								l.actual_date as date_start,
-								l.adjusted_date as date_start_adj,
-								r.actual_date as date_end,
-								r.adjusted_date as date_end_adj,
+								l.actual_date as effective_from,
+								l.adjusted_date as effective_from_adj,
+								r.actual_date as effective_to,
+								r.adjusted_date as effective_to_adj,
 								l.season_date_category_id
 						from (select * 
 							  from @off_dates_ref
@@ -283,16 +283,16 @@ begin
 			tableinsert:
 			/*Insert the date values into the season date table.*/
 			begin transaction 
-				insert into sladb.dbo.tbl_sla_season_date(season_id, date_start, date_start_adj, date_end, date_end_adj, season_category_id)
+				insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, season_category_id)
 					select season_id, 
-						   date_start, 
-						   date_start_adj, 
-						   date_end, 
-						   date_end_adj, 
+						   effective_from, 
+						   effective_from_adj, 
+						   effective_to, 
+						   effective_to_adj, 
 						   season_category_id
 					from @tbl_season_dates
 					/*Add a filter to only insert dates where the starting date is 1 day less than today.*/
-					where date_start = dateadd(d, -1, cast(getdate() as date))
+					where effective_from = dateadd(d, -1, cast(getdate() as date))
 			commit;
 
 			set @i = @i + 1;
