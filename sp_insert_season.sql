@@ -16,7 +16,7 @@
 ***********************************************************************************************************************/
 use sladb
 go
-/*create procedure dbo.sp_insert_season(@season_desc nvarchar(128),
+create procedure dbo.sp_insert_season(@season_desc nvarchar(128),
 									  @year_round bit,
 									  @effective bit,
 									  @date_ref_fixed bit,
@@ -24,9 +24,9 @@ go
 									  @date_ref_day_number int null,
 									  @day_name_desc nvarchar(9) null,
 									  @day_rank_id nvarchar(5) null,
-									  @date_type_id int null) as*/
+									  @date_type_id int null) as
 
-alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
+/*alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
 									  @year_round bit,
 									  @effective bit,
 									  @date_ref_fixed bit,
@@ -34,7 +34,7 @@ alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
 									  @date_ref_day_number int = null,
 									  @day_name_desc nvarchar(9) = null,
 									  @day_rank_id nvarchar(5) = null,
-									  @date_type_id int = null) as
+									  @date_type_id int = null) as*/
 begin
 	begin transaction;
 		declare @season_id int;

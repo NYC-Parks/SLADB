@@ -20,8 +20,8 @@
 use sladb
 go
 
---create procedure dbo.sp_season_dates @year int = null as
-alter procedure dbo.sp_season_dates @year int = null as
+create procedure dbo.sp_season_dates @year int = null as
+--alter procedure dbo.sp_season_dates @year int = null as
 begin
 
 	/*Initialize the variables that are being used to create the output table*/

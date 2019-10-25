@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  10/24/2019																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -11,10 +11,12 @@
  			  <Database>.<Schema>.<Table Name2>																								   
  			  <Database>.<Schema>.<Table Name3>				
 			  																				   
- Description: Insert the non-seasonal SLAs that did not change.								   
+ Description: <Lorem ipsum dolor sit amet, legimus molestiae philosophia ex cum, omnium voluptua evertitur nec ea.     
+	       Ut has tota ullamcorper, vis at aeque omnium. Est sint purto at, verear inimicus at has. Ad sed dicat       
+	       iudicabit. Has ut eros tation theophrastus, et eam natum vocent detracto, purto impedit appellantur te	   
+	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
---exec sladb.dbo.sp_merge_ref_unit
 begin transaction;
 	with slas as(
 	select l.sla_code,
@@ -37,12 +39,12 @@ begin transaction;
 		   case when r.obj_commiss >= '2014-01-01' then cast(r.obj_commiss as date)
 				else cast('2014-01-01' as date)
 		   end as effective_from,
-		   coalesce(r.obj_withdraw, null) as effective_to
+		   cast(coalesce(r.obj_withdraw, '2019-06-30') as date) as effective_to
 	from (select *,
 				 case when obj_udfchar02 = 'NULL' then 'N'
 					  else obj_udfchar02
 				 end as sla_id
-		   from ipmdb.dbo.tbl_sla_export) as l
+		  from ipmdb.dbo.tbl_sla_export) as l
 	left join
 		 (select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
 				 obj_commiss,
@@ -55,7 +57,7 @@ begin transaction;
 	left join
 		 slas as r2
 	on l.sla_id = r2.sla_id
-	where l.obj_udfchar02 =  r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
+	where l.obj_udfchar02 !=  r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
 
 	insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
 		select obj_code as unit_id,
@@ -65,6 +67,6 @@ begin transaction;
 					else 0
 			   end as effective,
 			   effective_from,
-			   effective_to
+			   '2019-06-30' as effective_to
 		from historic;
 commit;
