@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management  																						   			          
  Created Date:  10/23/2019																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified Date: 10/24/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -16,18 +16,29 @@
 ***********************************************************************************************************************/
 use sladb
 go
-create procedure dbo.sp_insert_season(@season_desc nvarchar(128),
+/*create procedure dbo.sp_insert_season(@season_desc nvarchar(128),
 									  @year_round bit,
 									  @effective bit,
-									  @season_date_ref_fixed bit,
-									  @season_date_month_name_desc nvarchar(9),
-									  @season_date_ref_day_number int,
-									  @season_date_day_name_desc nvarchar(9),
-									  @season_day_rank_id nvarchar(5),
-									  @season_date_type_id int,
-									  @season_id int) as
+									  @date_ref_fixed bit,
+									  @month_name_desc nvarchar(9) null,
+									  @date_ref_day_number int null,
+									  @day_name_desc nvarchar(9) null,
+									  @day_rank_id nvarchar(5) null,
+									  @date_type_id int null) as*/
+
+alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
+									  @year_round bit,
+									  @effective bit,
+									  @date_ref_fixed bit,
+									  @month_name_desc nvarchar(9) = null,
+									  @date_ref_day_number int = null,
+									  @day_name_desc nvarchar(9) = null,
+									  @day_rank_id nvarchar(5) = null,
+									  @date_type_id int = null) as
 begin
 	begin transaction;
+		declare @season_id int;
+
 		/*Insert the values into the Season table*/
 		insert into sladb.dbo.tbl_sla_season(season_desc,
 											 year_round,
@@ -37,14 +48,17 @@ begin
 		/*Set the value of the season_id parameter equal to the last identity value inserted*/
 		set @season_id = @@identity;
 
+		if @date_ref_fixed = 0
+		
+		/*Insert values into the season defintion table.*/
 		insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, 
-															season_date_ref_fixed, 
-															season_date_month_name_desc, 
-															season_date_ref_day_number, 
-															season_date_day_name_desc, 
-															season_day_rank_id,
-															season_date_type_id)
+															date_ref_fixed, 
+															month_name_desc, 
+															date_ref_day_number, 
+															day_name_desc, 
+															day_rank_id,
+															date_type_id)
 
-			values(@season_id, @season_date_ref_fixed, @season_date_month_name_desc, @season_date_ref_day_number, @season_date_day_name_desc, @season_day_rank_id, @season_date_type_id);
+			values(@season_id, @date_ref_fixed, @month_name_desc, @date_ref_day_number, @day_name_desc, @day_rank_id, @date_type_id);
 	commit;
 end;

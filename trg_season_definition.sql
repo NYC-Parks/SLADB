@@ -51,8 +51,8 @@ after insert as
 				if @year_round = 1
 					begin
 						begin transaction
-							insert into tbl_ref_sla_season_definition(season_id, season_date_ref_fixed, season_date_month_name_desc, 
-																	  season_date_ref_day_number, season_date_type_id)
+							insert into tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, 
+																	  date_ref_day_number, date_type_id)
 								values(@season_id, cast(1 as bit), 'January', cast(1 as int), cast(1 as int)) /*Start Season value*/,
 									  (@season_id, cast(1 as bit), 'December', cast(31 as int), cast(2 as int))/*End Season value*/;
 						commit;

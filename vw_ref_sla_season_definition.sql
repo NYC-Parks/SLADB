@@ -19,23 +19,23 @@ go
 --drop view dbo.vw_ref_sla_season_definition
 create view dbo.vw_ref_sla_season_definition as
 
-	select row_number() over(order by l.season_id, l.season_date_type_id) as row_id,
+	select row_number() over(order by l.season_id, l.date_type_id) as row_id,
 		   l.season_date_ref_id, 
 		   l.season_id, 
-		   l.season_date_ref_fixed, 
-		   l.season_date_month_name_desc, 
-		   l.season_date_ref_day_number, 
-		   l.season_date_day_name_desc, 
-		   l.season_day_rank_id,
-		   l.season_date_type_id,
+		   l.date_ref_fixed, 
+		   l.month_name_desc, 
+		   l.date_ref_day_number, 
+		   l.day_name_desc, 
+		   l.day_rank_id,
+		   l.date_type_id,
 		   r.year_round,
-		   r2.season_date_category_id
+		   r2.date_category_id
 	from sladb.dbo.tbl_ref_sla_season_definition as l
 	inner join
 		sladb.dbo.tbl_sla_season as r
 	on l.season_id = r.season_id
 	left join
 		sladb.dbo.tbl_ref_sla_season_date_type as r2
-	on l.season_date_type_id = r2.season_date_type_id
+	on l.date_type_id = r2.date_type_id
 	/*Exclude Seasons that are no longer active.*/
 	where r.effective = 1;

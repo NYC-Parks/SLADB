@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																					   			          
  Created Date:  08/30/2019																							   
- Modified Date: 10/23/2019																							   
+ Modified Date: 10/24/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -19,7 +19,7 @@
 ***********************************************************************************************************************/
 use sladb
 go
---truncate table sladb.dbo.tbl_sla_season_date
+
 --create procedure dbo.sp_season_dates @year int = null as
 alter procedure dbo.sp_season_dates @year int = null as
 begin
@@ -40,30 +40,32 @@ begin
 									effective_from_adj date,
 									effective_to date,
 									effective_to_adj date,
-									season_category_id int);
+									date_category_id int);
 
 	declare @off_dates_ref table (season_id int,
-							      actual_date date,
-							      adjusted_date date,
+							      ref_date date,
+							      saturday_ref_date date,
+							      sunday_ref_date date,
 							      date_row int,
-							      season_date_type_id int,
-							      season_date_category_id int);
+							      date_type_id int,
+							      date_category_id int);
 
 	declare @seasonids table(season_id int,
 							 row_id int identity(1,1));
 	
 	/*Create a table variable that will hold the transformed date values.*/
 	declare @dates_ref table (season_id int,
-							  actual_date date,
-							  adjusted_date date,
+							  ref_date date,
+							  saturday_ref_date date,
+							  sunday_ref_date date,
 							  date_row int,
-							  season_date_type_id int,
-							  season_date_category_id int);
+							  date_type_id int,
+							  date_category_id int);
 	
 	declare @offseason table(season_id int,
 							 ref_date date,
-							 season_date_type_id int,
-							 season_date_category_id int,
+							 date_type_id int,
+							 date_category_id int,
 							 date_row int);
 
 	insert into @seasonids(season_id)
@@ -82,7 +84,7 @@ begin
 			set @season_id = (select season_id from @seasonids where row_id = @i);
 
 			/*Select the fixed value from table variable where the id is equal to i*/
-			set @fixed = (select distinct(season_date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
+			set @fixed = (select distinct(date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
 			set @year1_round = (select distinct(year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
 
 			/*Delete all records from the holding table variable.*/
@@ -98,24 +100,29 @@ begin
 			
 			/*This section calculates the dates when seasons are composed of fixed dates (example: April 1st).*/
 			fixed:
-				insert into @tbl_season_dates
+				insert into @tbl_season_dates(season_id,
+											  effective_from,
+											  effective_from_adj,
+											  effective_to,
+											  effective_to_adj,
+											  date_category_id)
 					select l.season_id,
-						   l.actual_date as effective_from,
-						   l.adjusted_date as effective_from_adj,
-						   r.actual_date as effective_to,
-						   r.adjusted_date as effective_to_adj,
-						   l.season_date_category_id
+						   l.ref_date as effective_from,
+						   l.sunday_ref_date as effective_from_adj,
+						   r.ref_date as effective_to,
+						   r.saturday_ref_date as effective_from_adj,
+						   l.date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_fixed
 						  where season_id = @season_id and
-								season_date_type_id = 1 and
-								year(actual_date) = @year1) as l
+								date_type_id = 1 and
+								year(ref_date) = @year1) as l
 					full outer join
 							(select * 
 							 from sladb.dbo.vw_date_ref_fixed
 							 where season_id = @season_id and
-								   season_date_type_id = 2 and
-								   year(actual_date) = @year1) as r
+								   date_type_id = 2 and
+								   year(ref_date) = @year1) as r
 					on l.season_id = r.season_id and
 					   l.date_row = r.date_row;	
 					
@@ -128,24 +135,29 @@ begin
 
 			/*This sections calculates the dates when seasons are composed of non-fixed dates (example Last Tuesday of February).*/
 			notfixed:
-				insert into @tbl_season_dates
+				insert into @tbl_season_dates(season_id,
+											  effective_from,
+											  effective_from_adj,
+											  effective_to,
+											  effective_to_adj,
+											  date_category_id)
 					select l.season_id,
-							l.actual_date as effective_from,
-							l.adjusted_date as effective_from_adj,
-							r.actual_date as effective_to,
-							r.adjusted_date as effective_to_adj,
-							l.season_date_category_id
+							l.ref_date as effective_from,
+							l.sunday_ref_date as effective_from_adj,
+							r.ref_date as effective_to,
+							r.saturday_ref_date as effective_from_adj,
+							l.date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_notfixed
 						  where season_id = @season_id and
-								season_date_type_id = 1 and
-								year(actual_date) = @year1) as l
+								date_type_id = 1 and
+								year(ref_date) = @year1) as l
 					full outer join
 							(select * 
 							 from sladb.dbo.vw_date_ref_notfixed
 							 where season_id = @season_id and
-								   season_date_type_id = 2 and
-								   year(actual_date) = @year1) as r
+								   date_type_id = 2 and
+								   year(ref_date) = @year1) as r
 					on l.season_id = r.season_id and
 						l.date_row = r.date_row;
 					
@@ -213,14 +225,14 @@ begin
 						begin;
 							insert into @offseason(season_id,
 												   ref_date,
-												   season_date_type_id,
-												   season_date_category_id,
+												   date_type_id,
+												   date_category_id,
 												   date_row)
 								values(@season_id, @offs_start1, 3, 2, 1),
 									  (@season_id, @offs_end1, 4, 2, 1),
 									  (@season_id, @offs_start2, 3, 2, 2),
 									  (@season_id, @offs_end2, 4, 2, 2)
-								select * from @offseason
+								--select * from @offseason
 								goto offseasondates;
 						end;
 
@@ -228,53 +240,55 @@ begin
 						begin
 							insert into @offseason(season_id,
 											       ref_date,
-											       season_date_type_id,
-											       season_date_category_id,
+											       date_type_id,
+											       date_category_id,
 											       date_row)
 								values(@season_id, @offs_start1, 3, 2, 1),
 									  (@season_id, @offs_end1, 4, 2, 1);
 
 							goto offseasondates;
 
-						end;
+						end; 
 
 				offseasondates:	
 
 					insert into @off_dates_ref(season_id,
-											   actual_date,
-											   adjusted_date,
+											   ref_date,
+											   saturday_ref_date,
+											   sunday_ref_date,
 											   date_row,
-											   season_date_type_id,
-											   season_date_category_id)
+											   date_type_id,
+											   date_category_id)
 						select l.season_id,
-								l.ref_date as actual_date,
-								r.adjusted_date as adjusted_date,
+								l.ref_date as ref_date,
+								r.saturday_ref_date,
+								r.sunday_ref_date,
 								l.date_row,
-								l.season_date_type_id,
-								l.season_date_category_id
+								l.date_type_id,
+								l.date_category_id
 						from @offseason as l
 						left join
 								sladb.dbo.vw_season_dates_adjusted as r
-						on l.ref_date = r.actual_date
+						on l.ref_date = r.ref_date
 
 					insert into @tbl_season_dates
 						select l.season_id,
-								l.actual_date as effective_from,
-								l.adjusted_date as effective_from_adj,
-								r.actual_date as effective_to,
-								r.adjusted_date as effective_to_adj,
-								l.season_date_category_id
+								l.ref_date as effective_from,
+								l.sunday_ref_date as effective_from_adj,
+								r.ref_date as effective_to,
+								r.saturday_ref_date as effective_from_adj,
+								l.date_category_id
 						from (select * 
 							  from @off_dates_ref
 							  where season_id = @season_id and
-									season_date_type_id = 3 and
-									year(actual_date) = @year1) as l
+									date_type_id = 3 and
+									year(ref_date) = @year1) as l
 						full outer join
 								(select * 
 								 from @off_dates_ref
 								 where season_id = @season_id and
-									   season_date_type_id = 4 and
-									   year(actual_date) = @year1) as r
+									   date_type_id = 4 and
+									   year(ref_date) = @year1) as r
 						on l.season_id = r.season_id and
 						   l.date_row = r.date_row;
 						
@@ -283,16 +297,16 @@ begin
 			tableinsert:
 			/*Insert the date values into the season date table.*/
 			begin transaction 
-				insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, season_category_id)
+				insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
 					select season_id, 
 						   effective_from, 
 						   effective_from_adj, 
 						   effective_to, 
 						   effective_to_adj, 
-						   season_category_id
+						   date_category_id
 					from @tbl_season_dates
-					/*Add a filter to only insert dates where the starting date is 1 day less than today.*/
-					where effective_from = dateadd(d, -1, cast(getdate() as date))
+					/*Add a filter to only insert dates where the starting date is 1 day less than today.
+					where effective_from = dateadd(d, -1, cast(getdate() as date))*/
 			commit;
 
 			set @i = @i + 1;

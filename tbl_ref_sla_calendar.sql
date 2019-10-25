@@ -26,8 +26,8 @@ create table sladb.dbo.tbl_ref_sla_calendar(sla_calndr_id int identity(1,1) prim
 											sla_calndr_start_adj date,
 											sla_calndr_end_adj date); 
 
-insert into sladb.dbo.tbl_ref_sla_season(sla_season, sla_calndr_month, sla_calndr_day)
+/*insert into sladb.dbo.tbl_ref_sla_season(sla_season, sla_calndr_month, sla_calndr_day)
 	values(1, '2019-05-15', '2019-10-31'),
 		  (2, '2019-03-15', '2019-11-30'),
 		  (3, '2019-04-15', '2019-08-15'),
-		  (4, '2019-01-01', '2019-12-31');
+		  (4, '2019-01-01', '2019-12-31');*/

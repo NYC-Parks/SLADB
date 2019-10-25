@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
+ Created Date:  09/06/2019																							   
+ Modified Date: 10/24/2019																						   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB																								   
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,11 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_num int not null unique,
-													 season_month_name_desc nvarchar(9) primary key);
+create table sladb.dbo.tbl_ref_sla_season_month_name(month_name_num int not null unique,
+													 month_name_desc nvarchar(9) primary key);
 
 begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_num, season_month_name_desc)
+	insert into sladb.dbo.tbl_ref_sla_season_month_name(month_name_num, month_name_desc)
 		values(1, 'January'),
 			  (2, 'February'),
 			  (3, 'March'),

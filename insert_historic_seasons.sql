@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  09/12/2019																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -17,19 +17,37 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
-go
---drop view dbo.vw_season_dates_adjusted
-create view dbo.vw_season_dates_adjusted as
-	select l.ref_date,
-		   sladb.dbo.fn_getdate(l.ref_date, 0) as saturday_ref_date,
-		   sladb.dbo.fn_getdate(l.ref_date, 1)  as sunday_ref_date,
-		   l.month_name_desc,
-		   l.day_name_desc,
-		   datepart(day, ref_date) as date_ref_day_number,
-		   l.day_rank_id,
-		   year(ref_date) as ref_year
-	from sladb.dbo.tbl_ref_calendar as l
-	left join
-		 sladb.dbo.tbl_ref_sla_season_day_name as r
-	on l.day_name_desc = r.day_name_desc;
+exec sladb.dbo.sp_insert_tbl_ref_calendar
+
+exec sladb.dbo.sp_insert_season @season_desc = 'Year-round, not seasonal',
+								@year_round = 1,
+								@effective = 1,
+								@date_ref_fixed = 1;
+
+exec sladb.dbo.sp_season_dates @year = 2014
+exec sladb.dbo.sp_season_dates @year = 2015
+exec sladb.dbo.sp_season_dates @year = 2016
+exec sladb.dbo.sp_season_dates @year = 2017
+exec sladb.dbo.sp_season_dates @year = 2018
+exec sladb.dbo.sp_season_dates @year = 2019
+
+exec sladb.dbo.sp_insert_season @season_desc = 'Beaches, etc.',
+								@year_round = 0,
+								@effective = 1,
+								@date_ref_fixed = 1,
+								@month_name_desc = 'May',
+								@date_ref_day_number = 1;								;
+
+exec sladb.dbo.sp_insert_season @season_desc = 'Ballfields, etc.',
+								@year_round = 1,
+								@effective = 1,
+								@date_ref_fixed = 1;
+
+truncate table sladb.dbo.tbl_sla_season_date;
+
+exec sladb.dbo.sp_season_dates @year = 2014
+exec sladb.dbo.sp_season_dates @year = 2015
+exec sladb.dbo.sp_season_dates @year = 2016
+exec sladb.dbo.sp_season_dates @year = 2017
+exec sladb.dbo.sp_season_dates @year = 2018
+exec sladb.dbo.sp_season_dates @year = 2019

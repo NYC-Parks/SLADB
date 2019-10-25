@@ -3,9 +3,9 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																					   			          
  Created Date:  10/11/2019																							   
- Modified Date: 10/15/2019																								   
+ Modified Date: 10/24/2019																								   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
  Tables Used: sladb.dbo.tbl_ref_calendar																						   
  			  sladb.dbo.tbl_ref_sla_season_day_name																							   		
@@ -27,7 +27,7 @@ create function dbo.fn_getdate(@date date, @start bit)
 					     from sladb.dbo.tbl_ref_calendar as l
 					     left join
 					   		  sladb.dbo.tbl_ref_sla_season_day_name as r
-					     on l.day_name = r.season_day_name_desc
+					     on l.day_name_desc = r.day_name_desc
 					     where ref_date = @date);
 
 	if @start = 0
@@ -35,7 +35,7 @@ create function dbo.fn_getdate(@date date, @start bit)
 					     from sladb.dbo.tbl_ref_calendar as l
 					     left join
 					   		  sladb.dbo.tbl_ref_sla_season_day_name as r
-					     on l.day_name = r.season_day_name_desc
+					     on l.day_name_desc = r.day_name_desc
 					     where ref_date = @date);
 	return @adj_date;
 	end;

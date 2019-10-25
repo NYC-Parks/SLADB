@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
+ Created Date:  09/06/2019																							   
+ Modified Date: 10/24/2019																						   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -20,12 +20,12 @@
 --drop table sladb.dbo.tbl_ref_sla_season_definition
 create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int identity(1,1) primary key,
 													 season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
-													 season_date_ref_fixed bit not null,
-													 season_date_month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(season_month_name_desc),
-													 season_date_ref_day_number int null,
-													 season_date_day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(season_day_name_desc),
-													 season_day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(season_day_rank_id),
-													 season_date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id));
+													 date_ref_fixed bit not null,
+													 month_name_desc nvarchar(9) not null foreign key references sladb.dbo.tbl_ref_sla_season_month_name(month_name_desc),
+													 date_ref_day_number int null,
+													 day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(day_name_desc),
+													 day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id),
+													 date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(date_type_id));
 
 
 /*insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)

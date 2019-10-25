@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
+ Created Date:  09/06/2019																							   
+ Modified Date: 10/24/2019																							   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -18,11 +18,11 @@
 																													   												
 ***********************************************************************************************************************/
 --drop table sladb.dbo.tbl_ref_sla_season_date_type
-create table sladb.dbo.tbl_ref_sla_season_date_type(season_date_type_id int identity(1,1) primary key,
-													season_date_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(season_category_id),
-												    season_date_type_desc nvarchar(30));
+create table sladb.dbo.tbl_ref_sla_season_date_type(date_type_id int identity(1,1) primary key,
+													date_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(date_category_id),
+												    date_type_desc nvarchar(30));
 
-insert into sladb.dbo.tbl_ref_sla_season_date_type(season_date_category_id, season_date_type_desc)
+insert into sladb.dbo.tbl_ref_sla_season_date_type(date_category_id, date_type_desc)
 	values(1, 'Season Start'),
 		  (1, 'Season End'),
 		  (2, 'Offseason Start'),

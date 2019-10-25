@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/30/2019																							   
- Modified Date: 10/23/2019																							   
+ Modified Date: 10/24/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -35,7 +35,7 @@ on l.season_id = r.season_id and
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
-   r.season_category_id = r2.season_category_id)
+   r.date_category_id = r2.date_category_id)
 --where effective_to is not null
 
 
