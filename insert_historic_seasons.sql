@@ -73,5 +73,3 @@ begin transaction
 	where season_date_id in(7,10);
 commit;
 
-select *
-from  sladb.dbo.tbl_sla_season_date

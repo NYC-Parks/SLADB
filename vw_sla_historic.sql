@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/30/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified Date: 10/28/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -21,7 +21,7 @@ create view dbo.vw_sla_historic as(
 select l.unit_id,
 	   effective_from_adj as effective_from_adj, 
 	   coalesce(l.effective_to, r.effective_to_adj) as effective_to_adj,
-	   r2.sla_code
+	   r2.sla_id
 from sladb.dbo.tbl_unit_sla_season as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
