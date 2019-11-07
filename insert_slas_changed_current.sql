@@ -40,10 +40,12 @@ begin transaction;
 				else cast('2019-07-01' as date)
 		   end as effective_from,
 		   cast(coalesce(r.obj_withdraw, null) as date) as effective_to
+	/*Historic SLAs and Seasons snapshot*/
 	from (select *,
 				 obj_udfchar02 as sla_id
 		  from ipmdb.dbo.tbl_sla_export) as l
 	left join
+	/*Current SLAs and Seasons*/
 		 (select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
 				 obj_commiss,
 				 obj_withdraw,
@@ -52,9 +54,11 @@ begin transaction;
 	on l.obj_code = r.obj_code collate SQL_Latin1_General_CP1_CI_AS
 	left join
 		 slas as r2
+	/*Join the SLA translation to the current SLAs in AMPS*/
 	on r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS = r2.sla_id
-	where l.obj_udfchar02 !=  r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
-	select * from historic
+	where l.obj_udfchar02 != r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS or
+		  /*Include records where the SLA used to be null, but now is not null.*/
+		  l.obj_udfchar02 is null and r.obj_udfchar02 is not null)
 
 	insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
 		select obj_code as unit_id,
