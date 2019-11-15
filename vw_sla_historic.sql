@@ -19,8 +19,10 @@ go
 
 create view dbo.vw_sla_historic as(
 select l.unit_id,
-	   effective_from_adj as effective_from_adj, 
-	   coalesce(l.effective_to, r.effective_to_adj) as effective_to_adj,
+	   coalesce(r.effective_from_adj, l.effective_from) as effective_from_adj, 
+	   case when coalesce(l.effective_to, r.effective_to_adj)  >= cast(getdate() as date) then cast(getdate() as date)
+			else coalesce(l.effective_to, r.effective_to_adj) 
+	   end as effective_to_adj,
 	   r2.sla_id
 from sladb.dbo.tbl_unit_sla_season as l
 left join
@@ -35,8 +37,9 @@ on l.season_id = r.season_id and
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
-   r.date_category_id = r2.date_category_id)
---where effective_to is not null
-
+   r.date_category_id = r2.date_category_id
+where effective_to_adj <= cast(getdate() as date) or
+	  l.effective_to is null
+order by unit_id)
 
 

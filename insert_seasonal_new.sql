@@ -94,7 +94,7 @@ declare @unit_id nvarchar(30),
 			   sla_code,
 			   justification
 		from seasons_final
-	select * from #seasons_final
+
 	set @i = 1;
 	set @n = (select count(*) from #seasons_final);
 
@@ -121,3 +121,4 @@ begin transaction
 		   '0000000' status_user
 	from sladb.dbo.tbl_change_request_status;
 commit;
+
