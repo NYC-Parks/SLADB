@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																						   			          
  Created Date:  09/26/2019																							   
- Modified Date: 10/22/2019																							   
+ Modified Date: 11/20/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -23,5 +23,7 @@ create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) prima
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
 										   effective bit not null,
 										   effective_from date not null,
-										   effective_to date);
+										   effective_to date
+										   /*Create a unique constraint to prevent duplicate entries for the same unit, sla, season and effective from date this table*/
+										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_from));
 
