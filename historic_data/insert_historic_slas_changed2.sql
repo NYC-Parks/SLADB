@@ -56,7 +56,7 @@ begin transaction;
 	where l.obj_udfchar02 !=  r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
 	select * from historic
 
-	insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
+	--insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
 		select obj_code as unit_id,
 			   sla_code,
 			   1 as season_id,

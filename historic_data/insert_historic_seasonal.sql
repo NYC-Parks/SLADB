@@ -53,12 +53,12 @@ begin transaction;
 		on l.sla_code = r.sla_code
 		where l.sla_id = r.sla_id)
 
-	/*insert into sladb.dbo.tbl_unit_sla_season(unit_id,
+	insert into sladb.dbo.tbl_unit_sla_season(unit_id,
 											  season_id,
 											  sla_code,
 											  effective,
 											  effective_from,
-											  effective_to)*/
+											  effective_to)
 		select l.unit_id,
 			   1 as season_id,
 			   r.sla_code,
