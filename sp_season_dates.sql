@@ -86,7 +86,8 @@ begin
 			/*Select the fixed value from table variable where the id is equal to i*/
 			set @fixed = (select distinct(date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
 			set @year1_round = (select distinct(year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
-
+			print @fixed
+			print @year1_round
 			/*Delete all records from the holding table variable.*/
 			delete from @tbl_season_dates;
 			delete from @offseason;
@@ -100,6 +101,7 @@ begin
 			
 			/*This section calculates the dates when seasons are composed of fixed dates (example: April 1st).*/
 			fixed:
+				print 'Fixed SLA section';
 				insert into @tbl_season_dates(season_id,
 											  effective_from,
 											  effective_from_adj,
@@ -128,13 +130,14 @@ begin
 					
 					/*If the season is year round, that is from 1/1 to 12/31 then insert the records into the season date table.*/
 					if @year1_round = 1
-						goto tableinsert;
+						goto tableupdate;
 
 					if @year1_round = 0
 						goto notyearround;
 
 			/*This sections calculates the dates when seasons are composed of non-fixed dates (example Last Tuesday of February).*/
 			notfixed:
+				print 'Not fixed SLA section';
 				insert into @tbl_season_dates(season_id,
 											  effective_from,
 											  effective_from_adj,
@@ -252,7 +255,7 @@ begin
 						end; 
 
 				offseasondates:	
-
+					print 'Offseason dates labelled section';
 					insert into @off_dates_ref(season_id,
 											   ref_date,
 											   saturday_ref_date,
@@ -293,38 +296,44 @@ begin
 						on l.season_id = r.season_id and
 						   l.date_row = r.date_row;
 						
-						goto tableinsert
+						goto tableinsert;
 
 			tableupdate:
-			/*Insert the date values into the season date table.*/
-			begin transaction 
-				update sladb.dbo.tbl_sla_season_date
-					set season_id = u.season_id, 
-						effective_from = u.effective_from, 
-						effective_from_adj = u.effective_from_adj, 
-						effective_to = u.effective_to, 
-						effective_to_adj = u.effective_to_adj, 
-						date_category_id = u.date_category_id
-					from @tbl_season_dates as u
-					/*Add a filter to only insert dates where the starting date is 1 day less than today.
-					where effective_from = dateadd(d, -1, cast(getdate() as date))*/
-			commit;
+				print 'Doing table update'
+				print @year1_round 
+				print @fixed
+				/*Insert the date values into the season date table.*/
+				begin transaction 
+					update sladb.dbo.tbl_sla_season_date
+						set effective_to = u.effective_to, 
+							effective_to_adj = u.effective_to_adj
+						from @tbl_season_dates as u
+						where sladb.dbo.tbl_sla_season_date.season_id = u.season_id;
+						/*Add a filter to only insert dates where the starting date is 1 day less than today.
+						where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+				commit;
+				goto next_iter
 			
 			tableinsert:
-			/*Insert the date values into the season date table.*/
-			begin transaction 
-				insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
-					select season_id, 
-						   effective_from, 
-						   effective_from_adj, 
-						   effective_to, 
-						   effective_to_adj, 
-						   date_category_id
-					from @tbl_season_dates
-					/*Add a filter to only insert dates where the starting date is 1 day less than today.
-					where effective_from = dateadd(d, -1, cast(getdate() as date))*/
-			commit;
+				print 'Doing table insert'
+				print @year1_round 
+				print @fixed
+				/*Insert the date values into the season date table.*/
+				begin transaction 
+					insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
+						select season_id, 
+							   effective_from, 
+							   effective_from_adj, 
+							   effective_to, 
+							   effective_to_adj, 
+							   date_category_id
+						from @tbl_season_dates;
+						/*Add a filter to only insert dates where the starting date is 1 day less than today.
+						where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+				commit;
+				goto next_iter
 
+			next_iter:
 			set @i = @i + 1;
 		end;
 end;
