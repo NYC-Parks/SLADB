@@ -86,8 +86,7 @@ begin
 			/*Select the fixed value from table variable where the id is equal to i*/
 			set @fixed = (select distinct(date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
 			set @year1_round = (select distinct(year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
-			print @fixed
-			print @year1_round
+
 			/*Delete all records from the holding table variable.*/
 			delete from @tbl_season_dates;
 			delete from @offseason;
@@ -299,27 +298,29 @@ begin
 						goto tableinsert;
 
 			tableupdate:
-				print 'Doing table update'
-				print @year1_round 
-				print @fixed
-				/*Insert the date values into the season date table.*/
-				begin transaction 
-					update sladb.dbo.tbl_sla_season_date
-						set effective_to = u.effective_to, 
-							effective_to_adj = u.effective_to_adj
-						from @tbl_season_dates as u
-						where sladb.dbo.tbl_sla_season_date.season_id = u.season_id;
-						/*Add a filter to only insert dates where the starting date is 1 day less than today.
-						where effective_from = dateadd(d, -1, cast(getdate() as date))*/
-				commit;
-				goto next_iter
+				if exists(select distinct season_id from sladb.dbo.tbl_sla_season_date where season_id = @season_id)
+					begin
+						print 'Doing table update';
+						/*Insert the date values into the season date table.*/
+						begin transaction;
+							update sladb.dbo.tbl_sla_season_date
+								set effective_to = u.effective_to, 
+									effective_to_adj = u.effective_to_adj
+								from @tbl_season_dates as u
+								where sladb.dbo.tbl_sla_season_date.season_id = u.season_id;
+								/*Add a filter to only insert dates where the starting date is 1 day less than today.
+								where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+						commit;
+						goto next_iter;
+					end;
+
+				else
+					goto tableinsert;
 			
 			tableinsert:
-				print 'Doing table insert'
-				print @year1_round 
-				print @fixed
+				print 'Doing table insert';
 				/*Insert the date values into the season date table.*/
-				begin transaction 
+				begin transaction; 
 					insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
 						select season_id, 
 							   effective_from, 
@@ -331,9 +332,9 @@ begin
 						/*Add a filter to only insert dates where the starting date is 1 day less than today.
 						where effective_from = dateadd(d, -1, cast(getdate() as date))*/
 				commit;
-				goto next_iter
+				goto next_iter;
 
-			next_iter:
-			set @i = @i + 1;
+		next_iter:
+		set @i = @i + 1;
 		end;
 end;

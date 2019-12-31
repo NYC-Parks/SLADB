@@ -32,13 +32,12 @@ on l.season_id = r.season_id and
      l.effective_to between r.effective_from and r.effective_to) or
     (l.effective_to is null and 
 	 l.effective_from <= r.effective_to) or
-    (l.effective_to >= r.effective_from and 
-	 l.effective_to > r.effective_to))
+    (l.effective_to between r.effective_from and r.effective_to))
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
    r.date_category_id = r2.date_category_id
-where effective_to_adj <= cast(getdate() as date) or
-	  l.effective_to is null)
+/*where effective_to_adj <= cast(getdate() as date) or
+	  l.effective_to is null*/)
 
 

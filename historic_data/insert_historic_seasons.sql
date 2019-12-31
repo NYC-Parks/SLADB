@@ -49,6 +49,7 @@ begin transaction
 		values('Ballfields, etc.', 0, 1);
 commit;
 
+begin transaction
 insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
 	values(3, 1, 'March', 1, 1),
 			(3, 1, 'October', 31, 2);
@@ -70,6 +71,12 @@ begin transaction
 	update sladb.dbo.tbl_sla_season_date
 		set effective_from = '2019-07-01',
 			effective_from_adj = sladb.dbo.fn_getdate('2019-07-01', 1)
-	where season_date_id in(7,10);
+	where season_date_id in(2, 5);
 commit;
 
+/*begin transaction
+	update sladb.dbo.tbl_sla_season_date
+		set effective_from = '2019-11-01',
+			effective_from_adj = sladb.dbo.fn_getdate('2019-11-01', 1)
+	where season_date_id in(7);
+commit;*/
