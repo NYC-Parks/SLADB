@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  10/30/2019																							   
- Modified Date: 11/22/2019																						   
+ Modified Date: 12/27/2019																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -92,22 +92,26 @@ insert into #seasons_final(unit_id,
 			sla_code,
 			justification
 	from seasons_final
-
-set @i = 1;
-set @n = (select count(*) from #seasons_final);
+	/*Set the starting value of the iterator equal to 1 as to begin with the first row of data.*/
+	set @i = 1;
+	/*Set the ending value of the iterator equal to the total number of rows of data.*/
+	set @n = (select count(*) from #seasons_final);
 
 
 	while @i <= @n
 		begin
+			/*Set the insert values equal to the values of the corresponding row (i).*/
 			set @unit_id = (select unit_id from #seasons_final where row_id = @i);
 			set @sla_code = (select sla_code from #seasons_final where row_id = @i);
 			set @season_id = (select season_id from #seasons_final where row_id = @i);
 			set @change_request_justification = (select change_request_justification from #seasons_final where row_id = @i);
 
+			/*Insert the change request justifications.*/
 			exec sladb.dbo.sp_insert_change_request @unit_id = @unit_id,
 													@sla_code = @sla_code,
 													@season_id = @season_id,
 													@change_request_justification = @change_request_justification;
+			/*Add one to set the iterator equal to the next value.*/
 			set @i = @i + 1;
 		end;
 
@@ -116,7 +120,7 @@ begin transaction
 	select change_request_id,
 		   2 as sla_change_status,
 		   '2019-10-28' as status_date,
-		   '0000000' status_user
+		   '1549482' status_user
 	from sladb.dbo.tbl_change_request_status;
 commit;
 

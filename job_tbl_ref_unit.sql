@@ -24,14 +24,14 @@ exec dbo.sp_delete_job
 	--@job_id = '4D44FECB-7EFB-4B3C-9480-BF7E5CD5EB0D'
 go */
 
-use msdb ;  
+/*use msdb ;  
 go  
 exec dbo.sp_add_schedule  
     @schedule_name = N'Once_Daily_0820',  
     @freq_type = 4,  
 	@freq_interval = 1,
     @active_start_time = 082000 ;  
-go
+go*/
 
 use msdb ;  
 go  

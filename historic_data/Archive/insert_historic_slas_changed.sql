@@ -12,11 +12,9 @@
  			  [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
 			  sladb.dbo.tbl_unit_sla_season
 			  																				   
- Description: Create a script to insert the updated SLA and Season values for units that changed when SLAs and Seasons 
-			  were reviewed and updated.
+ Description: Create a script to insert SLA and Season values for units that haven't changed since 1/1/2014.									   
 																													   												
 ***********************************************************************************************************************/
-
 begin transaction;
 	with slas as(
 	select l.sla_code,
@@ -36,27 +34,28 @@ begin transaction;
 	,historic as(
 	select l.obj_code, 
 		   r2.sla_code,
-		   case when r.obj_commiss >= '2019-07-01' then cast(r.obj_commiss as date)
-				else cast('2019-07-01' as date)
+		   case when r.obj_commiss >= '2014-01-01' then cast(r.obj_commiss as date)
+				else cast('2014-01-01' as date)
 		   end as effective_from,
 		   cast(coalesce(r.obj_withdraw, null) as date) as effective_to
 	from (select *,
 				 obj_udfchar02 as sla_id
-		  from ipmdb.dbo.tbl_sla_export) as l
+		  from ipmdb.dbo.tbl_sla_export
+		  where obj_udfchar02 is not null and obj_udfchar02 != 'NULL') as l
 	left join
 		 (select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
 				 obj_commiss,
 				 obj_withdraw,
 				 obj_udfchar02
-		  from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects) as r
+		  from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
+		  where obj_udfchar02 is not null) as r
 	on l.obj_code = r.obj_code collate SQL_Latin1_General_CP1_CI_AS
 	left join
 		 slas as r2
-	on r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS = r2.sla_id
-	where l.obj_udfchar02 !=  r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
-	select * from historic
+	on l.sla_id = r2.sla_id
+	where l.obj_udfchar02 = r.obj_udfchar02 collate SQL_Latin1_General_CP1_CI_AS)
 
-	insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
+	--insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_from, effective_to)
 		select obj_code as unit_id,
 			   sla_code,
 			   1 as season_id,

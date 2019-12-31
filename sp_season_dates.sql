@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																					   			          
  Created Date:  08/30/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified Date: 12/31/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -20,7 +20,7 @@
 use sladb
 go
 
-create procedure dbo.sp_season_dates @year int = null as
+create or alter procedure dbo.sp_season_dates @year int = null as
 --alter procedure dbo.sp_season_dates @year int = null as
 begin
 
@@ -163,7 +163,8 @@ begin
 					
 					/*If the season is year round, that is from 1/1 to 12/31 then insert the records into the season date table.*/
 					if @year1_round = 1
-						goto tableinsert;
+						--goto tableinsert;
+						goto tableupdate;
 
 					if @year1_round = 0
 						goto notyearround;		
@@ -293,6 +294,21 @@ begin
 						   l.date_row = r.date_row;
 						
 						goto tableinsert
+
+			tableupdate:
+			/*Insert the date values into the season date table.*/
+			begin transaction 
+				update sladb.dbo.tbl_sla_season_date
+					set season_id = u.season_id, 
+						effective_from = u.effective_from, 
+						effective_from_adj = u.effective_from_adj, 
+						effective_to = u.effective_to, 
+						effective_to_adj = u.effective_to_adj, 
+						date_category_id = u.date_category_id
+					from @tbl_season_dates as u
+					/*Add a filter to only insert dates where the starting date is 1 day less than today.
+					where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+			commit;
 			
 			tableinsert:
 			/*Insert the date values into the season date table.*/

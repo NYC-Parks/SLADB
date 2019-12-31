@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
  Created Date:  10/22/2019																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified Date: 12/27/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -15,11 +15,17 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla_code(sla_code int primary key)
+create table sladb.dbo.tbl_ref_sla_code(sla_code int primary key);
+
 
 insert into sladb.dbo.tbl_ref_sla_code(sla_code)
-	select distinct sla_code
-	from sladb.dbo.tbl_ref_sla_translation
+	select row_number() over(order by l.sla_id)
+	from sladb.dbo.tbl_ref_sla as l
+	cross join
+		 sladb.dbo.tbl_ref_sla as r
+
+
+
 /*select l.sla_code,
 	   l.sla_id,
 	   r.sla_id

@@ -32,7 +32,7 @@ begin transaction;
 
 	
 		,seasonal_historic as(
-		select *
+		select l.*, r.obj_udfchar02
 		from seasonal as l
 		left join
 			 ipmdb.dbo.tbl_sla_export as r
