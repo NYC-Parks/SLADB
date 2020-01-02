@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  10/30/2019																							   
- Modified Date: 12/27/2019																						   
+ Modified Date: 01/01/2020																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -119,7 +119,7 @@ begin transaction
 	insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_date, status_user)
 	select change_request_id,
 		   2 as sla_change_status,
-		   '2019-10-28' as status_date,
+		   '2019-07-01' as status_date,
 		   '1549482' status_user
 	from sladb.dbo.tbl_change_request_status;
 commit;

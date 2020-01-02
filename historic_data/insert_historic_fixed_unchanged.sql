@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  10/25/2019																   
- Modified Date: 12/27/2019																							   
+ Modified Date: 01/01/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -77,6 +77,6 @@ begin transaction;
 		inner join
 			 sladb.dbo.tbl_ref_unit as r4
 		on l.obj_code = r4.unit_id
-		where (r3.sla_code = r.sla_code or
-			   r.sla_code is null and r3.sla_code is null)
+		where ((r3.sla_code = r.sla_code) or
+			   (r.sla_code is null and r3.sla_code is null))
 commit;
