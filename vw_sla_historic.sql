@@ -36,11 +36,23 @@ where cast(unit_withdraw as date) >= '2014-01-01' or
 	  unit_withdraw is null)
 
 select top 100 percent l.unit_id,
-	   coalesce(r.effective_from_adj, l.effective_from) as effective_from_adj, 
+	   case when l.effective_to is null and dbo.fn_getdate(l.effective_from, 1) between r.effective_from_adj and effective_to_adj then dbo.fn_getdate(l.effective_from, 1)
+			--when l.effective_to is null and r.effective_from >= dbo.fn_getdate(l.effective_from, 1) then r.effective_from_adj	
+			else r.effective_from_adj--coalesce(dbo.fn_getdate(l.effective_from, 1), r.effective_from_adj)
+	   end as effective_from_adj,
+	   /*case when l.effective_to is null and dbo.fn_getdate(l.effective_from, 1) < r.effective_from then dbo.fn_getdate(l.effective_from, 1)
+			when l.effective_to is null and r.effective_from >= dbo.fn_getdate(l.effective_from, 1) then r.effective_from_adj	
+			else r.effective_from_adj--coalesce(dbo.fn_getdate(l.effective_from, 1), r.effective_from_adj)
+	   end as effective_from_adj,
+	   case when dbo.fn_getdate(l.effective_from, 1) <= r.effective_from_adj then dbo.fn_getdate(l.effective_from, 1)
+				 else r.effective_from_adj --coalesce(l.effective_from, r.effective_from_adj) as effective_from_adj, 
+	   end as effective_from_adj,*/   
 	   case when coalesce(l.effective_to, r.effective_to_adj)  >= cast(getdate() as date) then cast(getdate() as date)
 			else coalesce(dbo.fn_getdate(l.effective_to, 0), r.effective_to_adj) 
 	   end as effective_to_adj,
-	   r2.sla_id
+	   r2.sla_id,
+	   r3.sla_min_days,
+	   r3.sla_max_days
 from units as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
@@ -52,8 +64,21 @@ left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
    r.date_category_id = r2.date_category_id
+left join
+	 sladb.dbo.tbl_ref_sla as r3
+on r2.sla_id = r3.sla_id
+where effective_to_adj <= cast(getdate() as date) or
+	  l.effective_to is null
 order by unit_id, effective_from_adj
-/*where effective_to_adj <= cast(getdate() as date) or
-	  l.effective_to is null*/
 
+select *
+from sladb.dbo.tbl_unit_sla_season
+where unit_id in('B033', 'Q163-ZN05A', 'R016-ZN01', 'R016-ZN02')
 
+select *
+from sladb.dbo.vw_sla_historic
+where unit_id in('B033', 'Q163-ZN05A', 'R016-ZN01', 'R016-ZN02')
+
+select *
+from sladb.dbo.tbl_sla_season_date
+where season_id in(1,2)
