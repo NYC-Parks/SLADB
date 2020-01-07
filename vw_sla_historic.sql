@@ -37,16 +37,8 @@ where cast(unit_withdraw as date) >= '2014-01-01' or
 
 select top 100 percent l.unit_id,
 	   case when l.effective_to is null and dbo.fn_getdate(l.effective_from, 1) between r.effective_from_adj and effective_to_adj then dbo.fn_getdate(l.effective_from, 1)
-			--when l.effective_to is null and r.effective_from >= dbo.fn_getdate(l.effective_from, 1) then r.effective_from_adj	
-			else r.effective_from_adj--coalesce(dbo.fn_getdate(l.effective_from, 1), r.effective_from_adj)
+			else r.effective_from_adj
 	   end as effective_from_adj,
-	   /*case when l.effective_to is null and dbo.fn_getdate(l.effective_from, 1) < r.effective_from then dbo.fn_getdate(l.effective_from, 1)
-			when l.effective_to is null and r.effective_from >= dbo.fn_getdate(l.effective_from, 1) then r.effective_from_adj	
-			else r.effective_from_adj--coalesce(dbo.fn_getdate(l.effective_from, 1), r.effective_from_adj)
-	   end as effective_from_adj,
-	   case when dbo.fn_getdate(l.effective_from, 1) <= r.effective_from_adj then dbo.fn_getdate(l.effective_from, 1)
-				 else r.effective_from_adj --coalesce(l.effective_from, r.effective_from_adj) as effective_from_adj, 
-	   end as effective_from_adj,*/   
 	   case when coalesce(l.effective_to, r.effective_to_adj)  >= cast(getdate() as date) then cast(getdate() as date)
 			else coalesce(dbo.fn_getdate(l.effective_to, 0), r.effective_to_adj) 
 	   end as effective_to_adj,
