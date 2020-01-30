@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management   																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified Date: 01/24/2020																							   
 											       																	   
  Project: SLADB
  																							   
@@ -21,8 +21,8 @@
 
 create table sladb.dbo.tbl_sla_season_date(season_date_id int identity(1,1) primary key,
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) on delete cascade,
-										   effective_from date not null,
-										   effective_from_adj date not null,
-										   effective_to date not null,
-										   effective_to_adj date not null,
+										   effective_start date not null,
+										   effective_start_adj as sladb.dbo.fn_getdate(effective_start, 1),
+										   effective_end date not null,
+										   effective_end_adj as sladb.dbo.fn_getdate(effective_end, 0),
 										   date_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(date_category_id));

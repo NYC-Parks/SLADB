@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  10/18/2019																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified Date: 01/23/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -15,7 +15,7 @@
 ***********************************************************************************************************************/
 use sladb
 go 
-create trigger dbo.trg_season_change
+create or alter trigger dbo.trg_season_change
 --alter trigger dbo.trg_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as

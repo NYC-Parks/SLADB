@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/30/2019																							   
- Modified Date: 01/02/2020																							   
+ Modified Date: 01/24/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -24,10 +24,10 @@ select l.unit_id,
 	   r.sla_code,
 	   r.season_id,
 	   r.effective,
-	   coalesce(r.effective_from, '2014-01-01') as effective_from, 
-	   case when r.effective_to  >= cast(getdate() as date) then cast(getdate() as date)
-			else dbo.fn_getdate(r.effective_to, 0) 
-	   end as effective_to
+	   coalesce(r.effective_start, '2014-01-01') as effective_start, 
+	   case when r.effective_end  >= cast(getdate() as date) then cast(getdate() as date)
+			else dbo.fn_getdate(r.effective_end, 0) 
+	   end as effective_end
 from sladb.dbo.tbl_ref_unit as l
 left join
 	 sladb.dbo.tbl_unit_sla_season as r
@@ -36,12 +36,12 @@ where cast(unit_withdraw as date) >= '2014-01-01' or
 	  unit_withdraw is null)
 
 select top 100 percent l.unit_id,
-	   case when l.effective_to is null and dbo.fn_getdate(l.effective_from, 1) between r.effective_from_adj and effective_to_adj then dbo.fn_getdate(l.effective_from, 1)
-			else r.effective_from_adj
-	   end as effective_from_adj,
-	   case when coalesce(l.effective_to, r.effective_to_adj)  >= cast(getdate() as date) then cast(getdate() as date)
-			else coalesce(dbo.fn_getdate(l.effective_to, 0), r.effective_to_adj) 
-	   end as effective_to_adj,
+	   case when l.effective_end is null and dbo.fn_getdate(l.effective_start, 1) between r.effective_start_adj and effective_end_adj then dbo.fn_getdate(l.effective_start, 1)
+			else r.effective_start_adj
+	   end as effective_start_adj,
+	   case when coalesce(l.effective_end, r.effective_end_adj)  >= cast(getdate() as date) then cast(getdate() as date)
+			else coalesce(dbo.fn_getdate(l.effective_end, 0), r.effective_end_adj) 
+	   end as effective_end_adj,
 	   r2.sla_id,
 	   r3.sla_min_days,
 	   r3.sla_max_days
@@ -49,9 +49,9 @@ from units as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
 on l.season_id = r.season_id and
-   ((l.effective_from <= r.effective_from and l.effective_to between r.effective_from and r.effective_to) or
-    (l.effective_to is null and l.effective_from <= r.effective_to) or
-    (l.effective_to between r.effective_from and r.effective_to))
+   ((l.effective_start <= r.effective_start and l.effective_end between r.effective_start and r.effective_end) or
+    (l.effective_end is null and l.effective_start <= r.effective_end) or
+    (l.effective_end between r.effective_start and r.effective_end))
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
@@ -59,18 +59,6 @@ on l.sla_code = r2.sla_code and
 left join
 	 sladb.dbo.tbl_ref_sla as r3
 on r2.sla_id = r3.sla_id
-where effective_to_adj <= cast(getdate() as date) or
-	  l.effective_to is null
-order by unit_id, effective_from_adj
-
-select *
-from sladb.dbo.tbl_unit_sla_season
-where unit_id in('B033', 'Q163-ZN05A', 'R016-ZN01', 'R016-ZN02')
-
-select *
-from sladb.dbo.vw_sla_historic
-where unit_id in('B033', 'Q163-ZN05A', 'R016-ZN01', 'R016-ZN02')
-
-select *
-from sladb.dbo.tbl_sla_season_date
-where season_id in(1,2)
+where effective_end_adj <= cast(getdate() as date) or
+	  l.effective_end is null
+order by unit_id, effective_start_adj

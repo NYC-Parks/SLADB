@@ -21,6 +21,11 @@ on sladb.dbo.tbl_sla_season
 after update as
 
 	begin transaction;
+
+		select *
+		from inserted
+
+
 		/*Create a table to hold the updates.*/
 		declare @updates table(season_id int,
 							   season_date_id int);
@@ -35,18 +40,18 @@ after update as
 				 (select season_id,
 						 season_date_id,
 						 /*Calculate the maximum ending date in the season dates table*/
-						 max(effective_to) over(partition by season_id order by season_id) as max_effective_to,
-						 effective_to
+						 max(effective_start) over(partition by season_id order by season_id) as max_effective_start,
+						 effective_start
 				  from sladb.dbo.tbl_sla_season_date) as r
 			on l.season_id = r.season_id
 			/*Filter to include only the rows where the date is equal to the maximum date, since this
 			  is the only row that should be updated.*/
-			where r.effective_to = r.max_effective_to;
+			where r.effective_start = r.max_effective_start;
 
 		update sladb.dbo.tbl_sla_season_date
 				/*Set the ending equal to today and the adjusted ending date equal to the next closest Saturday.*/
-			set effective_to = cast(getdate() as date),
-				effective_to_adj = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
+			set effective_start = cast(getdate() as date),
+				effective_start_adj = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
 			from @updates as u
 			where sladb.dbo.tbl_sla_season_date.season_date_id = u.season_date_id;
 

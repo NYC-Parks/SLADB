@@ -1,14 +1,14 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																					   			          
- Created Date:  09/27/2019																							   
- Modified Date: 01/29/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  01/24/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: SLADB	
  																							   
- Tables Used: sladb.dbo.tbl_change_request																							   
- 			  sladb.dbo.tbl_change_request_status																								   
+ Tables Used: <Database>.<Schema>.<Table Name1>																							   
+ 			  <Database>.<Schema>.<Table Name2>																								   
  			  <Database>.<Schema>.<Table Name3>				
 			  																				   
  Description: <Lorem ipsum dolor sit amet, legimus molestiae philosophia ex cum, omnium voluptua evertitur nec ea.     
@@ -17,19 +17,15 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
+use sladb;
 go
---drop trigger dbo.trg_change_request_status
-create trigger dbo.trg_i_change_request_status
-on sladb.dbo.tbl_change_request
-for insert as 
 
-	begin transaction
-		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
-			select change_request_id,
-				   1, --representing the change request has been "Submitted"
-				   '0000000' --where can the ERN be pulled from?
-			from inserted
-		 	
-	commit;
-	 
+create or alter procedure dbo.sp_u_tbl_sla_season as
+	begin
+		begin transaction
+			update sladb.dbo.tbl_sla_season
+				set effective = 0
+			where effective = 1 and 
+				  cast(dateadd(hour, -1, effective_end) as date) = cast(getdate() as date);
+		commit;
+	end;

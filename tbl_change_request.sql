@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
+ Created Date:  09/06/2019																							   
+ Modified Date: 01/30/2020																							   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -20,4 +20,8 @@
 create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) primary key,
 										  unit_id nvarchar(30) not null foreign key references sladb.dbo.tbl_ref_unit(unit_id),
 										  sla_code int not null foreign key references sladb.dbo.tbl_ref_sla_code(sla_code),
-										  season_id int not null foreign key references sladb.dbo.tbl_sla_season(season_id));
+										  season_id int not null foreign key references sladb.dbo.tbl_sla_season(season_id),
+										  /*Make sure that the effective start date is greater than or equal to today's date.*/
+										  effective_start date not null check (effective_start >= cast(getdate() as date)),
+										  effective_start_adj as sladb.dbo.fn_getdate(effective_start, 1),
+										  change_request_justification nvarchar(2000) not null);

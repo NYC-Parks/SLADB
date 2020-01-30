@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																						   			          
  Created Date:  09/26/2019																							   
- Modified Date: 11/20/2019																							   
+ Modified Date: 01/28/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -18,12 +18,14 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) primary key,
-										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id),
-										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_code(sla_code),
-										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id),
+										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id) not null,
+										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_code(sla_code) not null,
+										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
 										   effective bit not null,
-										   effective_from date not null,
-										   effective_to date
+										   effective_start date not null,
+										   effective_start_adj as sladb.dbo.fn_getdate(effective_start, 1),
+										   effective_end date,
+										   effective_end_adj as sladb.dbo.fn_getdate(effective_end, 0),
 										   /*Create a unique constraint to prevent duplicate entries for the same unit, sla, season and effective from date this table*/
-										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_from));
+										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_start));
 

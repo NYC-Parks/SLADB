@@ -2,10 +2,10 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
+ Created Date:  01/29/2020																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: <Project Name>	
+ Project: SLADB	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,5 +17,37 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_change_request_justification(change_request_id int foreign key references sladb.dbo.tbl_change_request(change_request_id),
-														change_request_justification nvarchar(2000) not null)
+use sladb
+go
+
+create trigger dbo.trg_i_tbl_unit_sla_season
+on sladb.dbo.tbl_unit_sla_season
+for insert as
+	begin
+		/*Try the insert*/
+		begin try
+			/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing effective record for that unit
+			  and set the effective value to 0 and the effective_date to today.*/
+			begin transaction;
+				update sladb.dbo.tbl_unit_sla_season
+				set effective = 0,
+					effective_to = cast(getdate() as date)
+				from inserted as l
+				inner join
+					 (select unit_id, 
+							 sla_season_id,
+							 /*Rank the effective records for the inserted unit(s)*/
+							 dense_rank() over(partition by unit_id order by unit_id, effective_start desc) as nrank
+					  from sladb.dbo.tbl_unit_sla_season
+					  where effective = 1) as r
+				on l.unit_id = r.unit_id
+				where sladb.dbo.tbl_unit_sla_season.sla_season_id = r.sla_season_id and 
+					  nrank = 2;
+			commit;
+		end try
+
+		/*Catch any errors and if applicable, rollback the above transaction.*/
+		begin catch
+			rollback transaction;
+		end catch
+	end;
