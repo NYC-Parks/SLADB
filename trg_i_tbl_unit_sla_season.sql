@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: <Modifier Name>																						   			          
+ Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
  Created Date:  01/29/2020																							   
- Modified Date: <MM/DD/YYYY>																							   
+ Modified Date: 02/12/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -20,7 +20,7 @@
 use sladb
 go
 
-create trigger dbo.trg_i_tbl_unit_sla_season
+create or alter trigger dbo.trg_i_tbl_unit_sla_season
 on sladb.dbo.tbl_unit_sla_season
 for insert as
 	begin
@@ -31,7 +31,7 @@ for insert as
 			begin transaction;
 				update sladb.dbo.tbl_unit_sla_season
 				set effective = 0,
-					effective_to = cast(getdate() as date)
+					effective_end = cast(getdate() as date)
 				from inserted as l
 				inner join
 					 (select unit_id, 

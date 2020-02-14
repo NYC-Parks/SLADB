@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																						   			          
  Created Date:  10/15/2019																							   
- Modified Date: MM/DD/YYYY																							   
+ Modified Date: 02/20/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -32,7 +32,7 @@ after update as
 		  the date for effective_to to the Saturday following the date it was decommissioned.*/
 		merge sladb.dbo.tbl_unit_sla_season as tgt using updates as src
 			on (tgt.unit_id = src.unit_id)
-			when matched and effective = 1 and effective_to is null
+			when matched and effective = 1 and effective_end is null
 				then update set tgt.effective = 0,
-						        tgt.effective_to = (select sladb.dbo.fn_getdate(cast(getdate() as date), 0)); 
+						        tgt.effective_end = (select dbo.fn_getdate(cast(getdate() as date), 0)); 
 	commit;

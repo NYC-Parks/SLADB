@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																						   			          
  Created Date:  10/11/2019																							   
- Modified Date: 10/23/2019																							   
+ Modified Date: 02/12/2020																							   
 											       																	   
  Project: SLADB 	
  																							   
@@ -21,11 +21,6 @@ on sladb.dbo.tbl_sla_season
 after update as
 
 	begin transaction;
-
-		select *
-		from inserted
-
-
 		/*Create a table to hold the updates.*/
 		declare @updates table(season_id int,
 							   season_date_id int);
@@ -50,8 +45,8 @@ after update as
 
 		update sladb.dbo.tbl_sla_season_date
 				/*Set the ending equal to today and the adjusted ending date equal to the next closest Saturday.*/
-			set effective_start = cast(getdate() as date),
-				effective_start_adj = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
+			set effective_start = cast(getdate() as date)
+				--effective_start_adj = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
 			from @updates as u
 			where sladb.dbo.tbl_sla_season_date.season_date_id = u.season_date_id;
 

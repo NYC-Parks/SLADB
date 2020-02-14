@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  10/18/2019																							   
- Modified Date: 01/23/2020																							   
+ Modified Date: 02/12/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -26,23 +26,23 @@ after insert as
 							   old_season_id int,
 							   new_season_id int,
 							   effective bit,
-							   effective_from date);
+							   effective_start date);
 
 		declare @updates table(sla_season_id int);
 
-		insert into @inserts(unit_id, sla_code, old_season_id, new_season_id, effective, effective_from)
+		insert into @inserts(unit_id, sla_code, old_season_id, new_season_id, effective, effective_start)
 			select r.unit_id,
 				   r.sla_code,
 				   l.old_season_id,
 				   l.new_season_id,
 				   1 as effective,
-				   sladb.dbo.fn_getdate(cast(getdate() as date), 1) as effective_from
+				   sladb.dbo.fn_getdate(cast(getdate() as date), 1) as effective_start
 			from inserted as l
 			left join
 				 sladb.dbo.tbl_unit_sla_season as r
 			on l.old_season_id = r.season_id
 			where r.effective = 1 and 
-				  r.effective_to is null;
+				  r.effective_end is null;
 		
 		/*Account for existing records for a unit that need to be updated*/
 		insert into @updates(sla_season_id)
@@ -51,12 +51,12 @@ after insert as
 			left join
 				 sladb.dbo.tbl_unit_sla_season as r
 			on l.old_season_id = r.season_id
-			where (r.effective = 1 and r.effective_to is null)
+			where (r.effective = 1 and r.effective_end is null)
 
 		/*Update if required*/
 		update sladb.dbo.tbl_unit_sla_season
 			set effective = 0,
-				effective_to = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
+				effective_end = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
 			from @updates as u
 			where sladb.dbo.tbl_unit_sla_season.sla_season_id = u.sla_season_id;
 	
@@ -65,8 +65,8 @@ after insert as
 												  sla_code, 
 												  season_id,
 												  effective,
-												  effective_from)
-			select unit_id, sla_code, new_season_id, 1 as effective, effective_from
+												  effective_start)
+			select unit_id, sla_code, new_season_id, 1 as effective, effective_start
 			from @inserts
 									
 	commit;

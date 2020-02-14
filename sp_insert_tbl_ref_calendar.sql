@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  08/28/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified Date: 02/14/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -20,7 +20,7 @@
 use sladb
 go
 
-create procedure dbo.sp_insert_tbl_ref_calendar as
+create or alter procedure dbo.sp_insert_tbl_ref_calendar as
 --alter procedure dbo.sp_insert_tbl_ref_calendar as
 set nocount on;
 begin
@@ -49,43 +49,12 @@ begin
 				values(@date)
 		set @i = @i + 1;
 		end;
-		
-		insert into @dates_interim(ref_date, ref_year, month_name_desc, day_name_desc, day_rank_id)
-			select ref_date,
-				   ref_year,
-				   month_name_desc,
-				   day_name_desc,
-				   /*Calculate the rank of day names by months*/
-				   dense_rank() over (partition by ref_year, month_name_desc, day_name_desc order by ref_date, ref_year, month_name_desc, day_name_desc) as day_rank_id
-			from (select ref_date, 
-						year(ref_date) as ref_year,
-						/*Weekday name of reference date*/
-						datename(weekday, ref_date) as day_name_desc, 
-						/*Month name of reference date*/
-						datename(month, ref_date) month_name_desc 
-				  from @calendar) as t
-				  order by ref_date;
-
+	
 	if object_id('sladb.dbo.tbl_ref_calendar') is not null
 	/*The start date equals January 1 of the start_year*/
 	begin transaction
-		insert into sladb.dbo.tbl_ref_calendar(ref_date, month_name_desc, day_name_desc, day_rank_id)
-			select ref_date,
-				   month_name_desc,
-				   day_name_desc,
-				   /*Calculate the rank of day names by months*/
-				   case when last_value(day_rank_id) over (partition by ref_year, month_name_desc, day_name_desc order by ref_year, month_name_desc, day_name_desc) = day_rank_id then 'last'
-						/*Otherwise cast the rank as its value*/
-						else cast(day_rank_id as nvarchar(5)) 
-				   end as day_rank
-			from (select ref_date, 
-						 ref_year,
-						 /*Weekday name of reference date*/
-						 datename(weekday, ref_date) as day_name_desc, 
-						 /*Month name of reference date*/
-						 datename(month, ref_date) month_name_desc,
-						 day_rank_id 
-				  from @dates_interim) as t
-				  order by ref_date;
+		insert into sladb.dbo.tbl_ref_calendar(ref_date)
+			select ref_date
+			from @calendar;
 	commit;
 end;

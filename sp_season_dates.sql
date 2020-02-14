@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																					   			          
  Created Date:  08/30/2019																							   
- Modified Date: 12/31/2019																							   
+ Modified Date: 02/12/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -36,10 +36,10 @@ begin
 	
 	declare @tbl_season_dates table(season_date_id int identity(1,1),
 									season_id int,
-									effective_from date,
-									effective_from_adj date,
-									effective_to date,
-									effective_to_adj date,
+									effective_start date,
+									effective_start_adj date,
+									effective_end date,
+									effective_end_adj date,
 									date_category_id int);
 
 	declare @off_dates_ref table (season_id int,
@@ -102,16 +102,16 @@ begin
 			fixed:
 				print 'Fixed SLA section';
 				insert into @tbl_season_dates(season_id,
-											  effective_from,
-											  effective_from_adj,
-											  effective_to,
-											  effective_to_adj,
+											  effective_start,
+											  effective_start_adj,
+											  effective_end,
+											  effective_end_adj,
 											  date_category_id)
 					select l.season_id,
-						   l.ref_date as effective_from,
-						   l.sunday_ref_date as effective_from_adj,
-						   r.ref_date as effective_to,
-						   r.saturday_ref_date as effective_from_adj,
+						   l.ref_date as effective_start,
+						   l.sunday_ref_date as effective_start_adj,
+						   r.ref_date as effective_end,
+						   r.saturday_ref_date as effective_start_adj,
 						   l.date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_fixed
@@ -138,16 +138,16 @@ begin
 			notfixed:
 				print 'Not fixed SLA section';
 				insert into @tbl_season_dates(season_id,
-											  effective_from,
-											  effective_from_adj,
-											  effective_to,
-											  effective_to_adj,
+											  effective_start,
+											  effective_start_adj,
+											  effective_end,
+											  effective_end_adj,
 											  date_category_id)
 					select l.season_id,
-							l.ref_date as effective_from,
-							l.sunday_ref_date as effective_from_adj,
-							r.ref_date as effective_to,
-							r.saturday_ref_date as effective_from_adj,
+							l.ref_date as effective_start,
+							l.sunday_ref_date as effective_start_adj,
+							r.ref_date as effective_end,
+							r.saturday_ref_date as effective_start_adj,
 							l.date_category_id
 					from (select * 
 						  from sladb.dbo.vw_date_ref_notfixed
@@ -176,9 +176,9 @@ begin
 				print 'The not year round labelled section.';
 				set @year1_start = datefromparts(@year1, 1, 1);
 				set @year1_end = datefromparts(@year1, 12, 31);
-				set @seas_start = (select effective_from from @tbl_season_dates);
+				set @seas_start = (select effective_start from @tbl_season_dates);
 				print @seas_start
-				set @seas_end = (select effective_to from @tbl_season_dates);
+				set @seas_end = (select effective_end from @tbl_season_dates);
 
 				/*If the start of season is equal to the start of the year or the end of a season
 					is equal to the end of the year then set the number of time periods equal to 2.*/
@@ -276,10 +276,10 @@ begin
 
 					insert into @tbl_season_dates
 						select l.season_id,
-								l.ref_date as effective_from,
-								l.sunday_ref_date as effective_from_adj,
-								r.ref_date as effective_to,
-								r.saturday_ref_date as effective_from_adj,
+								l.ref_date as effective_start,
+								l.sunday_ref_date as effective_start_adj,
+								r.ref_date as effective_end,
+								r.saturday_ref_date as effective_start_adj,
 								l.date_category_id
 						from (select * 
 							  from @off_dates_ref
@@ -304,12 +304,11 @@ begin
 						/*Insert the date values into the season date table.*/
 						begin transaction;
 							update sladb.dbo.tbl_sla_season_date
-								set effective_to = u.effective_to, 
-									effective_to_adj = u.effective_to_adj
+								set effective_end = u.effective_end
 								from @tbl_season_dates as u
 								where sladb.dbo.tbl_sla_season_date.season_id = u.season_id;
 								/*Add a filter to only insert dates where the starting date is 1 day less than today.
-								where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+								where effective_start = dateadd(d, -1, cast(getdate() as date))*/
 						commit;
 						goto next_iter;
 					end;
@@ -321,16 +320,14 @@ begin
 				print 'Doing table insert';
 				/*Insert the date values into the season date table.*/
 				begin transaction; 
-					insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
+					insert into sladb.dbo.tbl_sla_season_date(season_id, effective_start, effective_end, date_category_id)
 						select season_id, 
-							   effective_from, 
-							   effective_from_adj, 
-							   effective_to, 
-							   effective_to_adj, 
+							   effective_start, 
+							   effective_end, 
 							   date_category_id
 						from @tbl_season_dates;
 						/*Add a filter to only insert dates where the starting date is 1 day less than today.
-						where effective_from = dateadd(d, -1, cast(getdate() as date))*/
+						where effective_start = dateadd(d, -1, cast(getdate() as date))*/
 				commit;
 				goto next_iter;
 

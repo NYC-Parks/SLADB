@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  01/29/2020																							   
- Modified Date: 01/30/2020																							   
+ Modified Date: 02/12/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -16,7 +16,7 @@
 			  the date on which the change request reaches the approved status.
 																													   												
 ***********************************************************************************************************************/
-create procedure dbo.sp_i_tbl_unit_sla_season_delay as
+create or alter procedure dbo.sp_i_tbl_unit_sla_season_delay as
 	begin
 		begin try
 			begin transaction

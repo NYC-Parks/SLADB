@@ -16,15 +16,15 @@
 ***********************************************************************************************************************/
 use sladb
 go
-create procedure dbo.sp_insert_season(@season_desc nvarchar(128),
-									  @year_round bit,
-									  @effective bit,
-									  @date_ref_fixed bit,
-									  @month_name_desc nvarchar(9) null,
-									  @date_ref_day_number int null,
-									  @day_name_desc nvarchar(9) null,
-									  @day_rank_id nvarchar(5) null,
-									  @date_type_id int null) as
+create or alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
+											   @year_round bit,
+											   @effective bit,
+											   @date_ref_fixed bit,
+											   @month_name_desc nvarchar(9) null,
+											   @date_ref_day_number int null,
+											   @day_name_desc nvarchar(9) null,
+											   @day_rank_id nvarchar(5) null,
+											   @date_type_id int null) as
 
 /*alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
 									  @year_round bit,
