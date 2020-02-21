@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																					   			          
+ Modified By: Samuel Pollack, samuel.pollack@parks.nyc.gob, Innovation & Performance Management																					   			          
  Created Date:  08/30/2019																							   
- Modified Date: 02/12/2020																							   
+ Modified Date: 02/21/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -24,314 +24,50 @@ create or alter procedure dbo.sp_season_dates @year int = null as
 --alter procedure dbo.sp_season_dates @year int = null as
 begin
 
-	/*Initialize the variables that are being used to create the output table*/
-	declare @year1 int = isnull(@year, year(getdate())),
-			@i int = 1,
-			@n int, @t int,
-			@fixed bit, @year1_round bit, @season_id int,
-			@year1_start date, @year1_end date,
-			@seas_start date, @seas_end date,
-			@offs_start1 date, @offs_end1 date,
-			@offs_start2 date, @offs_end2 date;
-	
-	declare @tbl_season_dates table(season_date_id int identity(1,1),
-									season_id int,
-									effective_start date,
-									effective_start_adj date,
-									effective_end date,
-									effective_end_adj date,
-									date_category_id int);
+	if object_id('tempdb..#seasondates') is not null drop table #seasondates; 
 
-	declare @off_dates_ref table (season_id int,
-							      ref_date date,
-							      saturday_ref_date date,
-							      sunday_ref_date date,
-							      date_row int,
-							      date_type_id int,
-							      date_category_id int);
+	select *, rank() over (partition by season_id order by ref_date asc) dtrk
+	into #seasondates
+	from (
+		-- start and end dates
+		select season_id, ref_date, null date_type_id
+		from [sladb].[dbo].[tbl_sla_season]
+		left join sladb.dbo.tbl_ref_calendar on ref_date >= effective_start_adj
+		where ref_date in (effective_start_adj,coalesce(effective_end_adj,cast(dateadd(year,1,getdate()) as date)))
 
-	declare @seasonids table(season_id int,
-							 row_id int identity(1,1));
-	
-	/*Create a table variable that will hold the transformed date values.*/
-	declare @dates_ref table (season_id int,
-							  ref_date date,
-							  saturday_ref_date date,
-							  sunday_ref_date date,
-							  date_row int,
-							  date_type_id int,
-							  date_category_id int);
-	
-	declare @offseason table(season_id int,
-							 ref_date date,
-							 date_type_id int,
-							 date_category_id int,
-							 date_row int);
+		union
 
-	insert into @seasonids(season_id)
-		select distinct season_id
-		from sladb.dbo.vw_ref_sla_season_definition;
+		-- seasonal transitions
+		select [tbl_sla_season].season_id, ref_date, date_type_id
+		from [sladb].[dbo].[tbl_sla_season]
+		left join [sladb].[dbo].[tbl_ref_sla_season_definition] on [tbl_sla_season].season_id = [tbl_ref_sla_season_definition].season_id
+		left join sladb.dbo.tbl_ref_calendar on ref_date between effective_start_adj and effective_end_adj
+			or (effective_end_adj is null and ref_date >= effective_start_adj)
+		where ref_date <= cast(dateadd(year,1,getdate()) as date)
+			and year_round != 1 -- just worrying about seasonal seasons for now
+			and [tbl_ref_sla_season_definition].month_name_desc = tbl_ref_calendar.month_name_desc
+			and (date_ref_day_number = day_number 
+				or ([tbl_ref_sla_season_definition].day_name_desc=tbl_ref_calendar.day_name_desc 
+					and [tbl_ref_sla_season_definition].day_rank_id=tbl_ref_calendar.day_rank_id))
+	) changedates
 
-	/*Set the inner loop value to start at 1*/
-	set @i = 1;	
 
-	/*Set the number of iterations to the number of SLA seasons*/
-	set @n = (select count(*) from @seasonids);
+	begin transaction
+	truncate table sladb.dbo.tbl_sla_season_date
+	commit;
 
-		/*Iterate through the dates where i is less than or equal to the number of dates*/
-		while @i <= @n
-		begin/*Start the i loop*/
-			set @season_id = (select season_id from @seasonids where row_id = @i);
+	begin transaction
+	insert into sladb.dbo.tbl_sla_season_date (season_id, effective_start,effective_end,date_category_id)
+	select l.season_id
+		,l.ref_date effetive_start
+		,case when r.date_type_id is null then r.ref_date --this happens when a season is retired
+			else dateadd(dd,-1,r.ref_date) end effective_end --this happens when a season transitions 
+		,case when l.date_type_id is null and r.date_type_id is null then 1 --this happens when season is year round
+			when l.date_type_id is null and r.date_type_id = 1 then 2 --at beginning of season
+			when l.date_type_id is null and r.date_type_id = 2 then 1 --at beginning of season
+			else l.date_type_id end date_category_id --season transition 
+	from #seasondates l inner join #seasondates r on l.season_id = r.season_id and l.dtrk = r.dtrk - 1
+	order by season_id, effetive_start;
+	commit;
 
-			/*Select the fixed value from table variable where the id is equal to i*/
-			set @fixed = (select distinct(date_ref_fixed) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
-			set @year1_round = (select distinct(year_round) from sladb.dbo.vw_ref_sla_season_definition where season_id = @season_id);
-
-			/*Delete all records from the holding table variable.*/
-			delete from @tbl_season_dates;
-			delete from @offseason;
-
-			/*If the SLA season is year round fixed then insert the following records*/
-			if @fixed = 1
-				goto fixed;
-			
-			else
-				goto notfixed;
-			
-			/*This section calculates the dates when seasons are composed of fixed dates (example: April 1st).*/
-			fixed:
-				print 'Fixed SLA section';
-				insert into @tbl_season_dates(season_id,
-											  effective_start,
-											  effective_start_adj,
-											  effective_end,
-											  effective_end_adj,
-											  date_category_id)
-					select l.season_id,
-						   l.ref_date as effective_start,
-						   l.sunday_ref_date as effective_start_adj,
-						   r.ref_date as effective_end,
-						   r.saturday_ref_date as effective_start_adj,
-						   l.date_category_id
-					from (select * 
-						  from sladb.dbo.vw_date_ref_fixed
-						  where season_id = @season_id and
-								date_type_id = 1 and
-								year(ref_date) = @year1) as l
-					full outer join
-							(select * 
-							 from sladb.dbo.vw_date_ref_fixed
-							 where season_id = @season_id and
-								   date_type_id = 2 and
-								   year(ref_date) = @year1) as r
-					on l.season_id = r.season_id and
-					   l.date_row = r.date_row;	
-					
-					/*If the season is year round, that is from 1/1 to 12/31 then insert the records into the season date table.*/
-					if @year1_round = 1
-						goto tableupdate;
-
-					if @year1_round = 0
-						goto notyearround;
-
-			/*This sections calculates the dates when seasons are composed of non-fixed dates (example Last Tuesday of February).*/
-			notfixed:
-				print 'Not fixed SLA section';
-				insert into @tbl_season_dates(season_id,
-											  effective_start,
-											  effective_start_adj,
-											  effective_end,
-											  effective_end_adj,
-											  date_category_id)
-					select l.season_id,
-							l.ref_date as effective_start,
-							l.sunday_ref_date as effective_start_adj,
-							r.ref_date as effective_end,
-							r.saturday_ref_date as effective_start_adj,
-							l.date_category_id
-					from (select * 
-						  from sladb.dbo.vw_date_ref_notfixed
-						  where season_id = @season_id and
-								date_type_id = 1 and
-								year(ref_date) = @year1) as l
-					full outer join
-							(select * 
-							 from sladb.dbo.vw_date_ref_notfixed
-							 where season_id = @season_id and
-								   date_type_id = 2 and
-								   year(ref_date) = @year1) as r
-					on l.season_id = r.season_id and
-						l.date_row = r.date_row;
-					
-					/*If the season is year round, that is from 1/1 to 12/31 then insert the records into the season date table.*/
-					if @year1_round = 1
-						--goto tableinsert;
-						goto tableupdate;
-
-					if @year1_round = 0
-						goto notyearround;		
-
-			/*The labeled section for dates that are not year round*/
-			notyearround:
-				print 'The not year round labelled section.';
-				set @year1_start = datefromparts(@year1, 1, 1);
-				set @year1_end = datefromparts(@year1, 12, 31);
-				set @seas_start = (select effective_start from @tbl_season_dates);
-				print @seas_start
-				set @seas_end = (select effective_end from @tbl_season_dates);
-
-				/*If the start of season is equal to the start of the year or the end of a season
-					is equal to the end of the year then set the number of time periods equal to 2.*/
-				if @seas_start = @year1_start or @seas_end = @year1_end
-					set @t = 2;
-				else
-					set @t = 3;
-						
-				/*If the the number time periods is 3 then set the following date values.*/
-				if @t = 3
-					begin
-						print 'Two offseason time period.';
-						set @offs_start1 = @year1_start;
-						set @offs_end1 = dateadd(day, -1, @seas_start);
-
-						set @offs_start2 = dateadd(day, 1, @seas_end);
-						set @offs_end2 = @year1_end;
-
-						goto offseason;
-					end;
-						
-				/*If the the number time periods is 2 then set the following date values.*/
-				if @t = 2 
-					begin;
-					print 'One offseason time period.';
-					if @seas_start = @year1_start
-						begin
-							set @offs_start1 = dateadd(day, 1, @seas_start);
-							set @offs_end1 = @year1_end;
-
-							goto offseason;
-						end;
-								
-					if @seas_end = @year1_end
-						begin
-							set @offs_start1 = @year1_start;
-							set @offs_end1 = dateadd(day, -1, @seas_start);
-
-							goto offseason;
-						end;
-					end;
-				
-				/*This labelled section will calculate the dates for the offseason.*/
-				offseason:
-				print 'The offseason labelled section.';
-					if @t = 3
-						begin;
-							insert into @offseason(season_id,
-												   ref_date,
-												   date_type_id,
-												   date_category_id,
-												   date_row)
-								values(@season_id, @offs_start1, 3, 2, 1),
-									  (@season_id, @offs_end1, 4, 2, 1),
-									  (@season_id, @offs_start2, 3, 2, 2),
-									  (@season_id, @offs_end2, 4, 2, 2)
-								--select * from @offseason
-								goto offseasondates;
-						end;
-
-					if @t = 2
-						begin
-							insert into @offseason(season_id,
-											       ref_date,
-											       date_type_id,
-											       date_category_id,
-											       date_row)
-								values(@season_id, @offs_start1, 3, 2, 1),
-									  (@season_id, @offs_end1, 4, 2, 1);
-
-							goto offseasondates;
-
-						end; 
-
-				offseasondates:	
-					print 'Offseason dates labelled section';
-					insert into @off_dates_ref(season_id,
-											   ref_date,
-											   saturday_ref_date,
-											   sunday_ref_date,
-											   date_row,
-											   date_type_id,
-											   date_category_id)
-						select l.season_id,
-								l.ref_date as ref_date,
-								r.saturday_ref_date,
-								r.sunday_ref_date,
-								l.date_row,
-								l.date_type_id,
-								l.date_category_id
-						from @offseason as l
-						left join
-								sladb.dbo.vw_season_dates_adjusted as r
-						on l.ref_date = r.ref_date
-
-					insert into @tbl_season_dates
-						select l.season_id,
-								l.ref_date as effective_start,
-								l.sunday_ref_date as effective_start_adj,
-								r.ref_date as effective_end,
-								r.saturday_ref_date as effective_start_adj,
-								l.date_category_id
-						from (select * 
-							  from @off_dates_ref
-							  where season_id = @season_id and
-									date_type_id = 3 and
-									year(ref_date) = @year1) as l
-						full outer join
-								(select * 
-								 from @off_dates_ref
-								 where season_id = @season_id and
-									   date_type_id = 4 and
-									   year(ref_date) = @year1) as r
-						on l.season_id = r.season_id and
-						   l.date_row = r.date_row;
-						
-						goto tableinsert;
-
-			tableupdate:
-				if exists(select distinct season_id from sladb.dbo.tbl_sla_season_date where season_id = @season_id)
-					begin
-						print 'Doing table update';
-						/*Insert the date values into the season date table.*/
-						begin transaction;
-							update sladb.dbo.tbl_sla_season_date
-								set effective_end = u.effective_end
-								from @tbl_season_dates as u
-								where sladb.dbo.tbl_sla_season_date.season_id = u.season_id;
-								/*Add a filter to only insert dates where the starting date is 1 day less than today.
-								where effective_start = dateadd(d, -1, cast(getdate() as date))*/
-						commit;
-						goto next_iter;
-					end;
-
-				else
-					goto tableinsert;
-			
-			tableinsert:
-				print 'Doing table insert';
-				/*Insert the date values into the season date table.*/
-				begin transaction; 
-					insert into sladb.dbo.tbl_sla_season_date(season_id, effective_start, effective_end, date_category_id)
-						select season_id, 
-							   effective_start, 
-							   effective_end, 
-							   date_category_id
-						from @tbl_season_dates;
-						/*Add a filter to only insert dates where the starting date is 1 day less than today.
-						where effective_start = dateadd(d, -1, cast(getdate() as date))*/
-				commit;
-				goto next_iter;
-
-		next_iter:
-		set @i = @i + 1;
-		end;
 end;
