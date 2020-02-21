@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 02/12/2020																						   
+ Modified Date: 02/20/2020																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -21,6 +21,8 @@ create table sladb.dbo.tbl_sla_season(season_id int identity(1,1) primary key,
 									  season_desc nvarchar(128),
 									  year_round bit not null,
 									  effective bit not null,
-									  effective_end date null check (effective_end <= cast(getdate() as date)),
-									  effective_end_adj as dbo.fn_getdate(effective_end, 0));
+									  effective_end date null,
+									  effective_end_adj as dbo.fn_getdate(effective_end, 0),
+									  effective_start date not null,
+									  effective_start_adj as dbo.fn_getdate(effective_start, 1));
 

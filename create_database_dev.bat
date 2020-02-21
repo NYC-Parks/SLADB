@@ -36,7 +36,7 @@ sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\tbl_sla_season.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\tbl_ref_sla_season_definition.sql
 
-sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\tbl_ref_sla_code.sql
+REM sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\tbl_ref_sla_code.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\tbl_ref_sla_translation.sql
 
@@ -88,6 +88,8 @@ sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\trg_sla_season_date_update.sql
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\trg_i_tbl_unit_sla_season.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\trg_unit_decommissioned.sql
+
+sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\trg_i_tbl_ref_calendar.sql
 
 REM Create all of the stored procedures.
 REM -------------------------------------------------------------------------

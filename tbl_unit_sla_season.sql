@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																						   			          
  Created Date:  09/26/2019																							   
- Modified Date: 02/12/2020																							   
+ Modified Date: 02/20/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -19,7 +19,7 @@
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) primary key,
 										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id) not null,
-										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_code(sla_code) not null,
+										   sla_code int,
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
 										   effective bit not null,
 										   effective_start date not null,
