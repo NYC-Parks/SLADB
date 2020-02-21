@@ -16,7 +16,7 @@
 ***********************************************************************************************************************/
 use sladb
 go
-create function dbo.fn_getdate(@date date, @start bit)
+create or alter function dbo.fn_getdate(@date date, @start bit)
 	returns date
 	/*Use execute permissions to call the function*/
 	with execute as caller
