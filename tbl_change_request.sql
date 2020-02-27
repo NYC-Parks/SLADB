@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 02/20/2020																							   
+ Modified Date: 02/27/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -22,6 +22,7 @@ create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) pr
 										  sla_code int not null,
 										  season_id int not null foreign key references sladb.dbo.tbl_sla_season(season_id),
 										  /*Make sure that the effective start date is greater than or equal to today's date.*/
-										  effective_start date not null check (effective_start >= cast(getdate() as date)),
+										  effective_start date not null,
 										  effective_start_adj as dbo.fn_getdate(effective_start, 1),
-										  change_request_justification nvarchar(2000) not null);
+										  change_request_justification nvarchar(2000) not null,
+										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)));

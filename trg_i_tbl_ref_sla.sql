@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
+ Created Date:  02/26/2020																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -17,15 +17,41 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla(sla_id nvarchar(1) primary key,
-								   sla_desc nvarchar(128),
-								   sla_min_days int,
-								   sla_max_days int);
+use sladb
+go
 
-/*begin transaction
-	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-		values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
-			  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
-			  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
-			  ('N', 'No SLA', null, null);
-commit;*/
+create or alter trigger dbo.trg_i_tbl_ref_sla 
+	on sladb.dbo.tbl_ref_sla
+	after insert as
+	begin
+		/*Select the count of records in the tbl_ref_sla table*/
+		declare @n int = (select count(*) from sladb.dbo.tbl_ref_sla/*inserted*/);
+		/*Get the current identity value of the tbl_ref_sla_code table*/
+		declare @m int = (select ident_current('sladb.dbo.tbl_ref_sla_code'));
+
+		/*Multiply the number of records in the tbl_ref_sla table by itself to get the number of records that should exist in tbl_ref_sla_code*/
+		declare @i int = (select @n * @n);
+
+		/*Calculate the difference between the current identity -1 and the number rows in the tbl_ref_sla table*/
+		declare @d int = (select @i - (@m - 1));
+		print @d
+		
+		--declare @j int, @k int, @l int;
+
+		declare @k int = (select @m);
+
+		if @d > 1
+			begin
+				while @m <= @d
+					begin;
+						/*Allow identity inserts*/
+						set identity_insert sladb.dbo.tbl_ref_sla_code on;
+
+						begin transaction
+							insert into sladb.dbo.tbl_ref_sla_code(sla_code)
+								values(@m);				
+						commit;
+						set @m = @m + 1;
+					end;
+			end;
+	end;

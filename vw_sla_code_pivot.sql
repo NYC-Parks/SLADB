@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  <MM/DD/YYYY>																							   
+ Created Date:  02/26/2020																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -17,15 +17,20 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla(sla_id nvarchar(1) primary key,
-								   sla_desc nvarchar(128),
-								   sla_min_days int,
-								   sla_max_days int);
+use sladb
+go
+create or alter view dbo.vw_sla_code_pivot as
 
-/*begin transaction
-	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-		values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
-			  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
-			  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
-			  ('N', 'No SLA', null, null);
-commit;*/
+	select l.sla_code,
+			l.sla_id as in_season_sla,
+			r.sla_id as off_season_sla
+	from (select sla_id,
+					sla_code
+			from sladb.dbo.tbl_ref_sla_translation
+			where date_category_id = 1) as l
+	left join
+			(select sla_id,
+					sla_code
+			from sladb.dbo.tbl_ref_sla_translation
+			where date_category_id = 2) as r
+	on l.sla_code = r.sla_code;

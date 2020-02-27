@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
  Created Date:  10/23/2019																							   
- Modified Date: 10/25/2019																							   
+ Modified Date: 02/27/2019																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -14,69 +14,76 @@
  Description: Insert the initial historic SLAs to start SLADB.  									   
 																													   												
 ***********************************************************************************************************************/
-exec sladb.dbo.sp_insert_tbl_ref_calendar
+declare @i int, @n int, @j int, @m int, @k int;
 
-begin transaction
-	insert into sladb.dbo.tbl_sla_season(season_desc, year_round, effective)
-		values('Year-round, not seasonal', 1, 1);		
-commit;					
+declare @tbl_sla_season table(season_id int identity(1,1) primary key,
+							  season_desc nvarchar(128),
+							  year_round bit not null,
+							  effective bit not null,
+							  effective_start date not null);
 
-exec sladb.dbo.sp_season_dates @year = 2014;
-exec sladb.dbo.sp_season_dates @year = 2015;
-exec sladb.dbo.sp_season_dates @year = 2016;
-exec sladb.dbo.sp_season_dates @year = 2017;
-exec sladb.dbo.sp_season_dates @year = 2018;
---exec sladb.dbo.sp_season_dates @year = 2019;
+declare @tbl_ref_sla_season_definition table(season_date_ref_id int identity(1,1),
+											 date_ref_fixed bit not null,
+											 month_name_desc nvarchar(9) not null,
+											 date_ref_day_number int null,
+											 day_name_desc nvarchar(9) null,
+											 day_rank_id nvarchar(5) null,
+											 date_type_id int not null);
 
-/*insert into sladb.dbo.tbl_sla_season_date(season_id, effective_from, effective_from_adj, effective_to, effective_to_adj, date_category_id)
-	values(2, '2019-07-01', sladb.dbo.fn_getdate('2019-07-01', 1), ),
-		  ()*/
-begin transaction
-	insert into sladb.dbo.tbl_sla_season(season_desc, year_round, effective)
-		values('Beaches, etc.', 0, 1)
-commit;
+	/*Insert the seasons into a table variable*/
+	insert into @tbl_sla_season(season_desc, year_round, effective, effective_start)
+		values('Year-round, not seasonal', 1, 1, '2014-01-01'),
+			  ('Beaches, etc.', 0, 1, '2019-07-01'),
+			  ('Ballfields, etc.', 0, 1, '2019-07-01');		
+	
+	/*Insert the season definitions into a table variable*/
+	insert into @tbl_ref_sla_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
+		values(1, 'January', 1, 1),
+			  (1, 'December', 31, 2),
+			  (1, 'May', 1, 1),
+			  (1, 'October', 1, 2),
+			  (1, 'March', 1, 1),
+			  (1, 'October', 31, 2);
+	
+	set @i = 1;
+	set @j = 1;
+	/*Set this value to the highest identity value in the season_id column*/
+	set @n = (select max(season_id) from @tbl_sla_season);
+	/*Set this value to the highest identity value in the season_date_ref_id column*/
+	set @m = (select max(season_date_ref_id) from @tbl_ref_sla_season_definition);
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
-		values(2, 1, 'May', 1, 1),
-			  (2, 1, 'October', 1, 2);
-commit;
+	while @i <= @n
+		begin
+			/*Get the current identity value in the tbl_sla_season to set for the season definitions*/
+			set @k = (select ident_current('sladb.dbo.tbl_sla_season') + 1);
 
---exec sladb.dbo.sp_season_dates @year = 2019;
+			begin transaction
+				insert into sladb.dbo.tbl_sla_season(season_desc, year_round, effective, effective_start)
+					select season_desc, 
+							year_round, 
+							effective, 
+							effective_start
+					from @tbl_sla_season
+					where season_id = @i;
+			commit;
 
-begin transaction
-	insert into sladb.dbo.tbl_sla_season(season_desc, year_round, effective)
-		values('Ballfields, etc.', 0, 1);
-commit;
+			/*Only work through seasons that aren't year round because year round seasons are taken care of a with a trigger*/
+			if (select year_round from @tbl_sla_season where season_id = @i) = 0 and 
+			   @j <= @m
+				begin			
+					begin transaction
+						insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
+							select @k as season_id,
+									date_ref_fixed,
+									month_name_desc, 
+									date_ref_day_number, 
+									date_type_id
+							from @tbl_ref_sla_season_definition
+							where season_date_ref_id between @j and @j + 1;
+					commit;
+				end;
+					
+			set @i = @i + 1
+			set @j = @j + 2
 
-begin transaction
-insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
-	values(3, 1, 'March', 1, 1),
-			(3, 1, 'October', 31, 2);
-commit;
-
-exec sladb.dbo.sp_season_dates @year = 2019;
-
-begin transaction
-	delete from sladb.dbo.tbl_sla_season_date
-	where season_id = 2 and effective_from = '2019-01-01';
-commit;
-
-begin transaction
-	delete from sladb.dbo.tbl_sla_season_date
-	where season_id = 3 and effective_from = '2019-01-01';
-commit;
-
-begin transaction
-	update sladb.dbo.tbl_sla_season_date
-		set effective_from = '2019-07-01',
-			effective_from_adj = sladb.dbo.fn_getdate('2019-07-01', 1)
-	where season_date_id in(2, 5);
-commit;
-
-/*begin transaction
-	update sladb.dbo.tbl_sla_season_date
-		set effective_from = '2019-11-01',
-			effective_from_adj = sladb.dbo.fn_getdate('2019-11-01', 1)
-	where season_date_id in(7);
-commit;*/
+		end;

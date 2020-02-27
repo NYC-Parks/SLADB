@@ -17,15 +17,37 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-create table sladb.dbo.tbl_ref_sla(sla_id nvarchar(1) primary key,
-								   sla_desc nvarchar(128),
-								   sla_min_days int,
-								   sla_max_days int);
 
-/*begin transaction
-	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-		values('A', 'SLA A: 5-7 Visits per week.', 5, 7),
-			  ('B', 'SLA B: 3-5 Visits per week.', 3, 5),
-			  ('C', 'SLA C: 1-3 Visits per week.', 1, 3),
-			  ('N', 'No SLA', null, null);
-commit;*/
+begin transaction;
+declare @sla_tab table(sla_id nvarchar(1),
+					   date_category_id int,
+					   sla_translation_id int,
+					   row_id int identity(1,1));
+
+insert into @sla_tab(sla_id, date_category_id)
+	select sla_id, date_category_id
+	from sladb.dbo.tbl_ref_sla
+	cross join
+		 sladb.dbo.tbl_ref_sla_season_category;
+
+
+with combos as(
+select l.*, 
+	   r.sla_id as sla_id2,
+	   row_number() over(partition by l.date_category_id order by l.date_category_id, l.sla_id) as sla_code
+from @sla_tab as l
+cross join
+	 @sla_tab as r
+where l.date_category_id != r.date_category_id)
+
+
+	insert into sladb.dbo.tbl_ref_sla_translation(sla_id,
+												  date_category_id,
+												  sla_code)
+		select case when date_category_id = 1 then sla_id
+				else sla_id2
+			end as sla_id,
+		   date_category_id,
+		   sla_code
+	from combos;
+commit;
