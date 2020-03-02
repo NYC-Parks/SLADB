@@ -19,10 +19,3 @@
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_ref_sla_change_status(sla_change_status int identity(1,1) primary key,
 												 sla_change_status_desc nvarchar(128));
-
-insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status_desc)
-	values('Submitted'),
-		  ('Approved'),
-		  ('Rejected')/*,
-		  ('Implemented'),
-		  ('Canceled')*/;

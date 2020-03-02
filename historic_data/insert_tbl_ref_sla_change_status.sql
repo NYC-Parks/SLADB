@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
- Created Date:  09/12/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  03/02/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,20 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
-go
---drop view dbo.vw_date_ref_fixed
-create view dbo.vw_date_ref_fixed as 
-	select l.season_id,
-			r.ref_date,
-			r.saturday_ref_date,
-			r.sunday_ref_date,
-			row_number() over(partition by season_id, date_type_id order by season_id, date_type_id) as date_row,
-			l.date_type_id,
-			l.date_category_id
-	from sladb.dbo.vw_ref_sla_season_definition as l
-	left join
-		 sladb.dbo.vw_season_dates_adjusted as r
-	on l.month_name_desc = r.month_name_desc and
-		l.date_ref_day_number = r.date_ref_day_number
-	where l.date_ref_fixed = 1;
+begin transaction
+	insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status_desc)
+		values('Submitted'),
+			  ('Approved'),
+			  ('Rejected')/*,
+			  ('Implemented'),
+			  ('Canceled')*/;
+commit;

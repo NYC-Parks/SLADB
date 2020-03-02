@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management  																					   			          
  Created Date:  09/20/2019																							   
- Modified Date: 09/30/2019																							   
+ Modified Date: 03/02/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -20,7 +20,7 @@
 use sladb 
 go
 
-create procedure dbo.sp_merge_ref_unit as
+create or alter procedure dbo.sp_merge_ref_unit as
 	begin transaction;
 		with ampsunits as(
 		select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
@@ -32,7 +32,7 @@ create procedure dbo.sp_merge_ref_unit as
 			   obj_commiss,
 			   obj_updated,
 			   obj_withdraw
-		from [data.nycdpr.parks.nycnet].eamprod.dbo.r5objects
+		from [dataparks].eamprod.dbo.r5objects
 		where lower(obj_class) in('park', 'plgd', 'zone', 'greenst') and
 			  lower(obj_obtype) not in('c', 'i'))
 

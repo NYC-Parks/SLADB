@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
- Created Date:  09/12/2019																							   
- Modified Date: 10/24/2019																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  03/02/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -17,21 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
-go
---drop view dbo.vw_date_ref_notfixed
-create view dbo.vw_date_ref_notfixed as 
-	select l.season_id,
-			r.ref_date,
-			r.saturday_ref_date,
-			r.sunday_ref_date,
-			row_number() over(partition by season_id, date_type_id order by season_id, date_type_id) as date_row,
-			l.date_type_id,
-			l.date_category_id
-	from sladb.dbo.vw_ref_sla_season_definition as l
-	left join
-		 sladb.dbo.vw_season_dates_adjusted as r
-	on l.month_name_desc = r.month_name_desc and
-	   l.day_name_desc = r.day_name_desc and
-	   l.day_rank_id = r.day_rank_id
-	where l.date_ref_fixed = 0
+begin transaction
+	insert into sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id, day_rank_desc)
+		values('1', 'First {X} of the month.'),
+			  ('2', 'Second {X} of the month.'),
+			  ('3', 'Third {X} of the month.'),
+			  ('4', 'Fourth {X} of the month.'),
+			  ('last', 'Last {X} of the month.');
+commit;

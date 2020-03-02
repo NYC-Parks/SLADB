@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 03/02/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  03/02/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -17,11 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
---drop table sladb.dbo.tbl_ref_sla_season_date_type
-create table sladb.dbo.tbl_ref_sla_season_date_type(date_type_id int identity(1,1) primary key,
-													date_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(date_category_id),
-												    date_type_desc nvarchar(30));
+use sladb
+go
 
-
-
-
+create view dbo.vw_day_rank_dropdown as
+	select replace(day_rank_desc,'{X}', l.day_name_desc)
+	from sladb.dbo.tbl_ref_sla_season_day_name as l
+	cross join
+		 sladb.dbo.tbl_ref_sla_season_day_rank as r;

@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 10/24/2019																						   
+ Modified Date: 03/02/2020																						   
 											       																	   
  Project: SLADB		
  																							   
@@ -20,11 +20,3 @@
 create table sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id nvarchar(5) primary key,
 												   day_rank_desc nvarchar(128));
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id, day_rank_desc)
-		values('1', 'First {X}day of the month.'),
-			  ('2', 'Second {X}day of the month.'),
-			  ('3', 'Third {X}day of the month.'),
-			  ('4', 'Fourth {X}day of the month.'),
-			  ('last', 'Last {X}day of the month.')
-commit;

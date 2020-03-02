@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
- Created Date:  09/06/2019																							   
- Modified Date: 03/02/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  03/02/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,11 +17,13 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
---drop table sladb.dbo.tbl_ref_sla_season_date_type
-create table sladb.dbo.tbl_ref_sla_season_date_type(date_type_id int identity(1,1) primary key,
-													date_category_id int foreign key references sladb.dbo.tbl_ref_sla_season_category(date_category_id),
-												    date_type_desc nvarchar(30));
-
-
-
-
+begin transaction
+	insert into sladb.dbo.tbl_ref_sla_season_day_name(day_name_num, day_name_desc, ndays_sunday, ndays_saturday)
+		values(1, 'Sunday', 0, 6),
+			  (2, 'Monday', 6, 5),
+			  (3, 'Tuesday', 5, 4),
+			  (4, 'Wednesday', 4, 3),
+			  (5, 'Thursday', 3, 2),
+			  (6, 'Friday', 2, 1),
+			  (7, 'Saturday', 1, 0);
+commit;

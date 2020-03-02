@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 10/24/2019																						   
+ Modified Date: 03/02/2020																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -22,13 +22,3 @@ create table sladb.dbo.tbl_ref_sla_season_day_name(day_name_num int not null uni
 												   ndays_sunday int not null,
 												   ndays_saturday int not null);
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_day_name(day_name_num, day_name_desc, ndays_sunday, ndays_saturday)
-		values(1, 'Sunday', 0, 6),
-			  (2, 'Monday', 6, 5),
-			  (3, 'Tuesday', 5, 4),
-			  (4, 'Wednesday', 4, 3),
-			  (5, 'Thursday', 3, 2),
-			  (6, 'Friday', 2, 1),
-			  (7, 'Saturday', 1, 0)
-commit;

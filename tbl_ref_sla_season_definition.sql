@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/06/2019																							   
- Modified Date: 10/24/2019																						   
+ Modified Date: 03/02/2020																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -26,13 +26,3 @@ create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int iden
 													 day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(day_name_desc),
 													 day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id),
 													 date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(date_type_id));
-
-
-/*insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_number, season_active)
-	values('Field and Court Season', 1, 'April', 15, 1),
-		  ('Playgrounds and Pools'),
-		  ('Year Round');
-
-insert into sladb.dbo.tbl_ref_sla_season(season_desc, season_fixed, season_month_name, season_day_name, season_day_rank, season_active)
-	values('Beach Season', 0, 'May', 'Sunday', '2', 1)*/
-

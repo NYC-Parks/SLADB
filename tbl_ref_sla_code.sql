@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management																						   			          
  Created Date:  10/22/2019																							   
- Modified Date: 02/26/2020																						   
+ Modified Date: 03/02/2020																						   
 											       																	   
  Project: SLADB	
  																							   
@@ -16,30 +16,3 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_ref_sla_code(sla_code int identity(1,1) primary key);
-
-/*Allow identity inserts
-set identity_insert sladb.dbo.tbl_ref_sla_code on;*/
-
-/*insert into sladb.dbo.tbl_ref_sla_code(sla_code)
-	select row_number() over(order by l.sla_id)
-	from sladb.dbo.tbl_ref_sla as l
-	cross join
-		 sladb.dbo.tbl_ref_sla as r*/
-
-
-
-/*select l.sla_code,
-	   l.sla_id,
-	   r.sla_id
-from (select sla_code,
-			 sla_id,
-			 season_category_id
-	  from sladb.dbo.tbl_ref_sla_translation
-	  where season_category_id = 1) as l
-left join
-	 (select sla_code,
-			 sla_id,
-			 season_category_id
-	  from sladb.dbo.tbl_ref_sla_translation
-	  where season_category_id = 2) as r
-on l.sla_code = r.sla_code*/
