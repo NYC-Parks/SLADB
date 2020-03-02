@@ -64,16 +64,19 @@ REM -------------------------------------------------------------------------
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_ref_sla_season_definition.sql
 
-sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_season_dates_adjusted.sql
+REM sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_season_dates_adjusted.sql
 
-sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_date_ref_fixed.sql
+REM sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_date_ref_fixed.sql
 
-sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_date_ref_notfixed.sql
+REM sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_date_ref_notfixed.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_sla_historic.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_sla_code_pivot.sql
 
+sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_unit_sla_season_unassigned.sql
+
+sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_day_rank_dropdown.sql
 
 
 REM Create all of the stored procedures.
@@ -86,7 +89,7 @@ sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\sp_season_dates.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\sp_insert_season.sql
 
-sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\sp_i_tbl_unit_sla_season_delay.sql
+sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\sp_i_tbl_unit_sla_season.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\sp_u_tbl_sla_season.sql
 

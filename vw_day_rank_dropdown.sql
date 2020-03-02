@@ -21,7 +21,7 @@ use sladb
 go
 
 create view dbo.vw_day_rank_dropdown as
-	select replace(day_rank_desc,'{X}', l.day_name_desc)
+	select replace(day_rank_desc,'{X}', l.day_name_desc) as day_name_rank_desc
 	from sladb.dbo.tbl_ref_sla_season_day_name as l
 	cross join
 		 sladb.dbo.tbl_ref_sla_season_day_rank as r;

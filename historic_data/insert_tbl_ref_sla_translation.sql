@@ -30,7 +30,6 @@ insert into @sla_tab(sla_id, date_category_id)
 	cross join
 		 sladb.dbo.tbl_ref_sla_season_category;
 
-
 with combos as(
 select l.*, 
 	   r.sla_id as sla_id2,
@@ -39,7 +38,6 @@ from @sla_tab as l
 cross join
 	 @sla_tab as r
 where l.date_category_id != r.date_category_id)
-
 
 	insert into sladb.dbo.tbl_ref_sla_translation(sla_id,
 												  date_category_id,

@@ -19,6 +19,12 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 	begin
 		begin try
@@ -35,7 +41,8 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 					on l.change_request_id = r.change_request_id
 					/*If the change request status is approved and the effective date is today then insert the new record*/
 					where r.sla_change_status = 2 and
-						  l.effective_start_adj = cast(dateadd(hour, -1, getdate()) as date);
+						  --l.effective_start_adj = cast(dateadd(hour, -1, getdate()) as date);
+						  l.effective_start_adj <= cast(dateadd(hour, -1, getdate()) as date);
 			commit;
 
 			end try

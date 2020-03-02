@@ -55,42 +55,44 @@ select *
 from #amps_updates
 ) all_updates;
 
+/*Disable the check constraint to allow for historic data to be inserted*/
 alter table sladb.dbo.tbl_change_request
-	drop constraint ck_change_request_effective_start;
+	nocheck constraint ck_change_request_effective_start;
 
 begin transaction
-insert into sladb.dbo.tbl_change_request (unit_id, sla_code, season_id, effective_start, change_request_justification)
-select unit_id, sla_code, season_id, effective_start, change_request_justification
-from #all_updates
-where dtrk = 1;
+	insert into sladb.dbo.tbl_change_request (unit_id, sla_code, season_id, effective_start, change_request_justification)
+		select unit_id, sla_code, season_id, effective_start, change_request_justification
+		from #all_updates
+		where dtrk = 1;
 commit;
 
 begin transaction 
-insert into sladb.dbo.tbl_change_request_status (change_request_id, sla_change_status, status_user)
-select change_request_id, 2 as sla_change_status, '1552495' status_user
-from sladb.dbo.tbl_change_request_status
-where sla_change_status = 1;
+	insert into sladb.dbo.tbl_change_request_status (change_request_id, sla_change_status, status_user)
+		select change_request_id, 2 as sla_change_status, '1552495' status_user
+		from sladb.dbo.tbl_change_request_status
+		where sla_change_status = 1;
 commit;
 
 -- need to get the row id for the last record to filter on later
 declare @i int = (select ident_current('sladb.dbo.tbl_change_request_status'));
 
 begin transaction
-insert into sladb.dbo.tbl_change_request (unit_id, sla_code, season_id, effective_start, change_request_justification)
-select unit_id, sla_code, season_id, effective_start, change_request_justification
-from #all_updates
-where dtrk > 1;
+	insert into sladb.dbo.tbl_change_request (unit_id, sla_code, season_id, effective_start, change_request_justification)
+		select unit_id, sla_code, season_id, effective_start, change_request_justification
+		from #all_updates
+		where dtrk > 1;
 commit;
 
 begin transaction 
-insert into sladb.dbo.tbl_change_request_status (change_request_id, sla_change_status, status_user)
-select change_request_id, 2 as sla_change_status, '1552495' status_user
-from sladb.dbo.tbl_change_request_status
-where change_request_status_id > @i;
+	insert into sladb.dbo.tbl_change_request_status (change_request_id, sla_change_status, status_user)
+		select change_request_id, 2 as sla_change_status, '1552495' status_user
+		from sladb.dbo.tbl_change_request_status
+		where change_request_status_id > @i;
 commit;
 
+/*Enable the check constraint so that only current or future data can be inserted or updated.*/
 alter table sladb.dbo.tbl_change_request
-	add constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date));
+	check constraint ck_change_request_effective_start;
 
 --truncate table sladb.dbo.tbl_change_request_status
 --delete from sladb.dbo.tbl_change_request

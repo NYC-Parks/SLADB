@@ -20,7 +20,3 @@
 --drop table sladb.dbo.tbl_ref_sla_season_category
 create table sladb.dbo.tbl_ref_sla_season_category(date_category_id int identity(1,1) primary key,
 												   date_category_desc nvarchar(30));
-
-insert into sladb.dbo.tbl_ref_sla_season_category(date_category_desc)
-	values('Season'),
-		  ('Offseason');
