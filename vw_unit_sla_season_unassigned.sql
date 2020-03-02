@@ -1,9 +1,9 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
- Created Date:  01/30/2020																							   
- Modified Date: 03/02/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  03/02/2020																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -20,17 +20,11 @@
 use sladb
 go
 
-create trigger dbo.trg_i_tbl_change_request_status
-on sladb.dbo.tbl_change_request_status
-after insert as
-	begin
-		/*Try the insert*/
-		begin try
-			exec sladb.dbo.sp_i_tbl_unit_sla_season
-		end try
-
-		/*Catch any errors and if applicable, rollback the above transaction.*/
-		begin catch
-			rollback transaction;
-		end catch
-	end;
+create view dbo.vw_unit_sla_season_unassigned as
+	select l.*
+	from sladb.dbo.tbl_ref_unit as l
+	left join
+		 sladb.dbo.tbl_unit_sla_season as r
+	on l.unit_id = r.unit_id
+	where sla_code is null and 
+		  lower(unit_status) != 'd';
