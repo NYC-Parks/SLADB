@@ -78,6 +78,8 @@ sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_unit_sla_season_unassigned.sql
 
 sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_day_rank_dropdown.sql
 
+sqlcmd -S dpr-vdipm001 -E -i C:\Projects\sladb\vw_tbl_unit_sla_season_last_id.sql
+
 
 REM Create all of the stored procedures.
 REM -------------------------------------------------------------------------

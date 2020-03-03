@@ -19,18 +19,18 @@
 ***********************************************************************************************************************/
 use sladb
 go
-
-create trigger dbo.trg_i_tbl_change_request_status
+--drop trigger dbo.trg_i_tbl_change_request_status
+create or alter trigger dbo.trg_i_tbl_change_request_status
 on sladb.dbo.tbl_change_request_status
 after insert as
 	begin
 		/*Try the insert*/
-		begin try
-			exec sladb.dbo.sp_i_tbl_unit_sla_season
-		end try
+		--begin try
+			exec sladb.dbo.sp_i_tbl_unit_sla_season;
+		--end try
 
 		/*Catch any errors and if applicable, rollback the above transaction.*/
-		begin catch
-			rollback transaction;
-		end catch
+		--begin catch
+		--	rollback transaction;
+		--end catch
 	end;

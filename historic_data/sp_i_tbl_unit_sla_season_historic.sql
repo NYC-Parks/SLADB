@@ -41,7 +41,8 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 					on l.change_request_id = r.change_request_id
 					/*If the change request status is approved and the effective date is today then insert the new record*/
 					where r.sla_change_status = 2 and
-						  l.effective_start_adj = cast(dateadd(hour, -1, getdate()) as date)
+						  --l.effective_start_adj = cast(dateadd(hour, -1, getdate()) as date);
+						  l.effective_start_adj <= cast(getdate() as date)
 					except
 						select unit_id, 
 							   sla_code, 
