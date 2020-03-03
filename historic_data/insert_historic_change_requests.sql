@@ -1,3 +1,6 @@
+truncate table sladb.dbo.tbl_change_request_status;
+delete from sladb.dbo.tbl_change_request;
+truncate table sladb.dbo.tbl_unit_sla_season;
 
 if object_id('tempdb..#original') is not null drop table #original; 
 
@@ -94,7 +97,8 @@ commit;
 alter table sladb.dbo.tbl_change_request
 	check constraint ck_change_request_effective_start;
 
---truncate table sladb.dbo.tbl_change_request_status
---delete from sladb.dbo.tbl_change_request
---truncate table sladb.dbo.tbl_change_request
---DBCC CHECKIDENT ('sladb.dbo.tbl_change_request', RESEED, 1)
+begin transaction
+	update sladb.dbo.tbl_unit_sla_season
+		set effective_end = '2019-06-30'
+		where effective = 0;
+commit;
