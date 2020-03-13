@@ -3,7 +3,7 @@
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management 																						   			          
  Created Date:  09/30/2019																							   
- Modified Date: 01/24/2020																							   
+ Modified Date: 03/10/2020																							   
 											       																	   
  Project: SLADB	
  																							   
@@ -24,10 +24,12 @@ select l.unit_id,
 	   r.sla_code,
 	   r.season_id,
 	   r.effective,
-	   coalesce(r.effective_start, '2014-01-01') as effective_start, 
-	   case when r.effective_end  >= cast(getdate() as date) then cast(getdate() as date)
-			else dbo.fn_getdate(r.effective_end, 0) 
-	   end as effective_end
+	   coalesce(r.effective_start_adj, dbo.fn_getdate('2014-01-01', 1)) as effective_start_adj,
+	   /*coalesce(r.effective_end_adj, dbo.fn_getdate(cast(getdate() as date), 0)) as effective_end_adj
+	   coalesce(r.effective_start, '2014-01-01') as effective_start,*/ 
+	   case when r.effective_end_adj  >= cast(getdate() as date) then cast(getdate() as date)
+			else r.effective_end_adj
+	   end as effective_end_adj
 from sladb.dbo.tbl_ref_unit as l
 left join
 	 sladb.dbo.tbl_unit_sla_season as r
@@ -35,12 +37,19 @@ on l.unit_id = r.unit_id
 where cast(unit_withdraw as date) >= '2014-01-01' or
 	  unit_withdraw is null)
 
+
 select top 100 percent l.unit_id,
-	   case when l.effective_end is null and dbo.fn_getdate(l.effective_start, 1) between r.effective_start_adj and effective_end_adj then dbo.fn_getdate(l.effective_start, 1)
+	   case when l.effective_start_adj between r.effective_start_adj and r.effective_end_adj then l.effective_start_adj
+			else r.effective_start_adj
+	   end as effective_start_adj,
+	   /*case when l.effective_end is null and dbo.fn_getdate(l.effective_start, 1) between r.effective_start_adj and r.effective_end_adj then dbo.fn_getdate(l.effective_start, 1)
 			else r.effective_start_adj
 	   end as effective_start_adj,
 	   case when coalesce(l.effective_end, r.effective_end_adj)  >= cast(getdate() as date) then cast(getdate() as date)
 			else coalesce(dbo.fn_getdate(l.effective_end, 0), r.effective_end_adj) 
+	   end as effective_end_adj,*/
+	   case when coalesce(l.effective_end_adj, r.effective_end_adj) >= dbo.fn_getdate(cast(getdate() as date), 0) then dbo.fn_getdate(cast(getdate() as date), 0)
+			else coalesce(l.effective_end_adj, r.effective_end_adj) 
 	   end as effective_end_adj,
 	   r2.sla_id,
 	   r3.sla_min_days,
@@ -49,9 +58,12 @@ from units as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
 on l.season_id = r.season_id and
-   ((l.effective_start <= r.effective_start and l.effective_end between r.effective_start and r.effective_end) or
-    (l.effective_end is null and l.effective_start <= r.effective_end) or
-    (l.effective_end between r.effective_start and r.effective_end))
+   ((l.effective_start_adj <= r.effective_start_adj and l.effective_end_adj between r.effective_start_adj and r.effective_end_adj) or
+    (l.effective_end_adj is null and l.effective_start_adj <= r.effective_end_adj) or
+    (l.effective_end_adj between r.effective_start_adj and r.effective_end_adj))
+   /*(l.effective_end_adj between r.effective_start_adj and r.effective_end_adj or
+    l.effective_start_adj <= r.effective_end_adj or
+	l.effective_end_adj between r.effective_start_adj and r.effective_end_adj)*/
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
@@ -59,6 +71,9 @@ on l.sla_code = r2.sla_code and
 left join
 	 sladb.dbo.tbl_ref_sla as r3
 on r2.sla_id = r3.sla_id
-where effective_end_adj <= cast(getdate() as date) or
-	  l.effective_end is null
+where l.effective_start_adj <= dbo.fn_getdate(cast(getdate() as date), 1) and(
+	  r.effective_end_adj <= dbo.fn_getdate(cast(getdate() as date), 0) or
+	  --l.effective_end_adj <= dbo.fn_getdate(cast(getdate() as date), 0) or
+	  --r.effective_start_adj <= cast(getdate() as date) or
+	  l.effective_end_adj is null)
 order by unit_id, effective_start_adj
