@@ -24,7 +24,7 @@ select l.unit_id,
 	   r.sla_code,
 	   r.season_id,
 	   r.effective,
-	   coalesce(r.effective_start_adj, dbo.fn_getdate('2014-01-01', 1)) as effective_start_adj,
+	   coalesce(r.effective_start_adj, sladb.dbo.fn_getdate('2014-01-01', 1)) as effective_start_adj,
 	   /*coalesce(r.effective_end_adj, dbo.fn_getdate(cast(getdate() as date), 0)) as effective_end_adj
 	   coalesce(r.effective_start, '2014-01-01') as effective_start,*/ 
 	   case when r.effective_end_adj  >= cast(getdate() as date) then cast(getdate() as date)
@@ -42,14 +42,10 @@ select top 100 percent l.unit_id,
 	   case when l.effective_start_adj between r.effective_start_adj and r.effective_end_adj then l.effective_start_adj
 			else r.effective_start_adj
 	   end as effective_start_adj,
-	   /*case when l.effective_end is null and dbo.fn_getdate(l.effective_start, 1) between r.effective_start_adj and r.effective_end_adj then dbo.fn_getdate(l.effective_start, 1)
-			else r.effective_start_adj
-	   end as effective_start_adj,
-	   case when coalesce(l.effective_end, r.effective_end_adj)  >= cast(getdate() as date) then cast(getdate() as date)
-			else coalesce(dbo.fn_getdate(l.effective_end, 0), r.effective_end_adj) 
-	   end as effective_end_adj,*/
-	   case when coalesce(l.effective_end_adj, r.effective_end_adj) >= dbo.fn_getdate(cast(getdate() as date), 0) then dbo.fn_getdate(cast(getdate() as date), 0)
-			else coalesce(l.effective_end_adj, r.effective_end_adj) 
+	   case when l.effective_end_adj is not null and l.effective_end_adj >= cast(getdate() as date) then cast(getdate() as date)
+			when l.effective_end_adj is not null and l.effective_end_adj < cast(getdate() as date) then l.effective_end_adj
+			when l.effective_end_adj is null and r.effective_end_adj >= cast(getdate() as date) then cast(getdate() as date)
+			else r.effective_end_adj
 	   end as effective_end_adj,
 	   r2.sla_id,
 	   r3.sla_min_days,
@@ -61,9 +57,6 @@ on l.season_id = r.season_id and
    ((l.effective_start_adj <= r.effective_start_adj and l.effective_end_adj between r.effective_start_adj and r.effective_end_adj) or
     (l.effective_end_adj is null and l.effective_start_adj <= r.effective_end_adj) or
     (l.effective_end_adj between r.effective_start_adj and r.effective_end_adj))
-   /*(l.effective_end_adj between r.effective_start_adj and r.effective_end_adj or
-    l.effective_start_adj <= r.effective_end_adj or
-	l.effective_end_adj between r.effective_start_adj and r.effective_end_adj)*/
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
@@ -71,9 +64,6 @@ on l.sla_code = r2.sla_code and
 left join
 	 sladb.dbo.tbl_ref_sla as r3
 on r2.sla_id = r3.sla_id
-where l.effective_start_adj <= dbo.fn_getdate(cast(getdate() as date), 1) and(
-	  r.effective_end_adj <= dbo.fn_getdate(cast(getdate() as date), 0) or
-	  --l.effective_end_adj <= dbo.fn_getdate(cast(getdate() as date), 0) or
-	  --r.effective_start_adj <= cast(getdate() as date) or
-	  l.effective_end_adj is null)
+where l.effective_start_adj <= cast(getdate() as date) and
+	  r.effective_start_adj <= cast(getdate() as date)
 order by unit_id, effective_start_adj
