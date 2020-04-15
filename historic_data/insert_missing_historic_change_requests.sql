@@ -39,7 +39,7 @@ select r2.unit_id,
 	   r.ava_to,
 	   r.ava_changed,
 	   r.ava_modifiedby,
-	   count(r2.unit_id) over(partition by r2.unit_id order by ava_changed) as nchanges
+	   count(r2.unit_id) over(partition by r2.unit_id order by /*ava_changed,*/ unit_id) as nchanges
 from (select aat_code,
 			 aat_table
 	  from [dataparks].eamprod.dbo.r5audattribs
@@ -52,5 +52,15 @@ on l.aat_table = r.ava_table and
 inner join
 	 no_slas2 as r2
 on r.ava_primaryid collate SQL_Latin1_General_CP1_CI_AS = r2.unit_id
+where ava_changed < '2020-03-30'
 order by unit_id, ava_changed
 
+begin transaction
+	insert into sladb.dbo.tbl_change_request
+		select unit_id, sla_id
+		from;
+commit
+
+begin transaction
+	insert into sladbd.dbo.tbl_change_request_status
+commit;
