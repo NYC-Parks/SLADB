@@ -21,6 +21,8 @@ create or alter view dbo.vw_sla_historic as
 
 with units as (
 select l.unit_id,
+	   l.unit_mrc as district,
+	   left(l.unit_mrc, 1) as borough,
 	   r.sla_code,
 	   r.season_id,
 	   r.effective,
@@ -38,7 +40,9 @@ where cast(unit_withdraw as date) >= '2014-01-01' or
 	  unit_withdraw is null)
 
 
-select top 100 percent l.unit_id,
+select top 100 percent l.borough,
+	   l.district,
+	   l.unit_id,
 	   case when l.effective_start_adj between r.effective_start_adj and r.effective_end_adj then l.effective_start_adj
 			else r.effective_start_adj
 	   end as effective_start_adj,
