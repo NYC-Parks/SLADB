@@ -24,7 +24,15 @@ sqlcmd -S . -E -i insert_historic_seasons.sql
 
 sqlcmd -S . -E -i insert_historic_change_requests.sql
 
-sqlcmd -S . -E -Q "exec sladb.dbo.sp_season_dates;"
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_season_dates"
+
+sqlcmd -S . -E -Q "update_amps_inactive.sql"
+
+sqlcmd -S . -E -Q "insert_missing_historic_change_requests.sql"
+
+sqlcmd -S . -E -Q "insert_historic_change_requests_covid19.sql"
+
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_season_dates"
 
 cd ..
 
