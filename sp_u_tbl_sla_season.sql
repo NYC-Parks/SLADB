@@ -26,6 +26,6 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 			update sladb.dbo.tbl_sla_season
 				set effective = 0
 			where effective = 1 and 
-				  cast(dateadd(hour, -1, effective_end) as date) = cast(getdate() as date);
+				  cast(dateadd(hour, -1, cast(effective_end as datetime)) as date) = cast(getdate() as date);
 		commit;
 	end;

@@ -17,7 +17,7 @@
 use sladb
 go
 --drop view dbo.vw_ref_sla_season_definition
-create view dbo.vw_ref_sla_season_definition as
+create or alter view dbo.vw_ref_sla_season_definition as
 
 	select row_number() over(order by l.season_id, l.date_type_id) as row_id,
 		   l.season_date_ref_id, 
