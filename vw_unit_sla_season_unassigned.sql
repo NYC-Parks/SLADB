@@ -20,11 +20,13 @@
 use sladb
 go
 
-create view dbo.vw_unit_sla_season_unassigned as
+create or alter view dbo.vw_unit_sla_season_unassigned as
 	select l.*
 	from sladb.dbo.tbl_ref_unit as l
 	left join
-		 sladb.dbo.tbl_unit_sla_season as r
+		 (select *
+		  from sladb.dbo.vw_sla_historic
+		  where cast(getdate() as date) between effective_start_adj and effective_end_adj) as r
 	on l.unit_id = r.unit_id
-	where sla_code is null and 
+	where sla_id is null and 
 		  lower(unit_status) != 'd';

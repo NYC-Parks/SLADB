@@ -19,7 +19,7 @@ set quoted_identifier on;
 go
 
 create table sladb.dbo.tbl_ref_sla_translation(sla_trans_id int identity(1,1) primary key,				   
-											   sla_id nvarchar(1) not null,
+											   sla_id nvarchar(1) not null foreign key references sladb.dbo.tbl_ref_sla(sla_id),
 											   date_category_id int not null foreign key references sladb.dbo.tbl_ref_sla_season_category(date_category_id),
 											   --sla_code as ceiling(sla_trans_id/2) persisted--,
 											   sla_code int not null foreign key references sladb.dbo.tbl_ref_sla_code(sla_code),
