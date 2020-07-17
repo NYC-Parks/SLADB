@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-07-17T20:37:25.790Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="FBGKHdmzj7iZe-kjyDRh" version="13.4.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-17T20:45:29.809Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="gvX2soQsf8jbHfERAEF5" version="13.4.6" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1083" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="758" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -95,7 +95,7 @@
           <mxGeometry x="235" y="300" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wBC0IcQCy2k8Cki3I0yd-1" value="Do Nothing" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#f8cecc;strokeColor=#b85450;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="430" y="425" width="90" height="90" as="geometry" />
+          <mxGeometry x="500" y="425" width="90" height="90" as="geometry" />
         </mxCell>
         <mxCell id="wBC0IcQCy2k8Cki3I0yd-3" value="Does the unit exist in tbl_unit_sla_season?&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="280" y="630" width="150" height="60" as="geometry" />
@@ -129,7 +129,7 @@
           <mxGeometry x="526" y="700" width="50" height="40" as="geometry" />
         </mxCell>
         <mxCell id="wBC0IcQCy2k8Cki3I0yd-8" value="Do Nothing" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#f8cecc;strokeColor=#b85450;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="505" y="780" width="92" height="90" as="geometry" />
+          <mxGeometry x="505" y="820" width="92" height="90" as="geometry" />
         </mxCell>
         <mxCell id="wBC0IcQCy2k8Cki3I0yd-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="wBC0IcQCy2k8Cki3I0yd-7" target="wBC0IcQCy2k8Cki3I0yd-8" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -139,6 +139,12 @@
         </mxCell>
         <mxCell id="pCMEsx3_8Je4IrAWFXmV-0" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;Set effective = 0&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;Set effective_to date to the next upcoming Saturday&#39;s date&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="650" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pCMEsx3_8Je4IrAWFXmV-2" value="&lt;span id=&quot;docs-internal-guid-cab402d8-7fff-18fc-b851-d093ed2a1515&quot;&gt;&lt;span style=&quot;font-family: &amp;#34;arial&amp;#34; ; background-color: transparent ; vertical-align: baseline&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;i&gt;“No” if unit is in an AMPS class that is not used for Daily Tasks Fixed or Mobile Crew modules&lt;/i&gt;&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="355" y="490" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pCMEsx3_8Je4IrAWFXmV-3" value="&lt;span id=&quot;docs-internal-guid-5fe48b0e-7fff-a765-be8b-5b3e4f1d802c&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;arial&amp;quot; ; background-color: transparent ; vertical-align: baseline&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;“No” if unit is added to tbl_ref_unit and was never assigned an SLA&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontStyle=2" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="590" y="750" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
