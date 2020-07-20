@@ -1,62 +1,94 @@
-<mxfile host="app.diagrams.net" modified="2020-07-17T18:43:51.569Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="u598xPfyDFnCcrMkmLWU" version="13.4.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-20T15:51:50.531Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="EwDIg_FgE-1-fOqSzFMd" version="13.4.9" type="github">
   <diagram id="tBEbQWenUrNbx1Z8LTrX" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="bEAabfWQqf5mojN98RMT-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-1" target="bEAabfWQqf5mojN98RMT-2">
+        <mxCell id="bEAabfWQqf5mojN98RMT-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-1" target="bEAabfWQqf5mojN98RMT-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-1" value="COO Focht Adds or requests to add a new SLA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="190" y="50" width="120" height="60" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-1" value="COO or FDC adds or requests to add a new SLA value to be assigned to specific units" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="360" y="120" width="120" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-2" target="bEAabfWQqf5mojN98RMT-16">
+        <mxCell id="bEAabfWQqf5mojN98RMT-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-2" target="bEAabfWQqf5mojN98RMT-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-2" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;New record to tbl_ref_sla with sla_id, sla_desc, sla_min_days and sla_max_days" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="175" y="160" width="150" height="70" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-2" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;New record into tbl_ref_sla:&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_desc&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_min_days&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_max_days&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="345" y="215" width="150" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-3" target="bEAabfWQqf5mojN98RMT-4">
+        <mxCell id="bEAabfWQqf5mojN98RMT-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-3" target="bEAabfWQqf5mojN98RMT-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-3" target="bEAabfWQqf5mojN98RMT-5">
+        <mxCell id="bEAabfWQqf5mojN98RMT-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-3" target="bEAabfWQqf5mojN98RMT-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-3" value="Do the number of rows in tbl_ref_sla squared equal the number of rows in tbl_ref_sla_code?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="175" y="333" width="150" height="70" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-3" value="Do the number of rows in tbl_ref_sla_code account for all possible combinations of SLAs?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="345" y="403" width="150" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-4" target="bEAabfWQqf5mojN98RMT-14">
+        <mxCell id="bEAabfWQqf5mojN98RMT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="bEAabfWQqf5mojN98RMT-4" target="-VujINADL6BRCP6vp10U-9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="295" y="573" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bEAabfWQqf5mojN98RMT-4" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="345" y="493" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bEAabfWQqf5mojN98RMT-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-5" target="bEAabfWQqf5mojN98RMT-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-4" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="175" y="423" width="40" height="30" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-5" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="455" y="493" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-5" target="bEAabfWQqf5mojN98RMT-6">
+        <mxCell id="bEAabfWQqf5mojN98RMT-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-6" target="bEAabfWQqf5mojN98RMT-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-5" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="285" y="423" width="40" height="30" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-6" value="How many rows are missing from tbl_ref_sla_code?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="445" y="573" width="150" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-6" target="bEAabfWQqf5mojN98RMT-7">
+        <mxCell id="bEAabfWQqf5mojN98RMT-7" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;New records into tbl_ref_sla_code:&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_code&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=center;" parent="1" vertex="1">
+          <mxGeometry x="640" y="573" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bEAabfWQqf5mojN98RMT-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="bEAabfWQqf5mojN98RMT-16" target="bEAabfWQqf5mojN98RMT-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-6" value="What&#39;s the difference between the number of rows in tbl_ref_sla_code and the number of rows that there should be?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="275" y="503" width="150" height="70" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="405" y="340" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-7" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;New records into tbl_ref_sla_code to equal the required number of rows." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="470" y="503" width="150" height="70" as="geometry" />
+        <mxCell id="bEAabfWQqf5mojN98RMT-17" value="trg_i_tbl_ref_sla" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="439" y="342.5" width="170" height="25" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-14" value="No updates or inserts required." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="50" y="503" width="150" height="70" as="geometry" />
+        <mxCell id="-VujINADL6BRCP6vp10U-1" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bEAabfWQqf5mojN98RMT-16" target="bEAabfWQqf5mojN98RMT-3">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="-VujINADL6BRCP6vp10U-2" value="Technical Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="90" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="235" y="270" width="30" height="30" as="geometry" />
+        <mxCell id="-VujINADL6BRCP6vp10U-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="200" y="30" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="bEAabfWQqf5mojN98RMT-17" value="trg_i_tbl_ref_sla" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="275" y="272.5" width="170" height="25" as="geometry" />
+        <mxCell id="-VujINADL6BRCP6vp10U-4" value="Trigger" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="35" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-5" value="" style="rhombus;whiteSpace=wrap;html=1;align=left;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-6" value="Stored Procedure" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="85" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-8" value="The number of rows in tbl_ref_sla_code must be equal to the number of rows in tbl_ref_sla squared" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="403" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-9" value="No transactions required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="245" y="573" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-10" value="This value is the difference between the number of rows in tbl_ref_sla_code and the number of rows in tbl_ref_sla squared" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="445" y="650" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-11" value="Insert records until the difference is 0" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="650" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="-VujINADL6BRCP6vp10U-12" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="695" y="550" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
