@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-07-20T17:57:31.976Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="Yo1H9q2dB7Ln6ynjsxFY" version="13.4.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-20T17:58:55.527Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="12TcqipodcNbE8Lux6Tw" version="13.4.9" type="github">
   <diagram id="JurtI7rSHXeyfTPvLvUh" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -55,9 +55,6 @@
         <mxCell id="GOEzXW9mrkfehJml5P1z-17" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;Record into tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="424" y="635" width="146" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-18" value="Use the effective_end date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="590" y="700" width="120" height="60" as="geometry" />
-        </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-19" target="GOEzXW9mrkfehJml5P1z-21">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -79,17 +76,20 @@
         <mxCell id="GOEzXW9mrkfehJml5P1z-22" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="342.5" y="650" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-27" target="GOEzXW9mrkfehJml5P1z-31">
+        <mxCell id="GOEzXW9mrkfehJml5P1z-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-27" target="GOEzXW9mrkfehJml5P1z-44">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-27" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="GOEzXW9mrkfehJml5P1z-27" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="227.5" y="970" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-28" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="GOEzXW9mrkfehJml5P1z-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-28" target="GOEzXW9mrkfehJml5P1z-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOEzXW9mrkfehJml5P1z-28" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="67.5" y="970" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-31" value="&lt;b&gt;Update:&lt;/b&gt;&lt;br&gt;Record into tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="174.5" y="1040" width="146" height="60" as="geometry" />
+          <mxGeometry x="14.5" y="1040" width="146" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-33" value="&lt;b&gt;Delete:&lt;/b&gt;&lt;br&gt;Record from tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="352" y="730" width="146" height="60" as="geometry" />
@@ -114,6 +114,9 @@
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-38" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="147.5" y="820" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GOEzXW9mrkfehJml5P1z-44" value="No Transaction Required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="330" y="935" width="100" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
