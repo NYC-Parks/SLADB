@@ -19,12 +19,11 @@
 ***********************************************************************************************************************/
 use sladb
 go
-
+--drop trigger dbo.trg_season_definition
 create or alter trigger dbo.trg_i_tbl_sla_season
 on sladb.dbo.tbl_sla_season
 after insert as 
 	begin
-	/*Create the table parameter which is a clone of the tbl_ref_sla_season_defintion table*/
 	declare @tbl_ref_sla_season_definition table(season_date_ref_id int identity(1,1),
 												 date_ref_fixed bit not null,
 												 month_name_desc nvarchar(9) not null,
@@ -32,14 +31,11 @@ after insert as
 												 day_name_desc nvarchar(9) null,
 												 day_rank_id nvarchar(5) null,
 												 date_type_id int not null);
-		
-		/*Insert values for a year round season starting on January 1 and ending on December 31.*/
+
 		insert into @tbl_ref_sla_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
 			values(cast(1 as bit), 'January', cast(1 as int), cast(1 as int)) /*Start Season value*/,
 				  (cast(1 as bit), 'December', cast(31 as int), cast(2 as int));
-		
-		/*Perform a cross join between the table above year round seasons and the inserted season(s) so that the season_ids for newly inserted
-		  seasons gets assigned to the fixed dates for year round seasons.*/
+
 		begin transaction
 		insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, date_ref_fixed, month_name_desc, date_ref_day_number, date_type_id)
 			select l.season_id,
@@ -47,7 +43,6 @@ after insert as
 				   r.month_name_desc, 
 				   r.date_ref_day_number, 
 				   r.date_type_id
-			/*Only include year round seasons that were inserted.*/
 			from (select season_id
 				  from inserted
 				  where year_round = 1) as l
