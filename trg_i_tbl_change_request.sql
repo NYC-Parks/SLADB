@@ -19,12 +19,13 @@
 ***********************************************************************************************************************/
 use sladb
 go
---drop trigger dbo.trg_change_request_status
-create trigger dbo.trg_i_change_request_status
+
+create trigger dbo.trg_i_tbl_change_request
 on sladb.dbo.tbl_change_request
 for insert as 
 
 	begin transaction
+		/*After a new record is submitted into the tbl_change_request, insert a corresponding record into tbl_change_request_status*/
 		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
 			select change_request_id,
 				   1, --representing the change request has been "Submitted"

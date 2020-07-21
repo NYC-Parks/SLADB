@@ -20,38 +20,37 @@
 use sladb
 go
 
-create or alter procedure dbo.sp_insert_tbl_ref_calendar as
---alter procedure dbo.sp_insert_tbl_ref_calendar as
+create or alter procedure dbo.sp_i_tbl_ref_calendar as
 set nocount on;
 begin
 	declare @calendar table(ref_date date not null);
 
-	declare @dates_interim table(ref_date date,
-								 ref_year int,
-								 month_name_desc nvarchar(9),
-								 day_name_desc nvarchar(9),
-								 day_rank_id nvarchar(5));
-
 	--declare @start_date date = datefromparts(year(getdate()), 01, 01);
 	--declare @end_date date = datefromparts(year(getdate()), 12, 31);
-	declare @start_date date = datefromparts(2014, 01, 01);
+	/*Set start_date equal to the maximum ref_date in tbl_ref_calendar or 01-01-2014 if the table is empty*/
+	declare @start_date date = (select coalesce(dateadd(day, 1, max(ref_date)), datefromparts(2014, 01, 01)) from sladb.dbo.tbl_ref_calendar);
+	/*Set the end_date equal to the current date plus 1 year.*/
 	declare @end_date date = datefromparts(year(getdate()) + 1, 12, 31);
 	declare @i int, @n int, @date date;
 
 	set @i = 0;
+	/*Calculate the difference in days between the start_date and end_date parameters.*/
 	set @n = datediff(day, @start_date, @end_date);
 
 	while @i <= @n
 		begin
-			/*With each iteration add the iteration number to start date.*/
+			/*Iterate through the start_date adding one day each time until reaching the difference between the start_date and
+			  the end_date.*/
 			set @date = dateadd(day, @i, @start_date);
+			/*Insert the date as calculated directly above*/
 			insert into @calendar(ref_date)
 				values(@date)
+		/*Increment parameter i*/
 		set @i = @i + 1;
 		end;
 	
 	if object_id('sladb.dbo.tbl_ref_calendar') is not null
-	/*The start date equals January 1 of the start_year*/
+	/*Insert the records from the table parameter into tbl_ref_calendar*/
 	begin transaction
 		insert into sladb.dbo.tbl_ref_calendar(ref_date)
 			select ref_date

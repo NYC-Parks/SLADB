@@ -18,7 +18,7 @@
 use sladb
 go
 --drop trigger dbo.trg_sla_season_upsert
-create trigger dbo.trg_unit_decommissioned
+create trigger dbo.trg_u_tbl_ref_unit
 on sladb.dbo.tbl_ref_unit
 after update as
 

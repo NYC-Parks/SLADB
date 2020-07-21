@@ -20,7 +20,7 @@
 use sladb 
 go
 
-create or alter procedure dbo.sp_merge_ref_unit as
+create or alter procedure dbo.sp_m_tbl_ref_unit as
 	begin transaction;
 		with ampsunits as(
 		select obj_code collate SQL_Latin1_General_CP1_CI_AS as obj_code,
