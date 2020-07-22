@@ -20,30 +20,30 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter trigger dbo.trg_u_tbl_sla_season
 on sladb.dbo.tbl_sla_season
 for update as
 	begin
-		/*Try the insert*/
-		begin try
-			/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing effective record for that unit
-			  and set the effective value to 0 and the effective_date to today.*/
-			begin transaction;
-				update sladb.dbo.tbl_sla_season
-					set updated_date_utc = getutcdate()
-					from inserted as s
-					inner join
-						 sladb.dbo.tbl_sla_season as u
-					on s.season_id = u.season_id;
-			commit;
+		/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing effective record for that unit
+			and set the effective value to 0 and the effective_date to today.*/
+		begin transaction;
+			update sladb.dbo.tbl_sla_season
+				set updated_date_utc = getutcdate()
+				from inserted as s
+				inner join
+						sladb.dbo.tbl_sla_season as u
+				on s.season_id = u.season_id;
+		commit;
 
-			/*Call the stored procedure that will update the date values in the tbl_sla_season table.*/
-			exec sladb.dbo.sp_season_dates;
-
-		end try
-
-		/*Catch any errors and if applicable, rollback the above transaction.*/
-		begin catch
-			rollback transaction;
-		end catch
+		/*Execute the stored procedure to update the value of effective to 0 along with the updated_date_utc columns, if applicable.*/
+		exec sladb.dbo.sp_u_tbl_sla_season;
+		
+		/*Call the stored procedure that will update the date values in the tbl_sla_season table.*/
+		exec sladb.dbo.sp_m_tbl_sla_season_date;
 	end;

@@ -87,6 +87,7 @@ begin
 	inner join 
 		 #seasondates r 
 	on l.season_id = r.season_id and 
+	   /*To join the effective_start and effective_end dates properly you need to join the right table based on the date rank minus one.*/
 	   l.dtrk = r.dtrk - 1
 	order by season_id, effective_start;
 
