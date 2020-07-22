@@ -1,1 +1,120 @@
-<mxfile host="app.diagrams.net" modified="2020-07-22T19:32:11.854Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" version="13.5.1" etag="uInFeXBKE2ADyeu57cJ2" type="github"><diagram id="XN8gdffr4AGZBUH5e0Dg">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-07-22T20:12:50.009Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="WW8kJEs71pY2hFSew68b" version="13.5.1" type="github">
+  <diagram id="XN8gdffr4AGZBUH5e0Dg" name="Page-1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-1" target="vaD9kKH9fZ-N4TJZYWga-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-1" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="320" y="190" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-2" value="sp_i_tbl_ref_calendar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="356" y="192.5" width="145" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-9" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-10" value="Technical Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="30" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-11" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="210" y="50" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-12" value="Trigger" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="55" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-13" value="" style="rhombus;whiteSpace=wrap;html=1;align=left;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="210" y="100" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-14" value="Stored Procedure" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="105" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-15" value="This stored procedure is scheduled to run once annually on 12/31." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-16" target="vaD9kKH9fZ-N4TJZYWga-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-16" value="Calculate the start date as the maximum date plus one day." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="130" y="460" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-17" target="vaD9kKH9fZ-N4TJZYWga-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-17" value="Calculate the end date as December 31 of the current year plus one year" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="263.75" y="590" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-20" target="vaD9kKH9fZ-N4TJZYWga-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-20" target="vaD9kKH9fZ-N4TJZYWga-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-20" value="Does tbl_ref_calendar contain any records?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="257.5" y="270" width="155" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-22" target="vaD9kKH9fZ-N4TJZYWga-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-22" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="257.5" y="380" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="471.25" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-23" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="372.5" y="380" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-28" target="vaD9kKH9fZ-N4TJZYWga-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-28" value="Set the start date to the default value, 2014-01-01" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="400" y="460" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-32" target="vaD9kKH9fZ-N4TJZYWga-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-32" value="Calculate the difference (in days) between the start date and the end date." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="263.75" y="700" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-34" target="vaD9kKH9fZ-N4TJZYWga-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-34" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;New records into tbl_ref_calendar with the following values:&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- ref_date&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;&lt;i&gt;- ref_year (computed)&lt;/i&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;i&gt;- month_name_desc (computed)&lt;/i&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;i&gt;- day_number (computed)&lt;/i&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;i&gt;- day_name_desc (computed)&lt;/i&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="223.43" y="800" width="223.13" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-35" value="&lt;i&gt;Insert new records until the difference is made up between the start and end dates.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="820" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-37" target="vaD9kKH9fZ-N4TJZYWga-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-37" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="320" y="940" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-39" value="trg_i_tbl_ref_calendar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="356" y="942.5" width="145" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-41" value="&lt;b&gt;Update:&lt;/b&gt;&lt;br&gt;Update values in tbl_ref_calendar:&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- set day_rank_id equal to the one calculated&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="579.75" y="1015" width="142.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="vaD9kKH9fZ-N4TJZYWga-42" target="vaD9kKH9fZ-N4TJZYWga-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-42" value="Calculate a rank (day_rank_id)&amp;nbsp; for each weekday (day_name_desc) within a given year (ref_year) and month (month_name_desc)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="356" y="1010" width="174" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-43" value="&lt;i&gt;Example:&lt;br&gt;Memorial Day of 2020 (05-25-2020) would have a ref_year = 2020, month_name_desc = May, the day_number = 25 and the day_name_desc = Monday. The value calculated for the day_rank_id would be &quot;last&quot;. Or more succinctly this would be the last Monday of May of the year 2020.&lt;br&gt;&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="357.25" y="1100" width="172.75" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="vaD9kKH9fZ-N4TJZYWga-46" value="&lt;b&gt;End&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="631" y="1085" width="40" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
