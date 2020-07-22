@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2020-07-22T13:18:44.308Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="4SiWtkPhhQJabBK7m3mX" version="13.4.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-22T19:18:20.526Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="fMaSjSNRI64R2Ny_KAhS" version="13.5.1" type="github">
   <diagram id="JurtI7rSHXeyfTPvLvUh" name="Page-1">
-    <mxGraphModel dx="1083" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1263" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="eP21ShciTytA19N1fUZj-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-1" target="eP21ShciTytA19N1fUZj-2">
+        <mxCell id="eP21ShciTytA19N1fUZj-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GOEzXW9mrkfehJml5P1z-1" target="eP21ShciTytA19N1fUZj-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-1" value="Calculate default effective_end date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
@@ -46,101 +46,126 @@
         <mxCell id="GOEzXW9mrkfehJml5P1z-15" value="This stored procedure is scheduled to run daily." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="195" y="145" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-16" target="GOEzXW9mrkfehJml5P1z-28" edge="1">
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-16" target="GOEzXW9mrkfehJml5P1z-27">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-16" target="GOEzXW9mrkfehJml5P1z-27" edge="1">
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-16" target="GOEzXW9mrkfehJml5P1z-28">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-16" value="Is the effective_end date need to be updated?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="183" y="1150" width="120" height="60" as="geometry" />
+        <mxCell id="GOEzXW9mrkfehJml5P1z-16" value="For each record, is there a discrepancy between the effective_end dates in both tables?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="510" y="910" width="156" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-17" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;Record into tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="499.5" y="905" width="146" height="60" as="geometry" />
+        <mxCell id="GOEzXW9mrkfehJml5P1z-17" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;Insert new record(s) from #sla_season_dates into tbl_ref_sla_season_date with following values:&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- season_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective_start&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective_end&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- date_category_id&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="10" y="1220" width="231.5" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-19" target="GOEzXW9mrkfehJml5P1z-21" edge="1">
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-19" target="GOEzXW9mrkfehJml5P1z-22">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="344.66666666666674" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-19" target="4IHPjcSWIsbSOwblyYBn-16">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-19" target="GOEzXW9mrkfehJml5P1z-22" edge="1">
+        <mxCell id="GOEzXW9mrkfehJml5P1z-19" value="Is there a discrepancy between the number of records in tbl_ref_sla_season_date and #sla_season_dates?&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="263.75" y="800" width="162.5" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="GOEzXW9mrkfehJml5P1z-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-21" target="GOEzXW9mrkfehJml5P1z-33" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="1155" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GOEzXW9mrkfehJml5P1z-21" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="350" y="1015" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-22" target="4IHPjcSWIsbSOwblyYBn-5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-19" value="Does a record with the combination of season_id and effective_start exist in tbl_ref_sla_season_date?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="263" y="820" width="155" height="60" as="geometry" />
+        <mxCell id="GOEzXW9mrkfehJml5P1z-22" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="241.5" y="927.5" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-21" target="GOEzXW9mrkfehJml5P1z-34" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-21" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="223" y="920" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-22" target="GOEzXW9mrkfehJml5P1z-17" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-22" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="418" y="920" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-27" target="GOEzXW9mrkfehJml5P1z-44" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="GOEzXW9mrkfehJml5P1z-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-27" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="942.5" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-27" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="303" y="1240" width="40" height="30" as="geometry" />
+          <mxGeometry x="720" y="927.5" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-28" target="GOEzXW9mrkfehJml5P1z-31" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-28" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="143" y="1240" width="40" height="30" as="geometry" />
+          <mxGeometry x="568" y="1010" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-31" value="&lt;b&gt;Update:&lt;/b&gt;&lt;br&gt;Record into tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="90" y="1310" width="146" height="60" as="geometry" />
+          <mxGeometry x="515" y="1085" width="146" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-33" value="&lt;b&gt;Delete:&lt;/b&gt;&lt;br&gt;Record from tbl_ref_sla_season_date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="427.5" y="1000" width="146" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-34" target="GOEzXW9mrkfehJml5P1z-35" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-34" target="GOEzXW9mrkfehJml5P1z-38" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-34" value="Does the season still have a value of effective = 1?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="183" y="1000" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-35" target="GOEzXW9mrkfehJml5P1z-33" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-35" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="347.5" y="1015" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="GOEzXW9mrkfehJml5P1z-38" target="GOEzXW9mrkfehJml5P1z-16" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="GOEzXW9mrkfehJml5P1z-38" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="223" y="1090" width="40" height="30" as="geometry" />
+          <mxGeometry x="297" y="1160" width="146" height="60" as="geometry" />
         </mxCell>
         <mxCell id="GOEzXW9mrkfehJml5P1z-44" value="No Transaction Required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="405.5" y="1205" width="100" height="100" as="geometry" />
+          <mxGeometry x="800" y="882.5" width="100" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-1" value="&lt;i&gt;Default effective_end date will be current date +&amp;nbsp; 1 year&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="eP21ShciTytA19N1fUZj-1" value="&lt;i&gt;Default effective_end date will be current date +&amp;nbsp; 1 year&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="498" y="430" width="102" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="eP21ShciTytA19N1fUZj-2" target="eP21ShciTytA19N1fUZj-6">
+        <mxCell id="eP21ShciTytA19N1fUZj-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="eP21ShciTytA19N1fUZj-2" target="eP21ShciTytA19N1fUZj-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-2" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;Records into #seasondates temporary table:&lt;br&gt;- season_id and effective_start date&lt;br&gt;- season_id and effective_end date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="eP21ShciTytA19N1fUZj-2" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;Records into #seasondates temporary table:&lt;br&gt;- season_id and effective_start date&lt;br&gt;- season_id and effective_end date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="245" y="560" width="200" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-3" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;rounded=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="GOEzXW9mrkfehJml5P1z-12" target="eP21ShciTytA19N1fUZj-2">
+        <mxCell id="eP21ShciTytA19N1fUZj-3" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="GOEzXW9mrkfehJml5P1z-12" target="eP21ShciTytA19N1fUZj-2" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="350" y="670" as="sourcePoint" />
             <mxPoint x="400" y="620" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-6" value="&lt;b&gt;Transpose&lt;/b&gt;:&lt;br&gt;&amp;nbsp;Rows of all effective_start and effective_end dates for each unique season_id into columns in #sla_season_dates" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="245" y="670" width="200" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="eP21ShciTytA19N1fUZj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="eP21ShciTytA19N1fUZj-6" target="eP21ShciTytA19N1fUZj-6">
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="eP21ShciTytA19N1fUZj-6" target="GOEzXW9mrkfehJml5P1z-19">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eP21ShciTytA19N1fUZj-6" value="&lt;b&gt;Transpose&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective_start date&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective_end date&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;for each unique season_id into columns in #sla_season_dates&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="245" y="680" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="eP21ShciTytA19N1fUZj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="eP21ShciTytA19N1fUZj-6" target="eP21ShciTytA19N1fUZj-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-3" value="&lt;i&gt;This comparison is using combinations of each unique season_id and effective_start&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="449.5" y="800" width="150.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="4IHPjcSWIsbSOwblyYBn-5" target="4IHPjcSWIsbSOwblyYBn-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="125.74000000000001" y="1190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4IHPjcSWIsbSOwblyYBn-5" target="GOEzXW9mrkfehJml5P1z-21">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370.74" y="1030" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-5" value="Are there more rows in #sla_season_dates than in tbl_ref_sla_season_date?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="47.620000000000005" y="1000" width="156.25" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="4IHPjcSWIsbSOwblyYBn-11" target="GOEzXW9mrkfehJml5P1z-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-11" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="105.75" y="1100" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4IHPjcSWIsbSOwblyYBn-16" target="GOEzXW9mrkfehJml5P1z-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-16" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="400" y="927.5" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-24" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="350" y="1220" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-25" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="105.74000000000001" y="1350" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4IHPjcSWIsbSOwblyYBn-27" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="568" y="1145" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
