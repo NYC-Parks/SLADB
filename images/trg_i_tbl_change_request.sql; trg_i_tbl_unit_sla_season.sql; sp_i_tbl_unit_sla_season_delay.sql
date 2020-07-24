@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-07-24T02:38:59.344Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="gAylFeEc317JYLCl-SVP" version="13.5.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-24T02:42:16.271Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="vzif8YhtWmWiC4fUIQzv" version="13.5.1" type="github">
   <diagram id="APbCHEt9h7LmyBrYfhhx" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -187,6 +187,9 @@
         </mxCell>
         <mxCell id="Xcc2Si-ru2YFNp3SEIyi-5" value="&lt;span style=&quot;font-weight: 400 ; text-align: center&quot;&gt;Does tbl_unit_sla_season have a record for this unit with value of effective = 1?&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="220" y="840" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Xcc2Si-ru2YFNp3SEIyi-16" value="&lt;b&gt;End&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="490" y="1010" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
