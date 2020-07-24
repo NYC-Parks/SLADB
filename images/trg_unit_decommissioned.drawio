@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-07-20T15:32:12.434Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="TzqyHd-BPBD2p3VzaWht" version="13.4.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-07-24T02:44:20.552Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="RZT_QJehlusOWPx8UnYZ" version="13.5.1" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1662" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -42,7 +42,7 @@
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-7" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="220" y="418" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="whCD6D2BUrUE-KAFhuNb-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-9" target="IcBJmtCjxh9gWFY_vR4K-8">
+        <mxCell id="whCD6D2BUrUE-KAFhuNb-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-9" target="IcBJmtCjxh9gWFY_vR4K-8" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-9" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -70,7 +70,7 @@
         <mxCell id="eVjlIVdyCygKj0m38MmI-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="wBC0IcQCy2k8Cki3I0yd-3" target="wBC0IcQCy2k8Cki3I0yd-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wBC0IcQCy2k8Cki3I0yd-3" value="Does the unit have a record with a value of effective = 1 in tbl_unit_sla_season?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="wBC0IcQCy2k8Cki3I0yd-3" value="Does tbl_unit_sla_season have a record for this unit with value of effective = 1?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="450" y="992.75" width="160" height="60" as="geometry" />
         </mxCell>
         <mxCell id="eVjlIVdyCygKj0m38MmI-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="wBC0IcQCy2k8Cki3I0yd-6" target="pCMEsx3_8Je4IrAWFXmV-0" edge="1">
@@ -88,7 +88,7 @@
         <mxCell id="wBC0IcQCy2k8Cki3I0yd-8" value="No transaction required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="749" y="978" width="92" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="pCMEsx3_8Je4IrAWFXmV-0" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;Existing record in tbl_unit_sla_season:&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- set effective = 0&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- set effective_to date equal to the current date&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="pCMEsx3_8Je4IrAWFXmV-0" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;Existing record in tbl_unit_sla_season:&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- set effective = 0&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- set effective_end date equal to the current date&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="505" y="794.5" width="210" height="85.5" as="geometry" />
         </mxCell>
         <mxCell id="pCMEsx3_8Je4IrAWFXmV-2" value="&lt;span id=&quot;docs-internal-guid-cab402d8-7fff-18fc-b851-d093ed2a1515&quot;&gt;&lt;span style=&quot;font-family: &amp;#34;arial&amp;#34; ; background-color: transparent ; vertical-align: baseline&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;i&gt;A record is also added to vw_unit_sla_season_unassigned&amp;nbsp;&lt;/i&gt;&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -163,13 +163,13 @@
         <mxCell id="eVjlIVdyCygKj0m38MmI-17" value="No transaction required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="69" y="978" width="92" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="whCD6D2BUrUE-KAFhuNb-1" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="whCD6D2BUrUE-KAFhuNb-1" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="583" y="774.5" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="whCD6D2BUrUE-KAFhuNb-2" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="whCD6D2BUrUE-KAFhuNb-2" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="490" y="373" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="whCD6D2BUrUE-KAFhuNb-3" value="Start" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="whCD6D2BUrUE-KAFhuNb-3" value="Start" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="275" y="183" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
