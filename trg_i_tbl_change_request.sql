@@ -20,16 +20,23 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create trigger dbo.trg_i_tbl_change_request
 on sladb.dbo.tbl_change_request
 for insert as 
 
 	begin transaction
-		/*After a new record is submitted into the tbl_change_request, insert a corresponding record into tbl_change_request_status*/
+		/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
 		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
 			select change_request_id,
-				   1, --representing the change request has been "Submitted"
-				   '0000000' --where can the ERN be pulled from?
+				   1, /*1 = Submitted*/
+				   '0000000' /*Insert a default value for now. The true value will need to be pulled through active directory, expertise of ITT required. It
+				               is stored in the employeeID attribute.*/
 			from inserted
 		 	
 	commit;

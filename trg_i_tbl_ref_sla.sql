@@ -20,6 +20,12 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter trigger dbo.trg_i_tbl_ref_sla 
 	on sladb.dbo.tbl_ref_sla
 	after insert as
@@ -32,11 +38,8 @@ create or alter trigger dbo.trg_i_tbl_ref_sla
 		/*Multiply the number of records in the tbl_ref_sla table by itself to get the number of records that should exist in tbl_ref_sla_code*/
 		declare @i int = (select @n * @n);
 
-		/*Calculate the difference between the current identity -1 and the number rows in the tbl_ref_sla table*/
+		/*Calculate the difference between the current identity - 1 and the number rows in the tbl_ref_sla table*/
 		declare @d int = (select @i - (@m - 1));
-		print @d
-		
-		--declare @j int, @k int, @l int;
 
 		declare @k int = (select @m);
 

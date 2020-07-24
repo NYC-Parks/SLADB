@@ -14,9 +14,15 @@
 																													   												
 ***********************************************************************************************************************/
 use sladb
-go 
-create or alter trigger dbo.trg_season_change
---alter trigger dbo.trg_season_change
+go
+
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
+create or alter trigger dbo.trg_i_tbl_sla_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 

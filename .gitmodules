@@ -1,0 +1,3 @@
+[submodule "SLADB.wiki"]
+	path = SLADB.wiki
+	url = git@github.com:NYC-Parks/SLADB.wiki.git

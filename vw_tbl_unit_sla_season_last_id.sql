@@ -20,13 +20,22 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter view dbo.vw_tbl_unit_sla_season_last_id as
 	select unit_id, 
 		   sla_season_id,
 		   effective_start,
-		   /*Rank the effective records for the inserted unit(s)*/
-		   --last_value(sla_season_id) over(partition by unit_id order by effective_start desc) as last_sla_season_id,
+		   /*Rank the records for each unit that have a record with a value effective = 1. Units with more
+		     than one record with effective = 1 will be assigned sequential values from 1 to the number of records.*/
 		   rank() over(partition by unit_id order by effective_start desc) as row_rank,
+		   /*Count the number of records for each unit that have record with a value effective = 1. Units with more
+		     than one record with effective = 1 will have a value greater than 1.*/
 		   count(*) over(partition by unit_id order by unit_id) as n
 	from sladb.dbo.tbl_unit_sla_season
+	/*Only include records with a value of effective = 1*/
 	where effective = 1;

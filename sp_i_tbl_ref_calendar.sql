@@ -20,6 +20,12 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter procedure dbo.sp_i_tbl_ref_calendar as
 set nocount on;
 begin
