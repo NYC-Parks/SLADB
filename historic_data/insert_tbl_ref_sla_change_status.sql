@@ -21,7 +21,7 @@ begin transaction
 	insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status_desc)
 		values('Submitted'),
 			  ('Approved'),
-			  ('Rejected')/*,
-			  ('Implemented'),
+			  ('Rejected'),
+			  ('Invalid')/*,
 			  ('Canceled')*/;
 commit;
