@@ -26,53 +26,47 @@ create or alter trigger dbo.trg_i_tbl_sla_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 
-	begin transaction;
-		declare @inserts table(unit_id nvarchar(30), 
-							   sla_code int, 
-							   old_season_id int,
-							   new_season_id int,
-							   effective bit,
-							   effective_start date);
+	if object_id('tempdb..#season_change') is not null
+	drop table #season_change
 
-		declare @updates table(sla_season_id int);
+	select distinct r.unit_id,
+		   r.sla_code,
+		   l.new_season_id as season_id,
+		   r2.effective_start,
+		   dbo.fn_season_change_justification(l.old_season_id, l.new_season_id) as change_request_justification,
+		   case when r.sla_code = r3.sla_code then cast(1 as bit)
+				else cast(0 as bit)
+		   end as valid
+	--into #season_change
+	from sladb.dbo.tbl_sla_season_change as l
+	left join
+		 (select *
+		  from sladb.dbo.tbl_unit_sla_season
+		  where effective = 1) as r
+	on l.old_season_id = r.season_id
+	left join
+		 sladb.dbo.tbl_sla_season as r2
+	on l.new_season_id = r2.season_id
+	outer apply
+		dbo.fn_sla_code_valid(l.new_season_id) as r3
+	where r.sla_code = r3.sla_code
 
-		insert into @inserts(unit_id, sla_code, old_season_id, new_season_id, effective, effective_start)
-			select r.unit_id,
-				   r.sla_code,
-				   l.old_season_id,
-				   l.new_season_id,
-				   1 as effective,
-				   sladb.dbo.fn_getdate(cast(getdate() as date), 1) as effective_start
-			from inserted as l
-			left join
-				 sladb.dbo.tbl_unit_sla_season as r
-			on l.old_season_id = r.season_id
-			where r.effective = 1 and 
-				  r.effective_end is null;
-		
-		/*Account for existing records for a unit that need to be updated*/
-		insert into @updates(sla_season_id)
-			select r.sla_season_id
-			from @inserts as l
-			left join
-				 sladb.dbo.tbl_unit_sla_season as r
-			on l.old_season_id = r.season_id
-			where (r.effective = 1 and r.effective_end is null)
-
-		/*Update if required*/
-		update sladb.dbo.tbl_unit_sla_season
-			set effective = 0,
-				effective_end = sladb.dbo.fn_getdate(cast(getdate() as date), 0)
-			from @updates as u
-			where sladb.dbo.tbl_unit_sla_season.sla_season_id = u.sla_season_id;
-	
-		/*Insert new records.*/
-		insert into sladb.dbo.tbl_unit_sla_season(unit_id, 
-												  sla_code, 
-												  season_id,
-												  effective,
-												  effective_start)
-			select unit_id, sla_code, new_season_id, 1 as effective, effective_start
-			from @inserts
-									
+	begin transaction
+	insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start, change_request_justification)
+		select unit_id,
+			   sla_code,
+			   season_id,
+			   effective_start,
+			   change_request_justification
+		from #season_change
 	commit;
+
+	insert into tbl_change_request_status(change_request_id, sla_change_status, status_user)
+		select l.change_request_id,
+			   2 as sla_change_status,
+			   'SYSTEM' as status_user
+		from sladb.dbo.tbl_change_request as l
+		inner join
+			 sladb.dbo.tbl_change_request_status as r
+		on l.change_request_id = r.change_request_id
+		where change_request_justification = (select distinct change_request_justification from #season_change)

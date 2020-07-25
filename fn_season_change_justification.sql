@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  02/26/2020																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -26,21 +26,17 @@ go
 set quoted_identifier on;
 go
 
-create or alter view dbo.vw_sla_code_pivot as
+create or alter function dbo.fn_season_change_justification(@old_season_id int, @new_season_id int)
+	returns nvarchar(2000)
+	/*Use execute permissions to call the function*/
+	with execute as caller
+	begin
+		declare @justification nvarchar(2000);
 
-	select l.sla_code,
-			l.sla_id as in_season_sla,
-			r.sla_id as off_season_sla,
-			case when l.sla_id = r.sla_id then cast(1 as bit)
-				 else cast(0 as bit)
-			end as year_round
-	from (select sla_id,
-					sla_code
-			from sladb.dbo.tbl_ref_sla_translation
-			where date_category_id = 1) as l
-	left join
-			(select sla_id,
-					sla_code
-			from sladb.dbo.tbl_ref_sla_translation
-			where date_category_id = 2) as r
-	on l.sla_code = r.sla_code;
+		/*Create the justification message for tbl_change_request when migrating records from a discontinued season to a new season.*/
+		set @justification = concat('All records with a season_id = ', 
+									cast(@old_season_id as nvarchar),
+									' were automatically moved to a new season with a season_id = ',
+									cast(@new_season_id as nvarchar));
+	return @justification;
+	end;

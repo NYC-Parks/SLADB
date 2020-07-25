@@ -16,6 +16,13 @@
 ***********************************************************************************************************************/
 use sladb
 go
+
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter function dbo.fn_getdate(@date date, @start bit)
 	returns date
 	/*Use execute permissions to call the function*/

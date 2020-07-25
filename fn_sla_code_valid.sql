@@ -2,7 +2,7 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  02/26/2020																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
  Project: <Project Name>	
@@ -26,21 +26,18 @@ go
 set quoted_identifier on;
 go
 
-create or alter view dbo.vw_sla_code_pivot as
-
-	select l.sla_code,
-			l.sla_id as in_season_sla,
-			r.sla_id as off_season_sla,
-			case when l.sla_id = r.sla_id then cast(1 as bit)
-				 else cast(0 as bit)
-			end as year_round
-	from (select sla_id,
-					sla_code
-			from sladb.dbo.tbl_ref_sla_translation
-			where date_category_id = 1) as l
-	left join
-			(select sla_id,
-					sla_code
-			from sladb.dbo.tbl_ref_sla_translation
-			where date_category_id = 2) as r
-	on l.sla_code = r.sla_code;
+create or alter function dbo.fn_sla_code_valid(@season_id int)
+	returns table
+	/*Use execute permissions to call the function*/
+	--with execute as caller
+	as 
+	return 
+		(select sla_code
+		 from sladb.dbo.vw_sla_code_pivot as l
+		 inner join
+			  /*Determine whether the season is year round based on the input season_id*/
+			  (select year_round
+			   from sladb.dbo.tbl_sla_season
+			   where season_id = @season_id) as r
+		 /*Perform the join based on the value of year_round (0/1)*/
+		 on l.year_round = r.year_round)
