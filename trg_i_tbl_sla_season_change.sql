@@ -26,21 +26,24 @@ create or alter trigger dbo.trg_i_tbl_sla_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 	begin
-	begin transaction
-			update sladb.dbo.tbl_sla_season
-				set effective_end = s.effective_end,
-					updated_date_utc = getutcdate()
-				from sladb.dbo.tbl_sla_season as u
-				inner join
-					(select r.old_season_id as season_id,
-							l.effective_start as effective_end
-					 from sladb.dbo.tbl_sla_season as l
-					 inner join	
-						  inserted as r
-					 on l.season_id = r.new_season_id) as s
-				on u.season_id = s.season_id
+		begin transaction
+				update sladb.dbo.tbl_sla_season
+					set effective_end = s.effective_end,
+						updated_date_utc = getutcdate()
+					from sladb.dbo.tbl_sla_season as u
+					inner join
+						/*Join the season table with the inserted table on the new (replacing) season on the new season_id. Take the old
+						  season_id value and the effective_start date from the new season and use that as the effective_end date of the new
+						  season.*/
+						(select r.old_season_id as season_id,
+								l.effective_start as effective_end
+						 from sladb.dbo.tbl_sla_season as l
+						 inner join	
+							  inserted as r
+						 on l.season_id = r.new_season_id) as s
+					on u.season_id = s.season_id
 		commit;
 	
 		/*Execute the stored procedure to perform the cascading changes*/
-		exec sladb.dbo.sp_i_tbl_sla_season_change
+		exec sladb.dbo.sp_i_tbl_sla_season_change;
 	end;

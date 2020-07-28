@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create trigger dbo.trg_i_tbl_change_request
+create or alter trigger dbo.trg_i_tbl_change_request
 on sladb.dbo.tbl_change_request
 for insert as 
 
@@ -40,4 +40,22 @@ for insert as
 			from inserted
 		 	
 	commit;
+
+	/*Insert records for any invalid combinations of year round seasons and year round SLAs. This is a terminal status.
+	begin transaction*/
+		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
+			select l.change_request_id,
+				   4 as sla_change_status, /*4 = Invalid*/
+				  'SYSTEM' as status_user /*This is system generated, so adding SYSTEM as the user.*/
+			from inserted as l
+			left join
+				 sladb.dbo.tbl_sla_season as r
+			on l.season_id = r.season_id
+			left join
+					sladb.dbo.vw_sla_code_pivot as r2
+			on l.sla_code = r2.sla_code
+			where r.year_round != r2.year_round;
+	commit;
+
+
 	 
