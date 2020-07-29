@@ -36,7 +36,8 @@ after insert as
 						  season_id value and the effective_start date from the new season and use that as the effective_end date of the new
 						  season.*/
 						(select r.old_season_id as season_id,
-								l.effective_start as effective_end
+								/*Subtract one day from the effective_start adjusted date so that it becomes the Saturday and the effective_end date of the other season.*/
+								dateadd(day, -1, l.effective_start_adj) as effective_end
 						 from sladb.dbo.tbl_sla_season as l
 						 inner join	
 							  inserted as r

@@ -29,33 +29,34 @@ go
 create or alter trigger dbo.trg_i_tbl_change_request
 on sladb.dbo.tbl_change_request
 for insert as 
-
-	begin transaction
-		/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
-		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
-			select change_request_id,
-				   1, /*1 = Submitted*/
-				   '0000000' /*Insert a default value for now. The true value will need to be pulled through active directory, expertise of ITT required. It
-				               is stored in the employeeID attribute.*/
-			from inserted
+	begin
+		begin transaction
+			/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
+			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
+				select change_request_id,
+					   1, /*1 = Submitted*/
+					   '0000000' /*Insert a default value for now. The true value will need to be pulled through active directory, expertise of ITT required. It
+								   is stored in the employeeID attribute.*/
+				from inserted
 		 	
-	commit;
+		commit;
 
-	/*Insert records for any invalid combinations of year round seasons and year round SLAs. This is a terminal status.
-	begin transaction*/
-		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
-			select l.change_request_id,
-				   4 as sla_change_status, /*4 = Invalid*/
-				  'SYSTEM' as status_user /*This is system generated, so adding SYSTEM as the user.*/
-			from inserted as l
-			left join
-				 sladb.dbo.tbl_sla_season as r
-			on l.season_id = r.season_id
-			left join
-					sladb.dbo.vw_sla_code_pivot as r2
-			on l.sla_code = r2.sla_code
-			where r.year_round != r2.year_round;
-	commit;
+		/*Insert records for any invalid combinations of year round seasons and year round SLAs. This is a terminal status.*/
+		begin transaction
+			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
+				select l.change_request_id,
+					   4 as sla_change_status, /*4 = Invalid*/
+					  'SYSTEM' as status_user /*This is system generated, so adding SYSTEM as the user.*/
+				from inserted as l
+				left join
+					 sladb.dbo.tbl_sla_season as r
+				on l.season_id = r.season_id
+				left join
+						sladb.dbo.vw_sla_code_pivot as r2
+				on l.sla_code = r2.sla_code
+				where r.year_round != r2.year_round;
+		commit;
+	end;
 
 
 	 

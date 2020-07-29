@@ -36,7 +36,7 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 				    updated_date_utc = getutcdate()
 			where effective = 1 and 
 				  --cast(dateadd(hour, -1, cast(effective_end as datetime)) as date) = cast(getdate() as date);
-				  effective_end = cast(getdate() as date);
+				  effective_end <= cast(getdate() as date);
 		commit;
 
 		begin transaction
