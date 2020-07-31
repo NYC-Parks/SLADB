@@ -36,14 +36,14 @@ begin
 	/*Set start_date equal to the maximum ref_date in tbl_ref_calendar or 01-01-2014 if the table is empty*/
 	declare @start_date date = (select coalesce(dateadd(day, 1, max(ref_date)), datefromparts(2014, 01, 01)) from sladb.dbo.tbl_ref_calendar);
 	/*Set the end_date equal to the current date plus 1 year.*/
-	declare @end_date date = datefromparts(year(getdate()) + 1, 12, 31);
+	declare @end_date date = dateadd(year, 1, getdate());
 	declare @i int, @n int, @date date;
 
 	set @i = 0;
 	/*Calculate the difference in days between the start_date and end_date parameters.*/
 	set @n = datediff(day, @start_date, @end_date);
 
-	while @i <= @n
+	while (@i <= @n) and (@start_date <= @end_date)
 		begin
 			/*Iterate through the start_date adding one day each time until reaching the difference between the start_date and
 			  the end_date.*/

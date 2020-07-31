@@ -19,18 +19,11 @@
 ***********************************************************************************************************************/
 /*use msdb ;  
 go  
-exec dbo.sp_delete_job  
-    @job_name = N'job_tbl_ref_sector_district'
-	--@job_id = '4D44FECB-7EFB-4B3C-9480-BF7E5CD5EB0D'
-go */
-
-/*use msdb ;  
-go  
 exec dbo.sp_add_schedule  
-    @schedule_name = N'Once_Daily_0820',  
+    @schedule_name = N'Once_Daily_0001',  
     @freq_type = 4,  
 	@freq_interval = 1,
-    @active_start_time = 082000 ;  
+    @active_start_time = 000100 ;  
 go*/
 
 use msdb ;  
@@ -39,28 +32,70 @@ go
 declare @job_id uniqueidentifier;
 
 /*Create the job*/
-exec dbo.sp_add_job @job_name = N'job_tbl_ref_unit', 
+exec dbo.sp_add_job @job_name = N'job_sladb', 
 					@enabled = 1,
-					@description = N'Update the reference table for SLADB units.',
+					@description = N'Execute stored procedures for SLADB',
 					@owner_login_name = 'NYCDPR\py_services',
 					@job_id = @job_id output;
 
-exec sp_add_jobserver  
+exec dbo.sp_add_jobserver  
    @job_id = @job_id,  
    @server_name = N'(LOCAL)';  
 
-
+/*Insert the new records into the calendar reference table*/
 exec dbo.sp_add_jobstep  
     @job_id = @job_id,  
-    @step_name = N'sp_merge_ref_unit',  
+    @step_name = N'sp_i_tbl_ref_calendar',  
     @subsystem = N'TSQL',  
-    @command = N'exec sladb.dbo.sp_merge_ref_unit',
+    @command = N'exec sladb.dbo.sp_i_tbl_ref_calendar',
 	@on_success_action = 1,
-	@on_fail_action = 2;/*,   
-    @retry_attempts = 5,  
-    @retry_interval = 5 ;  */
- 
- 
-exec sp_attach_schedule  
+	@on_fail_action = 3;
+
+/*Do the merge with the units reference table*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'sp_m_tbl_ref_unit',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.sp_m_tbl_ref_unit',
+	@on_success_action = 1,
+	@on_fail_action = 3;
+
+/*Update the season table based on any changes in the season change table*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'sp_i_tbl_sla_season_change',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.sp_i_tbl_sla_season_change',
+	@on_success_action = 1,
+	@on_fail_action = 3;
+
+/*Update the season table to set seasons to effective or ineffective*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'sp_u_tbl_sla_season',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.sp_u_tbl_sla_season',
+	@on_success_action = 1,
+	@on_fail_action = 3;
+
+/*Do the merge into the season dates table*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'sp_m_tbl_sla_season_date',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.sp_m_tbl_sla_season_date',
+	@on_success_action = 1,
+	@on_fail_action = 3;
+	
+/*Insert any new records into the unit, sla, season table that have been in holding*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'sp_i_tbl_unit_sla_season',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.sp_i_tbl_unit_sla_season',
+	@on_success_action = 1,
+	@on_fail_action = 3;
+
+exec dbo.sp_attach_schedule  
    @job_id = @job_id,  
-   @schedule_name = N'Once_Daily_0820';  
+   @schedule_name = N'Once_Daily_0001';  
