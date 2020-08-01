@@ -30,31 +30,24 @@ create or alter trigger dbo.trg_i_tbl_ref_sla
 	on sladb.dbo.tbl_ref_sla
 	after insert as
 	begin
-		/*Select the count of records in the tbl_ref_sla table*/
-		declare @n int = (select count(*) from sladb.dbo.tbl_ref_sla/*inserted*/);
-		/*Get the current identity value of the tbl_ref_sla_code table*/
-		declare @m int = (select ident_current('sladb.dbo.tbl_ref_sla_code'));
+		/*Allow identity inserts*/
+		set identity_insert sladb.dbo.tbl_ref_sla_code on;
 
-		/*Multiply the number of records in the tbl_ref_sla table by itself to get the number of records that should exist in tbl_ref_sla_code*/
-		declare @i int = (select @n * @n);
+		begin transaction
+		insert into sladb.dbo.tbl_ref_sla_code(sla_code)
+			/*Perform a cross join between the tbl_ref_sla table and itself. This should produce a table
+			  with the squared number of rows of tbl_ref_sla. Use the rank function to assign the rank
+			  of each row ordered by the left and right sla_ids.*/
+			select row_number() over(order by l.sla_id, r.sla_id) as sla_code
+			from sladb.dbo.tbl_ref_sla as l
+			cross join
+				 sladb.dbo.tbl_ref_sla as r
+			/*Use except to filter out any duplicates that already exist.*/
+			except
+			select sla_code 
+			from sladb.dbo.tbl_ref_sla_code
+		commit;
 
-		/*Calculate the difference between the current identity - 1 and the number rows in the tbl_ref_sla table*/
-		declare @d int = (select @i - (@m - 1));
-
-		declare @k int = (select @m);
-
-		if @d > 1
-			begin
-				while @m <= @d
-					begin;
-						/*Allow identity inserts*/
-						set identity_insert sladb.dbo.tbl_ref_sla_code on;
-
-						begin transaction
-							insert into sladb.dbo.tbl_ref_sla_code(sla_code)
-								values(@m);				
-						commit;
-						set @m = @m + 1;
-					end;
-			end;
+		/*Allow identity inserts*/
+		set identity_insert sladb.dbo.tbl_ref_sla_code off;
 	end;
