@@ -33,13 +33,13 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 					   sla_code, 
 					   season_id, 
 					   1 as effective, 
-					   effective_start_adj
+					   effective_start
 				from(
 			    /*Join the change request table to the change request status table based on the change_request_id*/
 				select l.unit_id, 
 					   l.sla_code, 
 					   l.season_id,  
-					   l.effective_start_adj
+					   l.effective_start
 				from sladb.dbo.tbl_change_request as l
 				inner join
 						sladb.dbo.tbl_change_request_status as r
@@ -54,7 +54,7 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 					select unit_id, 
 							sla_code, 
 						    season_id, 
-						    effective_start_adj
+						    effective_start
 					from sladb.dbo.tbl_unit_sla_season) t;
 		commit;
 	end;

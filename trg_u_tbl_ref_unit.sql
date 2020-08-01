@@ -44,3 +44,28 @@ after update as
 				then update set tgt.effective = 0,
 						        tgt.effective_end = cast(getdate() as date); 
 	commit;
+
+	begin transaction;
+		/*Insert invalid status records for any change requests that have not been approved and for units that have been
+		  decommissioned.*/
+		insert into sladb.dbo.tbl_change_request_status(change_request_id, status_user, sla_change_status)
+			select i.change_request_id,
+				   'SYSTEM' as status_user,
+				   4 as sla_change_status /*4 = Invalid*/
+				 /*Select change requests that have ONLY 1 record in the status table.*/
+			from (select change_request_id
+				  from sladb.dbo.tbl_change_request_status
+				  group by change_request_id
+				  having count(*) = 1) as i
+			inner join
+			/*Inner join with the change requests bsased on the change_request_id*/
+				  sladb.dbo.tbl_change_request as s1
+			on i.change_request_id = s1.change_request_id
+			/*Inner join with the inserted units that were decommissioned in AMPS*/
+			inner join	
+				(select unit_id
+				 from inserted
+				 /*Filter to include only objects with a unit_status of D = Decommissioned. All other statuses are still considered to be active.*/
+				 where unit_status = 'D') as s2
+			on s1.unit_id = s2.unit_id
+	commit;

@@ -33,10 +33,10 @@ after insert as
 		/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing 
 		  effective record for that unit and set the effective value to 0 and the effective_date to today.*/
 		begin transaction;
-			update r
-			/*Set the value of effective = 0 and the effective_end date equal to the current date*/
+			update sladb.dbo.tbl_unit_sla_season
+			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla*/
 			set effective = 0,
-				effective_end = cast(getdate() as date)
+				effective_end = l.effective_start
 			/*Join the inserted records with the tbl_unit_sla_season based on the unit_id to get all records associated
 			  with the inserted unit(s).*/
 			from inserted as l
