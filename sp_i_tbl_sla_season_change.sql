@@ -69,7 +69,7 @@ create or alter procedure dbo.sp_i_tbl_sla_season_change as
 		/*Join the temporary table with the change request and change request status tables in order to insert the records granting
 		  automatic approval of these changes. The idea is to take the human of needing to make these particular changes.*/
 		begin transaction
-		insert into tbl_change_request_status(change_request_id, sla_change_status, status_user)
+		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
 			select l.change_request_id,
 				   /*If the SLA value is valid for the type of season then 2 = approve the change. Note that invalid values will be caught*/
 				   2 as sla_change_status,

@@ -35,8 +35,8 @@ begin
 	--declare @end_date date = datefromparts(year(getdate()), 12, 31);
 	/*Set start_date equal to the maximum ref_date in tbl_ref_calendar or 01-01-2014 if the table is empty*/
 	declare @start_date date = (select coalesce(dateadd(day, 1, max(ref_date)), datefromparts(2014, 01, 01)) from sladb.dbo.tbl_ref_calendar);
-	/*Set the end_date equal to the current date plus 1 year.*/
-	declare @end_date date = dateadd(year, 1, getdate());
+	/*Set the end_date equal to the end of the month after adding one year to the current the current date.*/
+	declare @end_date date = eomonth(dateadd(year, 1, getdate()));
 	declare @i int, @n int, @date date;
 
 	set @i = 0;
