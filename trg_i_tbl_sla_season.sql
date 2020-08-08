@@ -29,7 +29,20 @@ go
 create or alter trigger dbo.trg_i_tbl_sla_season
 on sladb.dbo.tbl_sla_season
 after insert as 
+
 	begin
+
+	/*Update the value of effective in tbl_sla_season in case the season is effective immediately. Need to peform a join
+	  between the inserted rows and the tbl_sla_season table because the computed columns are not in the inserted table.*/
+	begin transaction
+		update sladb.dbo.tbl_sla_season
+			set effective = case when u.effective_start_adj = cast(getdate() as date) then 1 else 0 end
+			from inserted as s
+			inner join
+				 sladb.dbo.tbl_sla_season as u
+			on s.season_id = u.season_id
+	commit;
+
 	/*Create a table parameter to hold the values required for the insert. For completeness, this table will hold the values
 	  for year round seasons that begin on January 1 and end on December 31.*/
 	declare @tbl_ref_sla_season_definition table(season_date_ref_id int identity(1,1),

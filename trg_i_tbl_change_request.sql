@@ -56,7 +56,7 @@ for insert as
 				on l.sla_code = r2.sla_code
 				/*Invalidate seasons/slas with mismatches in year round status or where the season is no longer effective.*/
 				where r.year_round != r2.year_round or
-					  r.effective = 0;
+					  (r.effective = 0 and r.effective_end is not null);
 		commit;
 	end;
 
