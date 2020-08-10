@@ -32,11 +32,21 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 		  and set the updated_date_utc.*/
 		begin transaction
 			update sladb.dbo.tbl_sla_season
-				set effective = 0,
+				/*set the effective value equal to 0 if it's equal to or past the effective_end_adj date,
+				  otherwise set the effective value equal to 1.*/
+				set effective = case when effective_end_adj <= cast(getdate() as date) then 0
+									 else 1
+								end,
 				    updated_date_utc = getutcdate()
-			where effective = 1 and 
-				  --cast(dateadd(hour, -1, cast(effective_end as datetime)) as date) = cast(getdate() as date);
-				  effective_end <= cast(getdate() as date);
+					  /*Find any currently effective seasons (effective = 1) that should be effective = 0 if the 
+						effective_end_adj date is less than or equal to today*/
+				where (effective = 1 and 
+					   effective_end_adj <= cast(getdate() as date)) or 
+					  /*Find any currently ineffective seasons (effective = 0) that should be effective = 1 if the 
+					    effective_start_adj date is less than or equal to today*/
+					  (effective = 0 and 
+					   effective_start_adj <= cast(getdate() as date) and 
+					   effective_end_adj is null);
 		commit;
 
 		begin transaction
