@@ -1,1 +1,70 @@
-<mxfile host="app.diagrams.net" modified="2020-08-11T15:47:44.822Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" version="13.6.2" etag="r9qoR1sKPNVqXoqPd0dX" type="github"><diagram id="kJnnY5Ic_b5OzEqMkCXE">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-08-11T16:05:00.451Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="ATuxLhSvjNkKkV_IBg_x" version="13.6.2" type="github">
+  <diagram id="kJnnY5Ic_b5OzEqMkCXE" name="Page-1">
+    <mxGraphModel dx="1247" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="eqDr6x8LtKYmMcFFeHZr-1" target="eqDr6x8LtKYmMcFFeHZr-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-1" value="Admin requests a new season be added" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="140" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="eqDr6x8LtKYmMcFFeHZr-2" target="eqDr6x8LtKYmMcFFeHZr-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-2" value="tbl_sla_season" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="140" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-3" value="Adding New/Updating Existing Season" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="eqDr6x8LtKYmMcFFeHZr-6" target="eqDr6x8LtKYmMcFFeHZr-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-6" value="trg_i_tbl_sla_season" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="140" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-8" value="tbl_ref_sla_season_definition" style="rounded=0;html=1;fillColor=#d5e8d4;strokeColor=#82b366;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="115" y="400" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-10" value="tbl_sla_season_change" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-11" value="tbl_change_request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="65" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-12" value="tbl_change_request_status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="70" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-13" value="trg_i_tbl_sla_season_change" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="270" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-14" value="sp_u_tbl_sla_season" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="270" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-16" value="trg_season_change" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=3" vertex="1" parent="1">
+          <mxGeometry x="285" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-17" value="Decommissioning a Unit" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="690" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-18" value="trg_unit_decommissioned" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=3" vertex="1" parent="1">
+          <mxGeometry x="860" y="40" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-19" value="tbl_ref_unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="700" y="130" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-20" value="sp_m_tbl_ref_unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="710" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-21" value="trg_u_tbl_ref_unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="890" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-22" value="tbl_unit_sla_season" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="880" y="130" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
