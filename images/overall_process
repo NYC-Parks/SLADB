@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-08-11T16:20:23.217Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="4JQim_yxKTGiNsXSA0t8" version="13.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-11T16:22:33.179Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="DPguc0Re6sd_gLBki_H5" version="13.6.2" type="github">
   <diagram id="kJnnY5Ic_b5OzEqMkCXE" name="Page-1">
-    <mxGraphModel dx="748" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2992" dy="1872" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -117,6 +117,21 @@
         </mxCell>
         <mxCell id="eqDr6x8LtKYmMcFFeHZr-43" value="trg_i_tbl_ref_calendar" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=left;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="2430" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-44" value="Adding new SLA" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=center;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2740" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-45" value="&lt;div style=&quot;box-sizing: border-box; font-size: 12px; font-style: normal; font-weight: 700; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px;&quot;&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;trg_i_tbl_ref_sla&lt;/strong&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2910" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-46" value="trg_i_tbl_ref_sla" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="2730" y="130" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-47" value="tbl_ref_sla" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="2900" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eqDr6x8LtKYmMcFFeHZr-48" value="tbl_ref_sla_code" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="2750" y="220" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
