@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-08-11T15:21:38.148Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="m2HgV3TfjsyL1QdIb2UQ" version="13.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-11T15:26:29.546Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="pVaI2QPUWmeo-5bzh9Po" version="13.6.2" type="github">
   <diagram id="4DkwhPr2-WqgIGUP0eRN" name="Page-1">
     <mxGraphModel dx="791" dy="1478" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -196,6 +196,9 @@
         </mxCell>
         <mxCell id="W5VT7vu6px5nTqs0NcFv-15" value="Admin defines a month and day (May 1) or date pattern (Example: Last Monday of May) for start and end of the in-season period of the season." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="292.33" y="-106.25" width="120" height="112.5" as="geometry" />
+        </mxCell>
+        <mxCell id="XZEz-qlOAHaJMKjeeI-z-1" value="&lt;i&gt;The dates at the start&amp;nbsp;&lt;/i&gt;&lt;i&gt;(January 1)&lt;/i&gt;&lt;i&gt;&lt;br&gt;&amp;nbsp;and end (&lt;/i&gt;&lt;i&gt;December 31)&lt;/i&gt;&lt;i&gt;&lt;br&gt;of the calendar year are the dates used for a year round season.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370.46" y="-312.5" width="135" height="99.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
