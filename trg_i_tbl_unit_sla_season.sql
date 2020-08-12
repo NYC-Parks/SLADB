@@ -36,7 +36,7 @@ after insert as
 			update sladb.dbo.tbl_unit_sla_season
 			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla*/
 			set effective = 0,
-				effective_end = l.effective_start
+				effective_end = dateadd(day, -1, l.effective_start_adj)
 			/*Join the inserted records with the tbl_unit_sla_season based on the unit_id to get all records associated
 			  with the inserted unit(s).*/
 			from inserted as l
