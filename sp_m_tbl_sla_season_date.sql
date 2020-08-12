@@ -71,11 +71,7 @@ begin
 	/*Join the #seasondates table to itself in order to get all of the relevant dates.*/
 	select l.season_id,
 		   l.ref_date as effective_start,
-		   /*When the date_type_id is null then set the value equal to the reference date*/
-		   case when r.date_type_id is null then r.ref_date --this happens when a season is retired
-				/*If the date_type_id is not null then subtract one day from the ref_date*/
-			    else dateadd(dd,-1,r.ref_date) 
-		   end as effective_end, --this happens when a season transitions 
+		   r.ref_date as effective_end, 
 		   case when l.date_type_id is null and r.date_type_id is null then 1 --this happens when season is year round
 		   /*Flip the date_type_ids because they should be the opposite.*/
 			when l.date_type_id is null and r.date_type_id = 1 then 2 --at end of a season
@@ -91,8 +87,28 @@ begin
 	   l.dtrk = r.dtrk - 1
 	order by season_id, effective_start;
 
+	if object_id('tempdb..#final_sla_season_dates') is not null 
+	drop table #seasondates; 
+
+	select season_id,
+		   /*When the row corresponds to the off-season (date_category_id = 2) then add 1 day to the effective_start date 
+			 because it should start one day after the effective_end of the in-season (date_category_id = 1). If it's in-season
+			 then don't do anything to the dates.*/
+		   case when date_category_id = 2 then dateadd(day, 1, effective_start)
+				else effective_start
+		   end as effective_start,
+		   /*When the row corresponds to the off-season (date_category_id = 2) then subtract 1 day to the effective_end date 
+			 because it should end one day before the effective_start of the in-season (date_category_id = 1). If it's in-season
+			 then don't do anything to the dates.*/
+		   case when date_category_id = 2 then dateadd(day, -1, effective_end)
+				else effective_end
+		   end as effective_end,
+		   date_category_id
+	into #final_sla_season_dates
+	from #sla_season_dates
+
 	begin transaction
-		merge sladb.dbo.tbl_sla_season_date as tgt using #sla_season_dates as src
+		merge sladb.dbo.tbl_sla_season_date as tgt using #final_sla_season_dates as src
 		/*The combination of season_id and effective_start should never change.*/
 		on (tgt.season_id = src.season_id and 
 			tgt.effective_start = src.effective_start)
