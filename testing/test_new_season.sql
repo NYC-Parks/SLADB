@@ -60,3 +60,18 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 		  (0, 'September', null, 'Monday', '1', 2);
 
 exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
+
+/*Insert a new periodic season with a variable start date of the last Monday in May and fixed end date of November 15. Make
+  the effective_start date retroactive.*/
+declare @new_season as insert_new_season,
+	    @new_season_definition as insert_new_season_definition
+
+insert into @new_season(season_desc, year_round, effective_start)
+	values('Season test 4', 0, '2020-08-09');
+
+insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, day_name_desc,
+								   day_rank_id, date_type_id)
+	values(0, 'May', null, 'Monday', 'last', 2),
+	      (1, 'November', 15, null, null, 1);
+
+exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
