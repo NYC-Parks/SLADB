@@ -16,25 +16,27 @@
 ***********************************************************************************************************************/
 use sladb
 go
-create or alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
-											   @year_round bit,
-											   @effective bit,
-											   @date_ref_fixed bit,
-											   @month_name_desc nvarchar(9) null,
-											   @date_ref_day_number int null,
-											   @day_name_desc nvarchar(9) null,
-											   @day_rank_id nvarchar(5) null,
-											   @date_type_id int null) as
 
-/*alter procedure dbo.sp_insert_season(@season_desc nvarchar(128),
-									  @year_round bit,
-									  @effective bit,
-									  @date_ref_fixed bit,
-									  @month_name_desc nvarchar(9) = null,
-									  @date_ref_day_number int = null,
-									  @day_name_desc nvarchar(9) = null,
-									  @day_rank_id nvarchar(5) = null,
-									  @date_type_id int = null) as*/
+/*If the user-defined table types don't exist then create them. These user-defined table types
+  are used as inputs into the sp_insert_season stored procedure.*/
+if type_id('insert_new_season') is null
+	create type insert_new_season
+		as table(season_desc nvarchar(128),
+				 year_round bit not null,
+				 effective_start date not null);
+if type_id('insert_new_season_definition') is null
+	create type insert_new_season_definition
+		as table(date_ref_fixed bit not null,
+				 month_name_desc nvarchar(9) not null,
+				 date_ref_day_number int null,
+				 day_name_desc nvarchar(9) null,
+				 day_rank_id nvarchar(5) null,
+				 date_type_id int not null);
+
+go 
+
+create or alter procedure dbo.sp_insert_season @new_season insert_new_season readonly, 
+											   @new_season_definition insert_new_season_definition readonly as
 begin
 	begin transaction;
 		declare @season_id int;
@@ -42,13 +44,11 @@ begin
 		/*Insert the values into the Season table*/
 		insert into sladb.dbo.tbl_sla_season(season_desc,
 											 year_round,
-											 effective)
-			values (@season_desc, @year_round, @effective);
+											 effective_start)
+			select * from @new_season;
 		
 		/*Set the value of the season_id parameter equal to the last identity value inserted*/
-		set @season_id = @@identity;
-
-		if @date_ref_fixed = 0
+		set @season_id = (select ident_current('sladb.dbo.tbl_sla_season'));
 		
 		/*Insert values into the season defintion table.*/
 		insert into sladb.dbo.tbl_ref_sla_season_definition(season_id, 
@@ -59,6 +59,13 @@ begin
 															day_rank_id,
 															date_type_id)
 
-			values(@season_id, @date_ref_fixed, @month_name_desc, @date_ref_day_number, @day_name_desc, @day_rank_id, @date_type_id);
+			select @season_id, 
+				   date_ref_fixed, 
+				   month_name_desc, 
+				   date_ref_day_number, 
+				   day_name_desc, 
+				   day_rank_id,
+				   date_type_id
+			from @new_season_definition;
 	commit;
 end;
