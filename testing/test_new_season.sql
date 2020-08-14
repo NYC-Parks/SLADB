@@ -31,3 +31,17 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 
 exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
 
+/*Insert a new periodic season with variable dates that start on the Sunday before the last Monday of May and the Saturday
+  the first Monday in September. Make effective date equal to this coming Saturday.*/
+declare @new_season as insert_new_season,
+	    @new_season_definition as insert_new_season_definition
+
+insert into @new_season(season_desc, year_round, effective_start)
+	values('Season test 2', 0, '2020-08-15');
+
+insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, day_name_desc,
+								   day_rank_id, date_type_id)
+	values(0, 'May', null, 'Monday', 'last', 1),
+		  (0, 'September', null, 'Monday', '1', 2);
+
+exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
