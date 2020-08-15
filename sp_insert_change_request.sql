@@ -34,12 +34,13 @@ create or alter procedure dbo.sp_insert_change_request @new_change_request inser
 													   @auto_approve int = 1 as
 
 begin
-	begin transaction;
+	
 		declare @change_request_id int;
 
 		/*Set the value of the change_request_id parameter equal to the current identity plus 1*/
 		set @change_request_id = (select ident_current('sladb.dbo.tbl_change_request') + 1);
 
+	begin transaction
 		/*Insert the values into the Season table*/
 		insert into sladb.dbo.tbl_change_request(unit_id,
 												 sla_code,
@@ -48,7 +49,7 @@ begin
 												 effective_start,
 												 change_request_justification)
 			select * from @new_change_request;
-		
+	commit;
 		
 		if @auto_approve = 1
 			begin
