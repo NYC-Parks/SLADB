@@ -111,6 +111,7 @@ insert into @new_change_request(unit_id,
 exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
 
 /*Submit multiple change requests for the same unit with different effective_start dates*/
+/*Disable the check constraint.*/
 alter table sladb.dbo.tbl_change_request
 	nocheck constraint ck_change_request_effective_start
 
@@ -129,5 +130,6 @@ insert into @new_change_request(unit_id,
 
 exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
 
+/*Enable the check constraint without checking records that were inserted since it was disabled.*/
 alter table sladb.dbo.tbl_change_request
-	with check check constraint ck_change_request_effective_start
+	check constraint ck_change_request_effective_start;
