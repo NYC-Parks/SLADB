@@ -75,3 +75,8 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 	      (1, 'November', 15, null, null, 1);
 
 exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
+
+/*Insert a new year round season with an effective_start date that is retroactive.*/
+insert into sladb.dbo.tbl_sla_season(season_desc, year_round, effective_start)
+	values('Season test 5', 0, '2020-08-09');
+
