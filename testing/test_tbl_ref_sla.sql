@@ -22,5 +22,11 @@ begin transaction
 		values('T', 'Test SLA', null, null)
 commit;
 
+begin transaction
+	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
+		values('D', 'Test adding a D SLA', 1, 1)
+commit;
+
+
 select * from sladb.dbo.tbl_ref_sla
 select * from sladb.dbo.tbl_ref_sla_code
