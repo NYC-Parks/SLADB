@@ -23,3 +23,10 @@ begin transaction
 		set effective = 0 
 		where season_id = 11;
 commit;
+
+/*Set effective_end date for a season to a future date (tomorrow in this example)*/
+begin transaction
+	update sladb.dbo.tbl_sla_season
+		set effective_end = '2020-08-15' 
+		where season_id = 12;
+commit;
