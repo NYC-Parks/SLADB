@@ -24,6 +24,7 @@ if type_id('insert_new_season') is null
 		as table(season_desc nvarchar(128),
 				 year_round bit not null,
 				 effective_start date not null);
+
 if type_id('insert_new_season_definition') is null
 	create type insert_new_season_definition
 		as table(date_ref_fixed bit not null,
@@ -46,7 +47,7 @@ begin
 											 year_round,
 											 effective_start)
 			select * from @new_season;
-		
+	
 		/*Set the value of the season_id parameter equal to the last identity value inserted*/
 		set @season_id = (select ident_current('sladb.dbo.tbl_sla_season'));
 		
