@@ -20,6 +20,12 @@
 use sladb
 go
 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
 create or alter procedure dbo.sp_m_tbl_sla_season_date  as
 begin
 
@@ -77,7 +83,11 @@ begin
 			when l.date_type_id is null and r.date_type_id = 1 then 2 --at end of a season
 			when l.date_type_id is null and r.date_type_id = 2 then 1 --at start of a season
 			else l.date_type_id 
-		 end as date_category_id --season transition 
+		 end as date_category_id, --season transition 
+		 /*Rank the rows within each season_id partition ordering them by the date*/
+		 dense_rank() over(partition by l.season_id order by l.ref_date) as row_rank,
+		 /*Count the total numbers of rows within each season_id partition.*/
+		 count(*) over(partition by l.season_id order by l.season_id) as row_count
 	into #sla_season_dates
 	from #seasondates as l 
 	inner join 
@@ -88,19 +98,22 @@ begin
 	order by season_id, effective_start;
 
 	if object_id('tempdb..#final_sla_season_dates') is not null 
-	drop table #seasondates; 
+		drop table #final_sla_season_dates; 
 
 	select season_id,
-		   /*When the row corresponds to the off-season (date_category_id = 2) then add 1 day to the effective_start date 
-			 because it should start one day after the effective_end of the in-season (date_category_id = 1). If it's in-season
-			 then don't do anything to the dates.*/
-		   case when date_category_id = 2 then dateadd(day, 1, effective_start)
+		   /*When the row corresponds to the off-season (date_category_id = 2) and if the row_rank is not equal to 1 
+			 within each seasonthen add 1 day to the effective_start date because it should start one day after the 
+			 effective_end of the in-season (date_category_id = 1). The record with a row_rank of 1 represents the record
+			 that has the user-selected effective_start date which we do not want to alter. If it's in-season then don't 
+			 do anything to the dates.*/
+		   case when date_category_id = 2 and row_rank != 1 then dateadd(day, 1, effective_start)
 				else effective_start
 		   end as effective_start,
-		   /*When the row corresponds to the off-season (date_category_id = 2) then subtract 1 day to the effective_end date 
-			 because it should end one day before the effective_start of the in-season (date_category_id = 1). If it's in-season
-			 then don't do anything to the dates.*/
-		   case when date_category_id = 2 then dateadd(day, -1, effective_end)
+		   /*When the row corresponds to the off-season (date_category_id = 2) and if the row_rank is not equal to the row_count 
+			 within each season then subtract 1 day to the effective_end date because it should end one day before the 
+			 effective_start of the in-season (date_category_id = 1). The row_count and row_rank are compared because we don't
+			 want to change a user-selected effective_end date. If it's in-season then don't do anything to the dates.*/
+		   case when date_category_id = 2 and row_rank != row_count then dateadd(day, -1, effective_end)
 				else effective_end
 		   end as effective_end,
 		   date_category_id
