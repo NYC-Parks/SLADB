@@ -27,6 +27,11 @@ create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) prima
 										   effective_start_adj as dbo.fn_getdate(effective_start, 1),
 										   effective_end date,
 										   effective_end_adj as dbo.fn_getdate(effective_end, 0),
+										   change_request_id int foreign key references sladb.dbo.tbl_change_request(change_request_id),
+										   created_date_utc datetime default getutcdate(),
+										   updated_date_utc datetime,
 										   /*Create a unique constraint to prevent duplicate entries for the same unit, sla, season and effective from date this table*/
-										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_start));
+										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_start),
+										   /*Make sure that the effective_end date is always greater than the effective_start date*/
+										   constraint ck_unit_effective_dates check (effective_end > effective_start));
 
