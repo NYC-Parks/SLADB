@@ -19,14 +19,12 @@
 ***********************************************************************************************************************/
 begin transaction
 	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-		values('T', 'Test SLA', null, null)
+		values('T', 'Test SLA', null, null),
+			  ('D', 'Test adding a D SLA', 1, 1)
 commit;
-
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla(sla_id, sla_desc, sla_min_days, sla_max_days)
-		values('D', 'Test adding a D SLA', 1, 1)
-commit;
-
 
 select * from sladb.dbo.tbl_ref_sla
 select * from sladb.dbo.tbl_ref_sla_code
+select * from sladb.dbo.tbl_ref_sla_translation
+select * from sladb.dbo.vw_sla_code_pivot order by sla_code
+select distinct in_season_sla, off_season_sla from sladb.dbo.vw_sla_code_pivot order by sla_code
