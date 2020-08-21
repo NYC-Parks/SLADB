@@ -46,7 +46,7 @@ after insert as
 			/*Join this results set with the view that determines whether or not that unit contains more than one record
 			  with a value of effective = 1 based on unit_id and sla_season_id*/
 			inner join
-					sladb.dbo.vw_tbl_unit_sla_season_last_id as r2
+					sladb.dbo.vw_unit_sla_season_last_id as r2
 			on r.unit_id = r2.unit_id and
 			   r.sla_season_id = r2.sla_season_id
 			/*Keep records only if the rank of the row for the unit is equal to the count of the total number of effective = 1 rows for 

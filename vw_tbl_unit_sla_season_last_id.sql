@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter view dbo.vw_tbl_unit_sla_season_last_id as
+create or alter view dbo.vw_unit_sla_season_last_id as
 	select unit_id, 
 		   sla_season_id,
 		   effective_start,
