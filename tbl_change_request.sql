@@ -25,4 +25,5 @@ create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) pr
 										  effective_start date not null,
 										  effective_start_adj as dbo.fn_getdate(effective_start, 1),
 										  change_request_justification nvarchar(2000) not null,
-										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)));
+										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)),
+										  constraint unq_change_request unique(unit_id, effective_start_adj));

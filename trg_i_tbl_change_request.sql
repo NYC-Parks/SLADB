@@ -30,6 +30,14 @@ create or alter trigger dbo.trg_i_tbl_change_request
 on sladb.dbo.tbl_change_request
 for insert as 
 	begin
+
+		begin transaction
+			update sladb.dbo.tbl_change_request
+				/*Set the effective_start_adj date with the insert*/
+				set effective_start_adj = dbo.fn_getdate(effective_start, 1)
+				where change_request_id in(select change_request_id from inserted)
+		commit;
+
 		begin transaction
 			/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
 			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
