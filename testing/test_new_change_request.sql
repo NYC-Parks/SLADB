@@ -133,3 +133,36 @@ exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_reques
 /*Enable the check constraint without checking records that were inserted since it was disabled.*/
 alter table sladb.dbo.tbl_change_request
 	check constraint ck_change_request_effective_start;
+
+/*Submit multiple change requests for the same unit with different effective_start dates*/
+/*Disable the check constraint.*/
+alter table sladb.dbo.tbl_change_request
+	nocheck constraint ck_change_request_effective_start
+
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	values('BZ410', 1, 6, '2020-08-17', 'Testing inserting new records.')
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	values('BZ410', 6, 6, '2020-08-18', 'Testing inserting new records.')
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+/*Enable the check constraint without checking records that were inserted since it was disabled.*/
+alter table sladb.dbo.tbl_change_request
+	check constraint ck_change_request_effective_start;
