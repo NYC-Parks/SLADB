@@ -17,6 +17,6 @@
 create table sladb.dbo.tbl_change_request_status(change_request_status_id int identity(1,1) primary key,
 												 change_request_id int foreign key references sladb.dbo.tbl_change_request(change_request_id) on delete cascade,
 												 sla_change_status int foreign key references sladb.dbo.tbl_ref_sla_change_status(sla_change_status),
-												 status_date date not null constraint df_audit_datestamp default current_timestamp,
-												 status_user nvarchar(7) not null
+												 created_date_utc datetime default getutcdate(),
+												 created_user nvarchar(7) not null,
 												 constraint unq_change_request_status unique(change_request_id, sla_change_status));

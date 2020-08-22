@@ -27,34 +27,38 @@ go
 
 create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 	begin
+		/*Execute the stored procedure to check for and flag any invalid change requests*/
+		exec sladb.dbo.sp_u_tbl_change_request;
+
 		begin transaction
-			insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_start)
+			insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_start, change_request_id, created_date_utc)
 				select unit_id, 
 					   sla_code, 
 					   season_id, 
 					   1 as effective, 
-					   effective_start
+					   effective_start,
+					   change_request_id,
+					   getutcdate() as created_date_utc 
 				from(
 			    /*Join the change request table to the change request status table based on the change_request_id*/
-				select l.unit_id, 
-					   l.sla_code, 
-					   l.season_id,  
-					   l.effective_start
-				from sladb.dbo.tbl_change_request as l
-				inner join
-						sladb.dbo.tbl_change_request_status as r
-				on l.change_request_id = r.change_request_id
+				select unit_id, 
+					   sla_code, 
+					   season_id,  
+					   effective_start,
+					   change_request_id
+				from sladb.dbo.tbl_change_request
 				/*If the change request status (sla_change_status) is 2 = Approved and the effective_start_adj (adjusted effective_start_date)
 					is equal to the current date minus one hour then insert the new record*/
-				where r.sla_change_status = 2 and
-					  l.effective_start_adj <= cast(dateadd(hour, -1, getdate()) as date)
+				where sla_change_status = 2 and
+					  effective_start_adj <= cast(dateadd(hour, -1, getdate()) as date)
 				/*Use an except operation to find only records that don't already exist in the tbl_unit_sla_season table. Except will only find the
 				  differences in rows between two results sets.*/
 				except
 					select unit_id, 
-							sla_code, 
-						    season_id, 
-						    effective_start
+						   sla_code, 
+						   season_id, 
+						   effective_start,
+						   change_request_id
 					from sladb.dbo.tbl_unit_sla_season) t;
 		commit;
 	end;

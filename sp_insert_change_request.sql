@@ -55,15 +55,10 @@ begin
 			begin
 				begin transaction
 					/*Insert values into the change_request_status table to auto-approve the submission.*/
-					insert into sladb.dbo.tbl_change_request_status(change_request_id,
-																	sla_change_status,
-																	status_user)
-
-						select change_request_id,
-							   2 as sla_change_status,
-							   '1549482' as status_user
-						from sladb.dbo.tbl_change_request
-						where change_request_id >= @change_request_id;
+					update sladb.dbo.tbl_change_request
+						set sla_change_status = 2
+						where change_request_id >= @change_request_id and
+							  sla_change_status != 4;
 				commit;
 			end;
 end;
