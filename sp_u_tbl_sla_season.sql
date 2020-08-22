@@ -50,11 +50,11 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 		commit;
 
 		begin transaction
-			update sladb.dbo.tbl_unit_sla_season
-			set effective = 0,
+			update u
+			set u.effective = 0,
 				/*Set the effective_date in tbl_unit_sla_season to the effective_end_adj date of the season in order
 				  to ensure no gaps in the dates.*/
-				effective_end = s.effective_end_adj 
+				u.effective_end = s.effective_end_adj 
 				/*Extract the records where the season is not effective*/
 			from (select *
 			      from sladb.dbo.tbl_sla_season
