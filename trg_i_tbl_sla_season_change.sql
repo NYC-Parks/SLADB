@@ -87,25 +87,20 @@ after insert as
 		/*Join the temporary table with the change request and change request status tables in order to insert the records granting
 		  automatic approval of these changes. The idea is to take the human of needing to make these particular changes.*/
 		begin transaction
-		insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, status_user)
-			select distinct l.change_request_id,
-				   /*If the SLA value is valid for the type of season then 2 = approve the change. Note that invalid values will be caught*/
-				   2 as sla_change_status,
-				   /*Set the status user to SYSTEM because this process is done by the database.*/
-				   'SYSTEM' as status_user
-			from sladb.dbo.tbl_change_request as l
+		update u
+			/*Set the value of sla_change_status to 2 = approve to auto-approve the change. Note that invalid records will
+			  be handled else by other scripts.*/
+			set u.sla_change_status = 2
+			from sladb.dbo.tbl_change_request as u
 			inner join
-				 sladb.dbo.tbl_change_request_status as r
-			on l.change_request_id = r.change_request_id
-			left join
-				 #season_change as r2
-			on l.unit_id = r2.unit_id and
-			   l.season_id = r2.season_id and 
-			   l.sla_code = r2.sla_code
-				  /*Extract only records having the correct change request justification.*/
-			where l.change_request_justification = (select distinct change_request_justification from #season_change) and
-				  /*Exclude invalid records because these are caught through a different workflow.*/
-				  r2.valid = 1;
+				 #season_change as s
+			on u.unit_id = s.unit_id and
+			   u.season_id = s.season_id and 
+			   u.sla_code = s.sla_code
+			/*Extract only records having the correct change request justification.*/
+			where u.change_request_justification = (select distinct change_request_justification from #season_change) and
+				  /*Don't auto approve records that were already invalidated*/
+				  u.sla_change_status != 4
 		commit;
 	
 	end;

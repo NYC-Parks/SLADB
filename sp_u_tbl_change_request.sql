@@ -49,7 +49,7 @@ create or alter procedure dbo.sp_u_tbl_change_request as
 			where u.effective_start_adj > = cast(getdate() as date) and 
 				  (r.year_round != r2.year_round or
 				   /*Invalidate records for seasons where the season is no longer effective*/
-				   (r.effective = 0 and r.effective_end is not null) or
+				   (r.effective = 0) or
 				   /*Invalidate records where the effective_start_adj of the change request is greater than or equal to the effective_end_adj 
 				   of the season.*/
 				   (u.effective_start_adj >= r.effective_end_adj) or

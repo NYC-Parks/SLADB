@@ -166,3 +166,129 @@ exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_reques
 /*Enable the check constraint without checking records that were inserted since it was disabled.*/
 alter table sladb.dbo.tbl_change_request
 	check constraint ck_change_request_effective_start;
+
+/*Add change requests for a periodic season*/
+alter table sladb.dbo.tbl_change_request
+	nocheck constraint ck_change_request_effective_start
+
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select unit_id,
+		   2 as sla_code,
+		   14 as season_id,
+		   '2020-08-23' as effective_start,
+		   'Testing inserting new records.' as change_request_justification
+	from sladb.dbo.vw_unit_sla_season_unassigned
+	order by unit_id
+	offset 5 rows
+	fetch first 5 rows only;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select unit_id,
+		   1 as sla_code,
+		   20 as season_id,
+		   '2020-08-09' as effective_start,
+		   'Testing inserting new records.' as change_request_justification
+	from sladb.dbo.vw_unit_sla_season_unassigned
+	order by unit_id
+	offset 5 rows
+	fetch first 5 rows only;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select unit_id,
+		   2 as sla_code,
+		   21 as season_id,
+		   '2020-08-09' as effective_start,
+		   'Testing inserting new records.' as change_request_justification
+	from sladb.dbo.vw_unit_sla_season_unassigned
+	order by unit_id
+	offset 10 rows
+	fetch first 5 rows only;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+/*Enable the check constraint without checking records that were inserted since it was disabled.*/
+alter table sladb.dbo.tbl_change_request
+	check constraint ck_change_request_effective_start;
+
+/*Change the SLA/Season of 4 existing units with seasonal slas for year round seasons, issue #129*/
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select top 4 unit_id,
+		   2 as sla_code,
+		   6 as season_id,
+		   '2020-08-23' as effective_start,
+		   'Testing inserting new records.' 
+	from sladb.dbo.tbl_unit_sla_season
+	where effective = 1;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+
+/*Change the SLA/Season of 4 existing units with seasonal slas for year round seasons, issue #129*/
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select top 4 unit_id,
+		   2 as sla_code,
+		   6 as season_id,
+		   '2020-08-24' as effective_start,
+		   'Testing inserting new records.' 
+	from sladb.dbo.tbl_unit_sla_season
+	where effective = 1;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+/*Insert records for periodic slas*/
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	select top 4 unit_id,
+		   2 as sla_code,
+		   6 as season_id,
+		   '2020-08-24' as effective_start,
+		   'Testing inserting new records.' 
+	from sladb.dbo.tbl_unit_sla_season
+	where effective = 1;
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
