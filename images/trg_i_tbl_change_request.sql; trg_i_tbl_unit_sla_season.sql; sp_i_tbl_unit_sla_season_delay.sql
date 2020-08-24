@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-08-11T16:13:08.262Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="katRCCGyEhnTMdn1FPR9" version="13.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-24T16:27:35.430Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36" etag="qwIjw-lQYRSu-I9kD9pI" version="13.6.4" type="github">
   <diagram id="APbCHEt9h7LmyBrYfhhx" name="Page-1">
-    <mxGraphModel dx="1662" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="868" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -40,11 +40,11 @@
         <mxCell id="Xcc2Si-ru2YFNp3SEIyi-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TYA-corCzER_tpGZpnsk-22" target="TYA-corCzER_tpGZpnsk-27" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="TYA-corCzER_tpGZpnsk-22" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record to tbl_change_request (which would include justification)&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
+        <mxCell id="TYA-corCzER_tpGZpnsk-22" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record into tbl_change_request with&amp;nbsp; sla_change_status = 1 for &quot;submitted&quot;&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="55" y="400" width="170" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="TYA-corCzER_tpGZpnsk-24" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record into tbl_change_request_status with &lt;br&gt;- sla_change_status = 1 for &quot;submitted&quot;&lt;br&gt;- status_date equal to the current date and time&lt;br&gt;- status_user to the user that submitted the request&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="55" y="615" width="278.75" height="105" as="geometry" />
+        <mxCell id="TYA-corCzER_tpGZpnsk-24" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record into tbl_change_request_status with &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- sla_change_status = 1 for &quot;submitted&quot;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- status_date equal to the current date and time&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- status_user to the user that submitted the request&lt;/span&gt;&lt;br&gt;&lt;br&gt;Update:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;record in tbl_change_request&lt;br&gt;- set effective_start_adj of inserted records equal to Sunday of or immediately following effective_start&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="55" y="620" width="278.75" height="150" as="geometry" />
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TYA-corCzER_tpGZpnsk-11" target="TYA-corCzER_tpGZpnsk-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -201,6 +201,9 @@
         </mxCell>
         <mxCell id="e-__jFEW9f1SL3vXLQ8T-9" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="260" y="170" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XjfmwIq85a9qO-nbTn4X-1" value="&lt;b&gt;Start&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="245" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
