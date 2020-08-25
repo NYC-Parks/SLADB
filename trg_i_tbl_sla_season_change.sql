@@ -26,37 +26,17 @@ create or alter trigger dbo.trg_i_tbl_sla_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 	begin
-		begin transaction
-				update sladb.dbo.tbl_sla_season
-					set effective_end = s.effective_end,
-						updated_date_utc = getutcdate()
-					from sladb.dbo.tbl_sla_season as u
-					inner join
-						/*Join the season table with the inserted table on the new (replacing) season on the new season_id. Take the old
-						  season_id value and the effective_start date from the new season and use that as the effective_end date of the new
-						  season.*/
-						(select r.old_season_id as season_id,
-								/*Subtract one day from the effective_start adjusted date so that it becomes the Saturday and the effective_end date of the other season.*/
-								dateadd(day, -1, l.effective_start_adj) as effective_end
-						 from sladb.dbo.tbl_sla_season as l
-						 inner join	
-							  inserted as r
-						 on l.season_id = r.new_season_id) as s
-					on u.season_id = s.season_id
-		commit;
 
 		/*Insert records into a temporary table for each unit with the existing. Carry over the current sla_code and check the
 		  validity, calculate the change request justification and use the effective start date of the new season.*/
 		select distinct r.unit_id,
 			   r.sla_code,
 			   l.new_season_id as season_id,
-			   r2.effective_start,
+			   /*Use the effective_start date of the new season as the effective_start date for the change requests*/
+			   r2.effective_start_adj as effective_start,
 			   /*Use this user-defined function to create a justification for the change request using the new and old
 					 season_id values.*/
-			   dbo.fn_season_change_justification(l.old_season_id, l.new_season_id) as change_request_justification,
-			   case when r2.year_round = r3.year_round then cast(1 as bit)
-					else cast(0 as bit)
-			   end as valid
+			   dbo.fn_season_change_justification(l.old_season_id, l.new_season_id) as change_request_justification
 		into #season_change
 		from inserted as l
 		inner join
@@ -67,10 +47,26 @@ after insert as
 		on l.old_season_id = r.season_id
 		inner join
 			 sladb.dbo.tbl_sla_season as r2
-		on l.new_season_id = r2.season_id
-		left join
-			 sladb.dbo.vw_sla_code_pivot as r3
-		on r.sla_code = r3.sla_code;
+		on l.new_season_id = r2.season_id;
+
+		begin transaction
+			update sladb.dbo.tbl_sla_season
+				set effective_end = s.effective_end,
+					updated_date_utc = getutcdate()
+				from sladb.dbo.tbl_sla_season as u
+				inner join
+					/*Join the season table with the inserted table on the new (replacing) season on the new season_id. Take the old
+						season_id value and the effective_start date from the new season and use that as the effective_end date of the new
+						season.*/
+					(select r.old_season_id as season_id,
+							/*Subtract one day from the effective_start adjusted date so that it becomes the Saturday and the effective_end date of the other season.*/
+							dateadd(day, -1, l.effective_start_adj) as effective_end
+						from sladb.dbo.tbl_sla_season as l
+						inner join	
+							inserted as r
+						on l.season_id = r.new_season_id) as s
+				on u.season_id = s.season_id
+		commit;
 
 		/*Insert records into the change request table for each unit with the new season and the previous sla_code. Note that this insert
 		  happens regardless of the validity of the request, the next step handles that*/
@@ -98,9 +94,9 @@ after insert as
 			   u.season_id = s.season_id and 
 			   u.sla_code = s.sla_code
 			/*Extract only records having the correct change request justification.*/
-			where u.change_request_justification = (select distinct change_request_justification from #season_change) and
-				  /*Don't auto approve records that were already invalidated*/
-				  u.sla_change_status != 4
+			where u.change_request_justification = (select distinct change_request_justification from #season_change) /*and
+				  Don't auto approve records that were already invalidated
+				  u.sla_change_status != 4*/
 		commit;
 	
 	end;

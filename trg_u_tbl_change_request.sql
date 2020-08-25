@@ -49,22 +49,43 @@ create or alter trigger dbo.trg_u_tbl_change_request
 on sladb.dbo.tbl_change_request
 for update as 
 	begin
-
+			  
 		begin transaction
 			/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
 			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, created_user)
-				select change_request_id,
-					   sla_change_status,
+				select l.change_request_id,
+					   l.sla_change_status,
 					   /*Insert a default value for the status_user right now. The true value will need to be pulled through active directory, 
 					   expertise of ITT required. It is stored in the employeeID attribute. If the sla_change_status is set to 4 = Invalid, then use
 					   SYSTEM as the user.*/
-					   case when sla_change_status = 4 then 'SYSTEM'
+					   case when l.sla_change_status = 4 then 'SYSTEM'
 							else '0000000' 
 					   end as created_user
-				from inserted
-				/*Updates are made to the effective_start_adj column, so these need to be ignored by filtering out any records with the default
-				  sla_change_status of 1 = 'Submitted'*/
-				where sla_change_status != 1
+				from inserted as l
+				inner join
+				/*Join the inserted and deleted tables and exclude any records that are changing from 4 to another status,
+				  this type of change is not allowed.*/
+					 deleted as r
+				on l.change_request_id = r.change_request_id
+				where not(r.sla_change_status = 4 and l.sla_change_status != 4) and
+					  /*Exclude any updates to change requests with a value of 1 or approved*/
+					  l.sla_change_status != 1 and 
+					  r.sla_change_status != 4
+		commit;
+
+		begin transaction
+			update u
+				set sla_change_status = 4
+				from sladb.dbo.tbl_change_request as u
+				inner join
+					 inserted as s
+				on u.change_request_id = s.change_request_id
+				inner join
+					/*Join the inserted and deleted tables and exclude any records that are changing from 4 to another status,
+					  this type of change is not allowed.*/
+					deleted as s1
+				on s.change_request_id = s1.change_request_id
+				where s1.sla_change_status = 4 and s.sla_change_status != 4
 		commit;
 
 	end;
