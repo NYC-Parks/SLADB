@@ -1,14 +1,14 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management    																					   			          
- Created Date:  09/27/2019																							   
- Modified Date: 01/29/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
+ Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
- Tables Used: sladb.dbo.tbl_change_request																							   
- 			  sladb.dbo.tbl_change_request_status																								   
+ Tables Used: <Database>.<Schema>.<Table Name1>																							   
+ 			  <Database>.<Schema>.<Table Name2>																								   
  			  <Database>.<Schema>.<Table Name3>				
 			  																				   
  Description: <Lorem ipsum dolor sit amet, legimus molestiae philosophia ex cum, omnium voluptua evertitur nec ea.     
@@ -26,26 +26,23 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_ii_tbl_change_request
+create or alter trigger dbo.trg_ai_tbl_change_request
 on sladb.dbo.tbl_change_request
-instead of insert as 
+after insert as 
 	begin
+
 		begin transaction
-			insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start,
-													 change_request_justification, effective_start_adj, sla_change_status)
-			select unit_id,
-				   sla_code,
-				   season_id,
-				   effective_start,
-				   change_request_justification,
-				   dbo.fn_getdate(effective_start, 1) as effective_start_adj,
-				   sla_change_status
-			from inserted;
+			/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
+			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, created_user)
+				select change_request_id,
+					   sla_change_status,
+					   /*Insert a default value for the status_user right now. The true value will need to be pulled through active directory, 
+					   expertise of ITT required. It is stored in the employeeID attribute.*/
+					   '0000000' as created_user
+				from inserted	 	
 		commit;
 
-		--set identity_insert sladb.dbo.tbl_change_request off;
+		/*Execute the stored procedure to checks the change request validity*/
+		exec sladb.dbo.sp_u_tbl_change_request;
 
 	end;
-
-
-	 
