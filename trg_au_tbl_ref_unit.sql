@@ -23,7 +23,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_u_tbl_ref_unit
+create or alter trigger dbo.trg_au_tbl_ref_unit
 on sladb.dbo.tbl_ref_unit
 after update as
 

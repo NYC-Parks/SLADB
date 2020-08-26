@@ -45,7 +45,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_u_tbl_change_request
+create or alter trigger dbo.trg_fu_tbl_change_request
 on sladb.dbo.tbl_change_request
 for update as 
 	begin

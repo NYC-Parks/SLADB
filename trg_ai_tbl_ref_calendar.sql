@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_i_tbl_ref_calendar
+create or alter trigger dbo.trg_ai_tbl_ref_calendar
 	on sladb.dbo.tbl_ref_calendar
 	after insert as
 	begin

@@ -22,7 +22,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_i_tbl_sla_season_change
+create or alter trigger dbo.trg_ai_tbl_sla_season_change
 on sladb.dbo.tbl_sla_season_change
 after insert as
 	begin

@@ -26,35 +26,34 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_i_tbl_unit_sla_season
+create or alter trigger dbo.trg_ai_tbl_unit_sla_season
 on sladb.dbo.tbl_unit_sla_season
 after insert as
 	begin
 		/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing 
 		  effective record for that unit and set the effective value to 0 and the effective_date to today.*/
 		begin transaction;
-			update sladb.dbo.tbl_unit_sla_season
+			update u
 			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla*/
-			set effective = 0,
-				effective_end = dateadd(day, -1, l.effective_start_adj),
-				updated_date_utc = getutcdate()
+			set u.effective = 0,
+				u.effective_end = dateadd(day, -1, s.effective_start_adj)
 			/*Join the inserted records with the tbl_unit_sla_season based on the unit_id to get all records associated
 			  with the inserted unit(s).*/
-			from inserted as l
+			from sladb.dbo.tbl_unit_sla_season as u
 			inner join
-					sladb.dbo.tbl_unit_sla_season as r
-			on l.unit_id = r.unit_id
+				  inserted as s
+			on u.unit_id = s.unit_id
 			/*Join this results set with the view that determines whether or not that unit contains more than one record
 			  with a value of effective = 1 based on unit_id and sla_season_id*/
 			inner join
-					sladb.dbo.vw_unit_sla_season_last_id as r2
-			on r.unit_id = r2.unit_id and
-			   r.sla_season_id = r2.sla_season_id
+				  sladb.dbo.vw_unit_sla_season_last_id as s1
+			on u.unit_id = s1.unit_id and
+			   u.sla_season_id = s1.sla_season_id
 			/*Keep records only if the rank of the row for the unit is equal to the count of the total number of effective = 1 rows for 
 			  that unit and the count of the total number of effective = 1 rows is greater than 1. These are the records where the effective
 			  value should be changed to equal 0.*/
-			where r2.row_rank = r2.n and
-					r2.n > 1;
+			where s1.row_rank = s1.n and
+				  s1.n > 1;
 		commit;
 
 	end;

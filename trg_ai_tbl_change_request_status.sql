@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_i_tbl_change_request_status
+create or alter trigger dbo.trg_ai_tbl_change_request_status
 on sladb.dbo.tbl_change_request_status
 after insert as
 	begin
