@@ -292,3 +292,18 @@ insert into @new_change_request(unit_id,
 	where effective = 1;
 
 exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
+
+/*Test the workflow for a change request in which the unit will be decommissioned.*/
+declare @new_change_request as insert_change_request;
+
+insert into @new_change_request(unit_id,
+								sla_code,
+								season_id,
+								/*Make sure that the effective start date is greater than or equal to today's date.*/
+								effective_start,
+								change_request_justification)
+	values('Q135-01', 1, 6, '2020-11-01', 'Test inserting change requests that will be invalidated when units are decommissioned.'),
+		  ('RZ243', 1, 6, '2020-11-01', 'Test inserting change requests that will be invalidated when units are decommissioned.'),
+		  ('X002-10', 1, 6, '2020-11-01', 'Test inserting change requests that will be invalidated when units are decommissioned.')
+
+exec sladb.dbo.sp_insert_change_request @new_change_request = @new_change_request, @auto_approve = 1;
