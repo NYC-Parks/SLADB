@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-08-31T19:06:56.027Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="ra7VNhdsZ6LwBtPmYZpu" version="13.6.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-31T19:21:23.588Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="W9yG6i97O2sCt5tDUi2Q" version="13.6.6" type="github">
   <diagram id="eTn_AuUJCj91Tefvj_zs" name="Page-1">
     <mxGraphModel dx="748" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -10,11 +10,11 @@
         <mxCell id="DygqwQwai4_pi-jc7A12-2" value="Approver View" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="420" y="40" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="DygqwQwai4_pi-jc7A12-4" value="Change Request for a Unit&lt;br&gt;&lt;br&gt;Inputs:&lt;br&gt;- unit (property) (type TBD)&lt;br&gt;- season to associate the unit with (dropdown with existing seasons)&lt;br&gt;- SLAs for in-season and off-season (if applicable); year-round seasons will only need one SLA&lt;br&gt;- effective start date&lt;br&gt;- written justification for request" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="100" y="120" width="230" height="150" as="geometry" />
+        <mxCell id="DygqwQwai4_pi-jc7A12-4" value="Change Request for a Unit&lt;br&gt;&lt;br&gt;Inputs:&lt;br&gt;- unit (property) (type TBD)&lt;br&gt;- season to associate the unit with (dropdown with existing seasons)&lt;br&gt;- SLAs for in-season and off-season (if applicable); year-round seasons will only need one SLA&lt;br&gt;- effective start date&lt;br&gt;- written justification for request&lt;br&gt;- ability to add multiple units to a request (e.g. Streeteasy&#39;s search function)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="230" height="160" as="geometry" />
         </mxCell>
         <mxCell id="DygqwQwai4_pi-jc7A12-6" value="Change Request for a Unit&lt;br&gt;&lt;br&gt;View:&lt;br&gt;- view all change requests that have been submitted (i.e. change_request status in change_request table is &quot;submitted&quot;)&lt;br&gt;&lt;br&gt;Inputs:&lt;br&gt;- approve or reject change requests&lt;br&gt;- change requests should show up in a list with a checkbox to the left&lt;br&gt;- user can check one or multiple requests and click &quot;approve&quot; or &quot;reject&quot; at the bottom of the screen&lt;br&gt;- requests do not disappear from this screen, but show up in a different view as &quot;approved&quot; or &quot;rejected&quot;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="410" y="110" width="250" height="280" as="geometry" />
+          <mxGeometry x="400" y="120" width="250" height="240" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
