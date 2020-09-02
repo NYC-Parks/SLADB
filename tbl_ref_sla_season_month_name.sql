@@ -18,5 +18,6 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_ref_sla_season_month_name(month_name_num int not null unique,
-													 month_name_desc nvarchar(9) primary key);
+													 month_name_desc nvarchar(9) primary key,
+													 month_max_days int not null);
 
