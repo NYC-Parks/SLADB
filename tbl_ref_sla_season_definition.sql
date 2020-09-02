@@ -25,4 +25,5 @@ create table sladb.dbo.tbl_ref_sla_season_definition(season_date_ref_id int iden
 													 date_ref_day_number int null,
 													 day_name_desc nvarchar(9) null foreign key references sladb.dbo.tbl_ref_sla_season_day_name(day_name_desc),
 													 day_rank_id nvarchar(5) null foreign key references sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id),
-													 date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(date_type_id));
+													 date_type_id int foreign key references sladb.dbo.tbl_ref_sla_season_date_type(date_type_id),
+													 constraint ck_month_maxdays check (date_ref_day_number between 1 and dbo.fn_month_maxdays(month_name_desc)));

@@ -2,10 +2,10 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  03/02/2020																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,18 +17,18 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_month_name(month_name_num, month_name_desc, month_max_days)
-		values(1, 'January', 31),
-			  (2, 'February', 28),
-			  (3, 'March', 31),
-			  (4, 'April', 30),
-			  (5, 'May', 31),
-			  (6, 'June', 30),
-			  (7, 'July', 31),
-			  (8, 'August', 31),
-			  (9, 'September', 30),
-			  (10, 'October', 31),
-			  (11, 'November', 30),
-			  (12, 'December', 31)
-commit;
+use sladb
+go
+
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
+create or alter function dbo.fn_month_maxdays(@month nvarchar(9))
+	returns int
+	with execute as caller
+	begin
+		return (select month_max_days from sladb.dbo.tbl_ref_sla_season_month_name where month_name_desc = @month);
+	end;
