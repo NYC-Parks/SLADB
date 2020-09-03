@@ -68,5 +68,17 @@ begin
 				   day_rank_id,
 				   date_type_id
 			from @new_season_definition;
+	
+	/*If the previous statement encountered an error, the value of @error will be greater than 0 and the 
+	  transaction should be rolled back.*/
+	if @@error > 0
+	begin
+	rollback transaction
+	end;
+
+	/*If no error is encountered then commit the transaction.*/
+	else
+	begin
 	commit;
+	end;
 end;
