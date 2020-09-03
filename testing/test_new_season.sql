@@ -173,3 +173,38 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 		  (1, 'November', 1, null, null,  2);
 
 exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
+
+/*Test a s*/
+use sladb
+go
+
+declare @new_season as insert_new_season,
+	    @new_season_definition as insert_new_season_definition
+
+insert into @new_season(season_desc, year_round, effective_start)
+	values('Season test 100', 0, cast(getdate() as date));
+
+insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, day_name_desc,
+								   day_rank_id, date_type_id)
+	values(1, 'April', 1, null, null,  1),
+		  (1, 'March', 30, null, null,  2);
+
+exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
+
+/*Replace a year-round season with a periodic season*/
+use sladb
+go
+declare @new_season as insert_new_season,
+	    @new_season_definition as insert_new_season_definition
+
+insert into @new_season(season_desc, year_round, effective_start)
+	values('Season test 10', 0, '2020-08-16');
+
+insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, day_name_desc,
+								   day_rank_id, date_type_id)
+	values(1, 'April', 1, null, null,  1),
+		  (1, 'June', 30, null, null,  2);
+
+exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
+
+
