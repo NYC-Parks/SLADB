@@ -156,3 +156,20 @@ commit;
 /*Enable the check constraint without checking records that were inserted since it was disabled.*/
 alter table sladb.dbo.tbl_change_request
 	check constraint ck_change_request_effective_start;
+
+/*Test a season with an invalid day*/
+use sladb
+go
+
+declare @new_season as insert_new_season,
+	    @new_season_definition as insert_new_season_definition
+
+insert into @new_season(season_desc, year_round, effective_start)
+	values('Season test 100', 0, cast(getdate() as date));
+
+insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day_number, day_name_desc,
+								   day_rank_id, date_type_id)
+	values(1, 'April', 31, null, null,  1),
+		  (1, 'November', 1, null, null,  2);
+
+exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition
