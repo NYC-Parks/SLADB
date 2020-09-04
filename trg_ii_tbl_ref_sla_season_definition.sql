@@ -79,8 +79,8 @@ begin
 		   /*If the difference between the min and max months is between 1 and 11 for a periodic (not year round) season,
 			 then flag the record as valid. If the difference between the min and max months for a year round season is 11 then
 			 flag the record as valid. Otherwise flag the record as invalid.*/ 
-		   case when year_round = 0 and abs(max_month_num - min_month_num) between 1 and 10 then 1
-				when year_round = 1 and abs(max_month_num - min_month_num) = 11 then 1
+		   case when year_round = 0 and abs(max_month_num - min_month_num) between 2 and 10 then 1
+				when year_round = 1 and abs(max_month_num - min_month_num) in(1, 11) then 1
 				else 0
 		   end as month_valid,
 		   /*For fixed dates (date_ref_fixed = 1) set the valid value to 0 if the date_ref_day_number is null.*/ 
