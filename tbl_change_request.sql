@@ -25,6 +25,7 @@ create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) pr
 										  effective_start date not null,
 										  effective_start_adj as dbo.fn_getdate(effective_start, 1),
 										  change_request_justification nvarchar(2000) not null,
+										  change_request_comments nvarchar(2000) null,
 										  /*Add the a status column with a default value of 1 (submitted)*/
 										  sla_change_status int not null foreign key references sladb.dbo.tbl_ref_sla_change_status(sla_change_status) default 1,
 										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)),
