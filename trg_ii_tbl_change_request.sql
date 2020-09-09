@@ -30,6 +30,25 @@ create or alter trigger dbo.trg_ii_tbl_change_request
 on sladb.dbo.tbl_change_request
 instead of insert as 
 	begin
+		
+		if object_id('tempdb..#inserts') is not null
+			drop table #inserts;
+		
+		/*Join the inserted change requests with the existing change requests and determine if the unit_id referenced
+		  by the new change requests already have existing change requests with a status of 1 or submitted. Ideally
+		  any existing change must be dealt with first.*/
+		select l.*,
+			   case when r.sla_change_status = 1 then 1
+					else 0
+			   end as submitted_exist
+		into #inserts
+		from inserted as l
+		left join
+			 sladb.dbo.tbl_change_request as r
+		on l.unit_id = r.unit_id
+		where r.sla_change_status = 1;
+
+
 		begin transaction
 			insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start,
 													 change_request_justification, effective_start_adj, sla_change_status)
@@ -40,11 +59,13 @@ instead of insert as
 				   change_request_justification,
 				   dbo.fn_getdate(effective_start, 1) as effective_start_adj,
 				   sla_change_status
-			from inserted;
+			from #inserts
+			/*Exclude any records that already have a change request submitted*/
+			where submitted_exist = 0;
 		commit;
 
-		--set identity_insert sladb.dbo.tbl_change_request off;
-
+		if exists(select * from #inserts where submitted_exist = 1)
+			raiserror('Warning, an existing change request has already been submitted for this unit and has not been approved.', 1, 1)
 	end;
 
 
