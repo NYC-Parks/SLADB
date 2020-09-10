@@ -14,6 +14,8 @@
  Description: Insert the initial historic SLAs to start SLADB.  									   
 																													   												
 ***********************************************************************************************************************/
+set nocount on;
+
 use sladb
 go
 

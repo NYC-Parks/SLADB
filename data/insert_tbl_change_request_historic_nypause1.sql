@@ -17,6 +17,8 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+set nocount on;
+
 use sladb
 go
 
@@ -1515,7 +1517,7 @@ insert into @new_change_request(unit_id,
 								/*Make sure that the effective start date is greater than or equal to today's date.*/
 								effective_start,
 								change_request_justification)
-(N'R002', 16, 1, CAST(N'2020-03-22' AS Date), N'C SLAs are suspended; C sites should be maintained only on an ‘as-needed’ or ‘as-able’ basis'),
+values(N'R002', 16, 1, CAST(N'2020-03-22' AS Date), N'C SLAs are suspended; C sites should be maintained only on an ‘as-needed’ or ‘as-able’ basis'),
 (N'R004', 6, 1, CAST(N'2020-03-22' AS Date), N'A SLAs sites are now Bs, except playgrounds which remain A as long as they are open'),
 (N'R005-ZN01', 6, 1, CAST(N'2020-03-22' AS Date), N'A SLAs sites are now Bs, except playgrounds which remain A as long as they are open'),
 (N'R005-ZN02', 11, 1, CAST(N'2020-03-22' AS Date), N'B SLAs sites are now Cs'),
@@ -1820,7 +1822,7 @@ insert into @new_change_request(unit_id,
 								/*Make sure that the effective start date is greater than or equal to today's date.*/
 								effective_start,
 								change_request_justification)
-(N'X001A-XZ378', 11, 1, CAST(N'2020-03-22' AS Date), N'B SLAs sites are now Cs'),
+values(N'X001A-XZ378', 11, 1, CAST(N'2020-03-22' AS Date), N'B SLAs sites are now Cs'),
 (N'X001B', 11, 1, CAST(N'2020-03-22' AS Date), N'B SLAs sites are now Cs'),
 (N'X001-ZN01', 6, 1, CAST(N'2020-03-22' AS Date), N'A SLAs sites are now Bs, except playgrounds which remain A as long as they are open'),
 (N'X001-ZN02', 6, 1, CAST(N'2020-03-22' AS Date), N'A SLAs sites are now Bs, except playgrounds which remain A as long as they are open'),

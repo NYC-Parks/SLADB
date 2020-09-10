@@ -17,6 +17,8 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+set nocount on;
+
 begin transaction
 	insert into sladb.dbo.tbl_ref_sla_season_day_rank(day_rank_id, day_rank_desc)
 		values('1', 'First {X} of the month.'),

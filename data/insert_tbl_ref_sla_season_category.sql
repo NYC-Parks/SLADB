@@ -17,6 +17,7 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+set nocount on;
 begin transaction
 	insert into sladb.dbo.tbl_ref_sla_season_category(date_category_desc)
 		values('Season'),

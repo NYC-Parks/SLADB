@@ -17,6 +17,8 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+--set nocount on;
+
 use sladb
 go
 
@@ -855,7 +857,7 @@ values('B001', 1, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'BZ96', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'BZ97', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'BZ98', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
-(N'BZ99', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review')
+(N'BZ99', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review');
 
 insert into @new_change_request(unit_id,
 								sla_code,
@@ -1349,7 +1351,7 @@ values(N'M001', 1, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'MZ93', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'MZ96', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'MZ97', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
-(N'MZG003', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review')
+(N'MZG003', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review');
 
 insert into @new_change_request(unit_id,
 								sla_code,
@@ -2107,7 +2109,7 @@ values(N'Q001-01', 1, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'QZ95', 6, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'QZ98', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'QZ981', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
-(N'QZG005', 1, 1, CAST(N'2014-01-01' AS Date), N'Original Review')
+(N'QZG005', 1, 1, CAST(N'2014-01-01' AS Date), N'Original Review');
 
 insert into @new_change_request(unit_id,
 								sla_code,
@@ -3109,7 +3111,7 @@ values(N'R002', 11, 1, CAST(N'2014-01-01' AS Date), N'Original Review'),
 (N'M108T-ZN02', 1, 1, CAST(N'2018-03-08' AS Date), N'Original Review'),
 (N'M108T-ZN03', 1, 1, CAST(N'2018-03-08' AS Date), N'Original Review'),
 (N'M108T-ZN04', 1, 1, CAST(N'2018-03-08' AS Date), N'Original Review'),
-(N'M108T-ZN05', 1, 1, CAST(N'2018-03-08' AS Date), N'Original Review')
+(N'M108T-ZN05', 1, 1, CAST(N'2018-03-08' AS Date), N'Original Review');
 
 /*Disable the check constraint preventing retroactive inserts*/
 alter table sladb.dbo.tbl_change_request

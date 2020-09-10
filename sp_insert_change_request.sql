@@ -37,8 +37,10 @@ begin
 	
 		declare @change_request_id int;
 
-		/*Set the value of the change_request_id parameter equal to the current identity plus 1*/
-		set @change_request_id = (select ident_current('sladb.dbo.tbl_change_request') + 1);
+		/*Set the value of the change_request_id parameter equal to the current identity plus 1, except if the table has not
+		  yet been populated.*/
+		set @change_request_id = (select case when ident_current('sladb.dbo.tbl_change_request') = 1 then 1 
+											  else ident_current('sladb.dbo.tbl_change_request') + 1 end);
 
 	begin transaction
 		/*Insert the values into the Season table*/

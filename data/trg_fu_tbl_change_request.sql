@@ -69,24 +69,6 @@ for update as
 				where s1.sla_change_status = 4 and s.sla_change_status != 4
 		commit;
 
-		begin transaction
-			update u
-			/*If the date of approval is after the effective_start_adj date then update the effective_start_adj 
-			  date to the Sunday following the create_date_utc of the approval.*/
-			set effective_start_adj = case when cast(s1.created_date_utc as date) > u.effective_start_adj then dbo.fn_getdate(cast(s1.created_date_utc as date), 1)
-										   else u.effective_start_adj end
-			from sladb.dbo.tbl_change_request  as u
-			inner join
-				 inserted as s
-			on u.change_request_id = s.change_request_id
-			inner join
-				sladb.dbo.tbl_change_request_status as s1
-			on u.change_request_id = s1.change_request_id
-			where u.sla_change_status = 2 and 
-				  s.sla_change_status = 2 and
-				  s1.sla_change_status = 2
-		commit;
-
 	end;
 
 

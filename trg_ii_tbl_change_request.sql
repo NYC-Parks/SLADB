@@ -37,7 +37,7 @@ instead of insert as
 		/*Join the inserted change requests with the existing change requests and determine if the unit_id referenced
 		  by the new change requests already have existing change requests with a status of 1 or submitted. Ideally
 		  any existing change must be dealt with first.*/
-		select l.*,
+		select distinct l.*,
 			   case when r.sla_change_status = 1 then 1
 					else 0
 			   end as submitted_exist
@@ -45,8 +45,7 @@ instead of insert as
 		from inserted as l
 		left join
 			 sladb.dbo.tbl_change_request as r
-		on l.unit_id = r.unit_id
-		where r.sla_change_status = 1;
+		on l.unit_id = r.unit_id;
 
 
 		begin transaction

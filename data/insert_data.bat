@@ -5,18 +5,18 @@ sqlcmd -S . -E -i insert_tbl_ref_sla_season_day_rank.sql
 
 REM Execute the stored procedures to populate the tbl_ref_calendar and tbl_ref_unit tables
 
-sqlcmd -S . -E -Q "exec sladb.dbo.sp_insert_tbl_ref_calendar;"
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_i_tbl_ref_calendar;"
 
-sqlcmd -S . -E -Q "exec sladb.dbo.sp_merge_ref_unit;"
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_m_tbl_ref_unit;"
 
 
 REM Execute the scripts to populate the other reference tables
 
-sqlcmd -S . -E -i insert_tbl_ref_sla.sql
-
 sqlcmd -S . -E -i insert_tbl_ref_sla_season_category.sql
 
 sqlcmd -S . -E -i insert_tbl_ref_sla_season_date_type.sql
+
+sqlcmd -S . -E -i insert_tbl_ref_sla.sql
 
 sqlcmd -S . -E -i insert_tbl_ref_sla_season_day_name.sql
 
@@ -29,12 +29,14 @@ REM Populate tbl_sla_season with the historic seasons then execute the sp_season
 
 sqlcmd -S . -E -i insert_historic_seasons.sql
 
-sqlcmd -S . -E -Q "exec sladb.dbo.sp_season_dates"
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_m_tbl_sla_season_date"
 
 
 REM Update the validation script to bypass checking the unit_status column value
 
 sqlcmd -S . -E -i sp_u_tbl_change_request.sql
+
+sqlcmd -S . -E -i trg_fu_tbl_change_request.sql
 
 
 REM Populate tbl_change_request with all historic change request, auto-approving them in order
@@ -57,6 +59,8 @@ cd ..
 REM Restore the proper logic for validation script
 
 sqlcmd -S . -E -i sp_u_tbl_change_request.sql
+
+sqlcmd -S . -E -i trg_fu_tbl_change_request.sql
 
 pause
 

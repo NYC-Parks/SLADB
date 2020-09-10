@@ -17,10 +17,11 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-set identity_insert sladb.dbo.tbl_ref_sla_change_status on
+set nocount on;
+set identity_insert sladb.dbo.tbl_ref_sla_change_status on;
 
 begin transaction
-	insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status_desc)
+	insert into sladb.dbo.tbl_ref_sla_change_status(sla_change_status, sla_change_status_desc)
 		values(1, 'Submitted'),
 			  (2, 'Approved'),
 			  (3, 'Rejected'),
@@ -28,4 +29,4 @@ begin transaction
 			  (5, 'Cancelled');
 commit;
 
-set identity_insert sladb.dbo.tbl_ref_sla_change_status off
+set identity_insert sladb.dbo.tbl_ref_sla_change_status off;
