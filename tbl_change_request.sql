@@ -23,9 +23,10 @@ create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) pr
 										  season_id int not null foreign key references sladb.dbo.tbl_sla_season(season_id),
 										  /*Make sure that the effective start date is greater than or equal to today's date.*/
 										  effective_start date not null,
-										  effective_start_adj as dbo.fn_getdate(effective_start, 1),
+										  effective_start_adj date null,
 										  change_request_justification nvarchar(2000) not null,
+										  change_request_comments nvarchar(2000) null,
 										  /*Add the a status column with a default value of 1 (submitted)*/
 										  sla_change_status int not null foreign key references sladb.dbo.tbl_ref_sla_change_status(sla_change_status) default 1,
 										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)),
-										  constraint unq_change_request unique(unit_id, effective_start_adj));
+										  constraint unq_change_request unique(unit_id, effective_start_adj, sla_change_status));

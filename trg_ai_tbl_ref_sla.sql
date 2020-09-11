@@ -31,7 +31,8 @@ create or alter trigger dbo.trg_ai_tbl_ref_sla
 	after insert as
 	begin
 		/*Select and store the current identity value of tbl_ref_sla_code*/
-		declare @sla_code int = (select ident_current('sladb.dbo.tbl_ref_sla_code'));
+		declare @sla_code int = (select case when ident_current('sladb.dbo.tbl_ref_sla_code') = 1 then 0
+											 else ident_current('sladb.dbo.tbl_ref_sla_code') end);
 
 		/*Allow identity inserts into sladb.dbo.tbl_ref_sla_code*/
 		set identity_insert sladb.dbo.tbl_ref_sla_code on;

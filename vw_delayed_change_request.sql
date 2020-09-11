@@ -2,10 +2,10 @@
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
  Modified By: <Modifier Name>																						   			          
- Created Date:  03/02/2020																							   
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,12 +17,16 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-set nocount on;
+use sladb
+go
 
-begin transaction
-	insert into sladb.dbo.tbl_ref_sla_season_date_type(date_category_id, date_type_desc)
-		values(1, 'Season Start'),
-			  (1, 'Season End'),
-			  (2, 'Offseason Start'),
-			  (2, 'Offseason End');
-commit; 
+set ansi_nulls on;
+go
+
+set quoted_identifier on;
+go
+
+create or alter view dbo.vw_delayed_change_request as
+	select *
+	from sladb.dbo.tbl_change_request
+	where dbo.fn_getdate(effective_start, 1) != effective_start_adj;
