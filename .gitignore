@@ -1,1 +1,3 @@
 *checkpoint*
+create_database_copy.bat
+data/insert_data_copy.bat
