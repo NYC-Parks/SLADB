@@ -39,16 +39,17 @@ on l.unit_id = r.unit_id
 where cast(unit_withdraw as date) >= '2014-01-01' or
 	  unit_withdraw is null)
 
-
 select top 100 percent l.borough,
 	   l.district,
 	   l.unit_id,
-	   case when l.effective_start_adj between r.effective_start_adj and r.effective_end_adj then l.effective_start_adj
+	   /*If the unit effective_start_adj date is greater than that of the season, use the date from the unit otherwise
+	     use the date from the season.*/
+	   case when l.effective_start_adj > r.effective_start_adj then l.effective_start_adj
 			else r.effective_start_adj
 	   end as effective_start_adj,
-	   case when l.effective_end_adj is not null and l.effective_end_adj >= cast(getdate() as date) then cast(getdate() as date)
-			when l.effective_end_adj is not null and l.effective_end_adj < cast(getdate() as date) then l.effective_end_adj
-			when l.effective_end_adj is null and r.effective_end_adj >= cast(getdate() as date) then cast(getdate() as date)
+	   /*If the unit effective_end_adj date is less than that of the season, use the date from the unit otherwise
+	     use the date from the season.*/
+	   case when coalesce(l.effective_end_adj, cast(getdate() as date)) < r.effective_end_adj then coalesce(l.effective_end_adj, cast(getdate() as date))
 			else r.effective_end_adj
 	   end as effective_end_adj,
 	   r2.sla_id,
@@ -58,9 +59,10 @@ from units as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
 on l.season_id = r.season_id and
-   ((l.effective_start_adj <= r.effective_start_adj and l.effective_end_adj between r.effective_start_adj and r.effective_end_adj) or
-    (l.effective_end_adj is null and l.effective_start_adj <= r.effective_end_adj) or
-    (l.effective_end_adj between r.effective_start_adj and r.effective_end_adj))
+   ((l.effective_start_adj between r.effective_start_adj and coalesce(r.effective_end_adj, cast(getdate() as date)) and
+     coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj) or
+   (l.effective_start_adj between r.effective_start_adj and r.effective_end_adj) or
+   (coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj))
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
@@ -68,6 +70,6 @@ on l.sla_code = r2.sla_code and
 left join
 	 sladb.dbo.tbl_ref_sla as r3
 on r2.sla_id = r3.sla_id
-where l.effective_start_adj <= cast(getdate() as date) and
-	  r.effective_start_adj <= cast(getdate() as date)
+--where l.effective_start_adj <= cast(getdate() as date) and
+--	  r.effective_start_adj <= cast(getdate() as date)
 order by unit_id, effective_start_adj
