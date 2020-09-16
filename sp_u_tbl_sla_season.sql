@@ -34,14 +34,14 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 			update sladb.dbo.tbl_sla_season
 				/*set the effective value equal to 0 if it's equal to or past the effective_end_adj date,
 				  otherwise set the effective value equal to 1.*/
-				set effective = case when effective_end_adj <= cast(getdate() as date) then 0
+				set effective = case when effective_end_adj < cast(getdate() as date) then 0
 									 else 1
 								end,
 				    updated_date_utc = getutcdate()
 					  /*Find any currently effective seasons (effective = 1) that should be effective = 0 if the 
 						effective_end_adj date is less than or equal to today*/
 				where (effective = 1 and 
-					   effective_end_adj <= cast(getdate() as date)) or 
+					   effective_end_adj < cast(getdate() as date)) or 
 					  /*Find any currently ineffective seasons (effective = 0) that should be effective = 1 if the 
 					    effective_start_adj date is less than or equal to today*/
 					  (effective = 0 and 
@@ -51,10 +51,11 @@ create or alter procedure dbo.sp_u_tbl_sla_season as
 
 		begin transaction
 			update u
-			set u.effective = 0,
+			/*If the effective_end_adj date of the season is less than today then set the value of effective = 0*/
+			set u.effective = case when s.effective_end_adj < cast(getdate() as date) then 0 else 1 end,
 				/*Set the effective_date in tbl_unit_sla_season to the effective_end_adj date of the season in order
 				  to ensure no gaps in the dates.*/
-				u.effective_end = s.effective_end_adj 
+				u.effective_end_adj = s.effective_end_adj 
 				/*Extract the records where the season is not effective*/
 			from (select *
 			      from sladb.dbo.tbl_sla_season
