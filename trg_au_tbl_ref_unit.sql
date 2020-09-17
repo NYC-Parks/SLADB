@@ -31,7 +31,7 @@ after update as
 		/*Create a CTE from the updated records. Note that updates go into both the inserted (new) and deleted (old)tables, but the new 
 		  records are the only ones that matter for this trigger.*/
 		with updates as(
-		select unit_id, unit_status
+		select unit_id, unit_status, unit_withdraw
 		from inserted
 		/*Filter to include only objects with a unit_status of D = Decommissioned. All other statuses are still considered to be active.*/
 		where unit_status = 'D')
@@ -41,8 +41,9 @@ after update as
 		merge sladb.dbo.tbl_unit_sla_season as tgt using updates as src
 			on (tgt.unit_id = src.unit_id)
 			when matched and effective = 1 and effective_end is null
-				then update set tgt.effective = 0,
-						        tgt.effective_end = cast(getdate() as date); 
+								/*If the saturday that follows the unit_withdraw date is less than today then set effective = 0*/
+				then update set tgt.effective = case when dbo.fn_getdate(src.unit_withdraw, 0) < cast(getdate() as date) then 0 else 1 end,
+						        tgt.effective_end_adj = dbo.fn_getdate(src.unit_withdraw, 0); 
 	commit;
 
 	begin transaction;

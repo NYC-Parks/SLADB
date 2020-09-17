@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: SLADB																						   			          
- Created Date:  03/03/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -17,25 +17,12 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
-use sladb
-go
-
-set ansi_nulls on;
-go
-
-set quoted_identifier on;
-go
-
-create or alter view dbo.vw_unit_sla_season_last_id as
-	select unit_id, 
-		   sla_season_id,
-		   effective_start_adj,
-		   /*Rank the records for each unit that have a record with a value effective = 1. Units with more
-		     than one record with effective = 1 will be assigned sequential values from 1 to the number of records.*/
-		   rank() over(partition by unit_id order by effective_start_adj desc) as row_rank,
-		   /*Count the number of records for each unit that have record with a value effective = 1. Units with more
-		     than one record with effective = 1 will have a value greater than 1.*/
-		   count(*) over(partition by unit_id order by unit_id) as n
-	from sladb.dbo.tbl_unit_sla_season
-	/*Only include records with a value of effective = 1*/
-	where effective = 1;
+/*Update the timestamp of the historic SLAs to match their effective_start dates*/
+begin transaction
+	update u
+	set u.created_date_utc = cast(s.effective_start as datetime)
+	from sladb.dbo.tbl_change_request as s
+	left join
+		 sladb.dbo.tbl_change_request_status as u
+	on u.change_request_id = s.change_request_id;
+commit;

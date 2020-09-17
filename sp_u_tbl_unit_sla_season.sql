@@ -1,11 +1,11 @@
 /***********************************************************************************************************************
 																													   	
  Created By: Dan Gallagher, daniel.gallagher@parks.nyc.gov, Innovation & Performance Management         											   
- Modified By: SLADB																						   			          
- Created Date:  03/03/2020																							   
+ Modified By: <Modifier Name>																						   			          
+ Created Date:  <MM/DD/YYYY>																							   
  Modified Date: <MM/DD/YYYY>																							   
 											       																	   
- Project: SLADB	
+ Project: <Project Name>	
  																							   
  Tables Used: <Database>.<Schema>.<Table Name1>																							   
  			  <Database>.<Schema>.<Table Name2>																								   
@@ -26,16 +26,12 @@ go
 set quoted_identifier on;
 go
 
-create or alter view dbo.vw_unit_sla_season_last_id as
-	select unit_id, 
-		   sla_season_id,
-		   effective_start_adj,
-		   /*Rank the records for each unit that have a record with a value effective = 1. Units with more
-		     than one record with effective = 1 will be assigned sequential values from 1 to the number of records.*/
-		   rank() over(partition by unit_id order by effective_start_adj desc) as row_rank,
-		   /*Count the number of records for each unit that have record with a value effective = 1. Units with more
-		     than one record with effective = 1 will have a value greater than 1.*/
-		   count(*) over(partition by unit_id order by unit_id) as n
-	from sladb.dbo.tbl_unit_sla_season
-	/*Only include records with a value of effective = 1*/
-	where effective = 1;
+create or alter procedure dbo.sp_u_tbl_unit_sla_season as
+	/*Set the value of effective to 0 if AND ONLY if the effective_end_adj date is less than or equal to today for
+	  records that are currently effective.*/
+	begin transaction
+		update sladb.dbo.tbl_unit_sla_season
+		set effective = 0
+		where effective_end_adj < cast(getdate() as date) and
+			  effective = 1;
+	commit;

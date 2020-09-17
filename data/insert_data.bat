@@ -51,6 +51,7 @@ sqlcmd -S . -E -i insert_tbl_change_request_historic_nypause2.sql
 
 sqlcmd -S . -E -i insert_tbl_change_request_historic_endnypause.sql
 
+sqlcmd -S . -E -i update_tbl_change_request_status.sql
 
 REM navigate a directory up
 

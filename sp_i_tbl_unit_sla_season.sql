@@ -31,12 +31,12 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 		exec sladb.dbo.sp_u_tbl_change_request;
 
 		begin transaction
-			insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_start, change_request_id, created_date_utc)
+			insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_start_adj, change_request_id, created_date_utc)
 				select unit_id, 
 					   sla_code, 
 					   season_id, 
 					   1 as effective, 
-					   effective_start,
+					   effective_start_adj as effective_start_adj,
 					   change_request_id,
 					   getutcdate() as created_date_utc 
 				from(
@@ -44,7 +44,7 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 				select unit_id, 
 					   sla_code, 
 					   season_id,  
-					   effective_start,
+					   effective_start_adj,
 					   change_request_id
 				from sladb.dbo.tbl_change_request
 				/*If the change request status (sla_change_status) is 2 = Approved and the effective_start_adj (adjusted effective_start_date)
@@ -57,7 +57,7 @@ create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 					select unit_id, 
 						   sla_code, 
 						   season_id, 
-						   effective_start,
+						   effective_start_adj,
 						   change_request_id
 					from sladb.dbo.tbl_unit_sla_season) t;
 		commit;

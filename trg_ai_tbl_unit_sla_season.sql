@@ -34,9 +34,10 @@ after insert as
 		  effective record for that unit and set the effective value to 0 and the effective_date to today.*/
 		begin transaction;
 			update u
-			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla*/
-			set u.effective = 0,
-				u.effective_end = dateadd(day, -1, s.effective_start_adj)
+			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla. The effective_start_adj
+			- 1 should always be a Saturday and less than today, but add logic to make sure when setting the value of effective.*/
+			set u.effective = case when dateadd(day, -1, s.effective_start_adj) < cast(getdate() as date) then 0 else 1 end,
+				u.effective_end_adj = dateadd(day, -1, s.effective_start_adj)
 			/*Join the inserted records with the tbl_unit_sla_season based on the unit_id to get all records associated
 			  with the inserted unit(s).*/
 			from sladb.dbo.tbl_unit_sla_season as u

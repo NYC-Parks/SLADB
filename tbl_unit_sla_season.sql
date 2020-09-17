@@ -23,15 +23,13 @@ create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) prima
 										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_code(sla_code) not null, 
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,
 										   effective bit not null,
-										   effective_start date not null,
-										   effective_start_adj as dbo.fn_getdate(effective_start, 1),
-										   effective_end date,
-										   effective_end_adj as dbo.fn_getdate(effective_end, 0),
+										   effective_start_adj date not null,
+										   effective_end_adj date,
 										   change_request_id int foreign key references sladb.dbo.tbl_change_request(change_request_id) on delete cascade,
 										   created_date_utc datetime default getutcdate(),
 										   updated_date_utc datetime,
 										   /*Create a unique constraint to prevent duplicate entries for the same unit, sla, season and effective from date this table*/
-										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_start),
+										   constraint unq_unitslaseason unique(unit_id, sla_code, season_id, effective_start_adj),
 										   /*Make sure that the effective_end date is always greater than the effective_start date*/
-										   constraint ck_unit_effective_dates check (effective_end > effective_start));
+										   constraint ck_unit_effective_dates check (effective_end_adj > effective_start_adj));
 
