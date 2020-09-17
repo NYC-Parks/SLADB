@@ -59,8 +59,8 @@ begin
 					/*Insert values into the change_request_status table to auto-approve the submission.*/
 					update sladb.dbo.tbl_change_request
 						set sla_change_status = 2
-						where change_request_id >= @change_request_id and
-							  sla_change_status != 4;
+						where change_request_id >= @change_request_id /*and
+							  sla_change_status != 4*/;
 				commit;
 			end;
 end;
