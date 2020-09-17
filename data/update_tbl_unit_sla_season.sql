@@ -17,6 +17,9 @@
 	       vis. His ad sonet probatus torquatos, ut vim tempor vidisse deleniti.>  									   
 																													   												
 ***********************************************************************************************************************/
+use sladb
+go
+
 begin transaction
 update u
 	set u.effective_end_adj = dbo.fn_getdate(s.unit_withdraw, 0)
