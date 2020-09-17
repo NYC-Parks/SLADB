@@ -488,7 +488,6 @@ values(N'B008-BZ535', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since o
 (N'BZ590', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review'),
 (N'BZ591', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review'),
 (N'BZ592', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review'),
-(N'BZ595', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review'),
 (N'BZ83', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review'),
 (N'BZ95', 16, 1, CAST(N'2019-07-01' AS Date), N'AMPS updates since original review');
 

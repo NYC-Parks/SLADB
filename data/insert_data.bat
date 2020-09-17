@@ -53,6 +53,8 @@ sqlcmd -S . -E -i insert_tbl_change_request_historic_endnypause.sql
 
 sqlcmd -S . -E -i update_tbl_change_request_status.sql
 
+sqlcmd -S . -E -i update_tbl_unit_sla_season.sql
+
 REM navigate a directory up
 
 cd ..
