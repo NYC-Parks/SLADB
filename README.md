@@ -3,7 +3,7 @@
 * [Tables](#Tables)
 * [Views](#Views)
 * [Functions](#Functions)
-* [Stored Procedures](#Stored Procedures)
+* [Stored Procedures](#Stored_Procedures)
 * [Triggers](#Triggers)
 
 # Overview
