@@ -1,16 +1,16 @@
-<mxfile host="app.diagrams.net" modified="2020-07-22T19:27:08.898Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" etag="o99CtohafNwlu-cv832Q" version="13.4.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-22T15:30:12.589Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="UZBYfF7yON_mKd96iXrf" version="13.7.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="868" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="Admin discontinues existing season, setting an effective_end date." style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="Admin discontinues existing season, setting an effective_end date." style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="307.5" y="200" width="135" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="X3GcQL-NPRju56YZY_Ri-2" value="&lt;b&gt;Update:&lt;br&gt;&lt;/b&gt;existing record in tbl_sla_season with&lt;br&gt;- set effective_end date to user-specified date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="X3GcQL-NPRju56YZY_Ri-2" value="&lt;b&gt;Update:&lt;br&gt;&lt;/b&gt;existing record in tbl_sla_season with&lt;br&gt;- set effective_end date to user-specified date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="245" y="300" width="260" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="X3GcQL-NPRju56YZY_Ri-4" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="X3GcQL-NPRju56YZY_Ri-2" edge="1" target="MRGtH3ut4B2zLl-mFBzY-22">
+        <mxCell id="X3GcQL-NPRju56YZY_Ri-4" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="X3GcQL-NPRju56YZY_Ri-2" target="MRGtH3ut4B2zLl-mFBzY-22" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="375" y="370" as="sourcePoint" />
             <mxPoint x="375" y="420" as="targetPoint" />
@@ -22,10 +22,10 @@
             <mxPoint x="374.71000000000004" y="300" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-0" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-0" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#99CCFF;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="20" y="20" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-1" value="Technical Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-1" value="Technical Process" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#82b366;fillColor=#97D077;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="20" y="100" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -40,19 +40,19 @@
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-5" value="Stored Prodedure" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="240" y="95" width="120" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-6" target="MRGtH3ut4B2zLl-mFBzY-7">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-6" target="MRGtH3ut4B2zLl-mFBzY-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-6" target="MRGtH3ut4B2zLl-mFBzY-9">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-6" target="MRGtH3ut4B2zLl-mFBzY-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-6" value="Is today&#39;s date equal to effective_end date of the season?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-6" value="Is today&#39;s date equal to effective_end date of the season?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="132.5" y="635" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-7" target="MRGtH3ut4B2zLl-mFBzY-18">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-7" target="MRGtH3ut4B2zLl-mFBzY-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-7" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-7" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="17" y="650" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-9" target="MRGtH3ut4B2zLl-mFBzY-16" edge="1">
@@ -60,22 +60,22 @@
             <mxPoint x="422" y="875" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-9" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-9" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="167.5" y="750" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-16" target="BvRXjK3O4e4GX6fMoHdj-23">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-16" target="BvRXjK3O4e4GX6fMoHdj-23" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-16" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;existing record in tbl_sla_season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective = 0&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- updated_date_utc equal to the current date and time&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="95" y="825" width="195" height="85" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-28" target="BvRXjK3O4e4GX6fMoHdj-20">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-28" target="BvRXjK3O4e4GX6fMoHdj-20" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-28" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;existing record in tbl_unit_sla_season&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective = 0&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective_end to the current date&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="305" y="1010" width="220" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-18" target="MRGtH3ut4B2zLl-mFBzY-6">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-18" target="MRGtH3ut4B2zLl-mFBzY-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-18" value="" style="rhombus;whiteSpace=wrap;html=1;align=left;fillColor=#f8cecc;strokeColor=#b85450;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -84,53 +84,62 @@
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-19" value="sp_u_tbl_sla_season" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="215" y="525" width="170" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-22" target="BvRXjK3O4e4GX6fMoHdj-12">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="MRGtH3ut4B2zLl-mFBzY-22" target="BvRXjK3O4e4GX6fMoHdj-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="MRGtH3ut4B2zLl-mFBzY-22" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="360" y="420" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="MRGtH3ut4B2zLl-mFBzY-23" value="trg_u_tbl_sla_season" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="MRGtH3ut4B2zLl-mFBzY-23" value="trg_fu_tbl_sla_season" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="400" y="425" width="160" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-12" target="MRGtH3ut4B2zLl-mFBzY-18">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-12" target="MRGtH3ut4B2zLl-mFBzY-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-12" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;existing record in tbl_sla_season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- updated_date_utc equal to the current date and time&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-12" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;existing record in tbl_sla_season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- updated_date_utc equal to the current date and time&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="95" y="405" width="195" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-19" value="sp_m_tbl_sla_season_date" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-19" value="sp_m_tbl_sla_season_date" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="625" y="1030" width="170" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-20" value="" style="rhombus;whiteSpace=wrap;html=1;align=left;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-20" value="" style="rhombus;whiteSpace=wrap;html=1;align=left;fillColor=#f8cecc;strokeColor=#b85450;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="590" y="1025" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-23" target="BvRXjK3O4e4GX6fMoHdj-25">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-23" target="BvRXjK3O4e4GX6fMoHdj-25" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-23" target="BvRXjK3O4e4GX6fMoHdj-29">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-23" target="BvRXjK3O4e4GX6fMoHdj-29" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-23" value="Are there units in the tbl_unit_sla_season table that are assigned this season and have a value effective = 1?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-23" value="Are there units in the tbl_unit_sla_season table that are assigned this season and have a value effective = 1?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="350" y="831.25" width="130" height="72.5" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-25" target="MRGtH3ut4B2zLl-mFBzY-28">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-25" target="MRGtH3ut4B2zLl-mFBzY-28" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-25" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-25" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="390" y="940" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-29" target="BvRXjK3O4e4GX6fMoHdj-31">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BvRXjK3O4e4GX6fMoHdj-29" target="BvRXjK3O4e4GX6fMoHdj-31" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-29" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-29" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="525" y="852.5" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-31" value="No transactions required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-31" value="No transactions required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="620" y="817.5" width="100" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="BvRXjK3O4e4GX6fMoHdj-33" value="&lt;i&gt;In addition to being called by the trigger, this stored procedure is scheduled to run once daily.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BvRXjK3O4e4GX6fMoHdj-33" value="&lt;i&gt;In addition to being called by the trigger, this stored procedure is scheduled to run once daily.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="240" y="550" width="130" height="72.5" as="geometry" />
+        </mxCell>
+        <mxCell id="hz_bBZgn3IMPrt3UgGcj-0" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;existing record in tbl_unit_sla_season&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective = 0&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective_end_adj to the current date&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="305" y="1010" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hz_bBZgn3IMPrt3UgGcj-1" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;existing record in tbl_sla_season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- effective = 0&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- updated_date_utc equal to the current date and time&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="95" y="825" width="195" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="hz_bBZgn3IMPrt3UgGcj-2" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;existing record in tbl_sla_season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- updated_date_utc equal to the current date and time&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="95" y="405" width="195" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
