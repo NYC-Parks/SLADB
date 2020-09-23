@@ -3,7 +3,7 @@
 * [Tables](#Tables)
 * [Views](#Views)
 * [Functions](#Functions)
-* [Stored Procedures](#Stored_Procedures)
+* [Stored Procedures](#Stored-Procedures)
 * [Triggers](#Triggers)
 
 # Overview
@@ -64,7 +64,7 @@ Currently SLAs are managed inside of the Asset Management Parks System (AMPS). T
 
 **fn_getdate(@date, @start)** - This function calculates the date of next closest Saturday (end) to the input date if the @start value is 0 and the date of next closest Sunday (start) to the input date if the @start value is 1.
 
-# Stored_Procedures
+# Stored Procedures
 
 # Triggers
 
