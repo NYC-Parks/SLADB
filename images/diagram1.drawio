@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-09-22T15:35:46.536Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="5qPV95EHb_R8qI7GgQhi" version="13.7.3" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-28T19:36:31.403Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="ydJuSn_Tt4us7Iqz4r_Z" version="13.7.6" type="github">
   <diagram id="4DkwhPr2-WqgIGUP0eRN" name="Page-1">
-    <mxGraphModel dx="2170" dy="1125" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -137,7 +137,7 @@
         <mxCell id="0mnIXxgitie9EsV3Na0Z-8" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="709.0599999999998" y="1183" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="0mnIXxgitie9EsV3Na0Z-9" value="&lt;b&gt;sp_fu_tbl_sla_season&lt;/b&gt;" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="0mnIXxgitie9EsV3Na0Z-9" value="&lt;b&gt;sp_u_tbl_sla_season&lt;/b&gt;" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="634.0599999999998" y="1220" width="180" height="20" as="geometry" />
         </mxCell>
         <mxCell id="0mnIXxgitie9EsV3Na0Z-12" value="Consult diagram #2 for information about sp_u_tbl_sla_season." style="rounded=0;whiteSpace=wrap;html=1;align=left;fontStyle=2;fillColor=none;" parent="1" vertex="1">
@@ -164,9 +164,6 @@
         <mxCell id="W5VT7vu6px5nTqs0NcFv-4" value="&lt;b&gt;Update:&lt;/b&gt;&lt;br&gt;newly inserted record in tbl_sla_season:&lt;br&gt;&amp;nbsp;&lt;br&gt;- set effective = 1 if and only if the effective_start_adj = current date" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="751.01" y="185" width="223.29" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="W5VT7vu6px5nTqs0NcFv-7" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;new two records into tbl_ref_sla_season_definition:&lt;br&gt;&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
-          <mxGeometry x="912.6599999999999" y="540" width="223.29" height="115" as="geometry" />
-        </mxCell>
         <mxCell id="XZEz-qlOAHaJMKjeeI-z-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="W5VT7vu6px5nTqs0NcFv-8" target="W5VT7vu6px5nTqs0NcFv-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -182,35 +179,38 @@
         <mxCell id="W5VT7vu6px5nTqs0NcFv-9" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;align=center;" parent="1" vertex="1">
           <mxGeometry x="760" y="459.75" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="XZEz-qlOAHaJMKjeeI-z-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="W5VT7vu6px5nTqs0NcFv-10" target="W5VT7vu6px5nTqs0NcFv-7" edge="1">
+        <mxCell id="UFlidcO9mRyw9voRycj2-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="W5VT7vu6px5nTqs0NcFv-10" target="UFlidcO9mRyw9voRycj2-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="W5VT7vu6px5nTqs0NcFv-10" value="Yes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;align=center;" parent="1" vertex="1">
-          <mxGeometry x="912.66" y="459.75" width="50" height="30" as="geometry" />
+          <mxGeometry x="945" y="459.75" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="W5VT7vu6px5nTqs0NcFv-14" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;new two records into tbl_ref_sla_season_definition:" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
-          <mxGeometry x="700" y="695" width="170" height="60" as="geometry" />
+          <mxGeometry x="860" y="885.5" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="XZEz-qlOAHaJMKjeeI-z-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="W5VT7vu6px5nTqs0NcFv-15" target="W5VT7vu6px5nTqs0NcFv-14" edge="1">
+        <mxCell id="UFlidcO9mRyw9voRycj2-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="W5VT7vu6px5nTqs0NcFv-15" target="UFlidcO9mRyw9voRycj2-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="W5VT7vu6px5nTqs0NcFv-15" value="Admin defines a month and day (May 1) or date pattern (Example: Last Monday of May) for start and end of the in-season period of the season." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="724.9999999999999" y="539" width="120" height="112.5" as="geometry" />
         </mxCell>
         <mxCell id="XZEz-qlOAHaJMKjeeI-z-1" value="&lt;i&gt;The dates at the start&amp;nbsp;&lt;/i&gt;&lt;i&gt;(January 1)&lt;/i&gt;&lt;i&gt;&lt;br&gt;&amp;nbsp;and end (&lt;/i&gt;&lt;i&gt;December 31)&lt;/i&gt;&lt;i&gt;&lt;br&gt;of the calendar year are the dates used for a year round season.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1150.66" y="545.5" width="135" height="99.5" as="geometry" />
-        </mxCell>
-        <mxCell id="XZEz-qlOAHaJMKjeeI-z-2" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1004.3" y="655" width="40" height="20" as="geometry" />
+          <mxGeometry x="1230" y="671" width="135" height="99.5" as="geometry" />
         </mxCell>
         <mxCell id="XZEz-qlOAHaJMKjeeI-z-3" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="765.0000000000001" y="755" width="40" height="20" as="geometry" />
+          <mxGeometry x="925.0000000000001" y="945.5" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="xaypJvQnQSg7XH9IyrJF-1" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;record for the new season in tbl_sla_season with:&lt;br&gt;- season_desc&lt;br&gt;- year_round&lt;br&gt;- default effective = 0&lt;br&gt;- effective_start" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" vertex="1" parent="1">
+        <mxCell id="xaypJvQnQSg7XH9IyrJF-1" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;record for the new season in tbl_sla_season with:&lt;br&gt;- season_desc&lt;br&gt;- year_round&lt;br&gt;- default effective = 0&lt;br&gt;- effective_start" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="182.32999999999998" y="170" width="170" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="xaypJvQnQSg7XH9IyrJF-2" value="Manually reassign seasons to a unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" vertex="1" parent="1">
+        <mxCell id="xaypJvQnQSg7XH9IyrJF-2" value="Manually reassign seasons to a unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" parent="1" vertex="1">
           <mxGeometry x="513.0300000000001" y="347.5" width="130" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="UFlidcO9mRyw9voRycj2-1" value="&lt;b&gt;trg_ii_tbl_ref_season_definition&lt;/b&gt;" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="825" y="700" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="UFlidcO9mRyw9voRycj2-4" value="Admin defines a month and day (May 1) or date pattern (Example: Last Monday of May) for start and end of the in-season period of the season." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="849.9999999999999" y="740.5" width="120" height="112.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
