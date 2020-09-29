@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-09-23T12:46:01.587Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="12gRSVqSs1_d4ch3xQvg" version="13.7.3" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-29T19:46:48.426Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="cLRISDALNIyDJKMRtGSP" version="13.7.6" type="github">
   <diagram id="APbCHEt9h7LmyBrYfhhx" name="Page-1">
-    <mxGraphModel dx="2586" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2272" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -24,12 +24,6 @@
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-7" value="Borough User Tries to Submits SLA Change Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="142.01" y="270" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="e-__jFEW9f1SL3vXLQ8T-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="TYA-corCzER_tpGZpnsk-9" target="TYA-corCzER_tpGZpnsk-11" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e-__jFEW9f1SL3vXLQ8T-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="TYA-corCzER_tpGZpnsk-9" target="TYA-corCzER_tpGZpnsk-14" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-9" value="COO Focht Reviews Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="440" y="270" width="120" height="60" as="geometry" />
@@ -148,7 +142,7 @@
           <mxGeometry x="800" y="305" width="230" height="90" as="geometry" />
         </mxCell>
         <mxCell id="utrAC_NS1D6aVvXHYf-W-9" value="No Transaction Required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="1100" y="135" width="100" height="100" as="geometry" />
+          <mxGeometry x="1100" y="145" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="utrAC_NS1D6aVvXHYf-W-27" value="&lt;i&gt;In addition to being called by the trigger, this stored procedure is schedule to run once daily.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="347" y="450" width="120" height="80" as="geometry" />
@@ -255,7 +249,7 @@
         <mxCell id="HUFOrXZjp_os2G7rT3iw-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="HUFOrXZjp_os2G7rT3iw-7" target="utrAC_NS1D6aVvXHYf-W-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="HUFOrXZjp_os2G7rT3iw-7" value="&lt;div&gt;&lt;span&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;change request record in tbl_change_request with sla_change_status = 3 for &quot;rejected&quot;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
+        <mxCell id="HUFOrXZjp_os2G7rT3iw-7" value="&lt;div&gt;&lt;span&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;change request record in tbl_change_request with sla_change_status = 4 for &quot;cancelled&quot;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="797" y="75" width="230" height="90" as="geometry" />
         </mxCell>
         <mxCell id="HUFOrXZjp_os2G7rT3iw-15" value="&lt;div&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;No change request inserted, return warning to user&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;fontStyle=1" parent="1" vertex="1">
@@ -297,34 +291,43 @@
         <mxCell id="HUFOrXZjp_os2G7rT3iw-41" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;&lt;b&gt;Insert:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;new record into tbl_change_request_status with sla_change_status = 4 for &quot;invalid&quot;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="920" y="1080" width="230" height="70.5" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-1" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-1" value="Business Process" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="20" y="20" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-2" value="Cancel Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-2" value="Cancel Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="90" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-3" value="Reject Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-3" value="Reject Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="205" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-4" value="Approve Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-4" value="Approve Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="320" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-5" value="COO Focht Reviews Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-5" value="COO Focht Reviews Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="440" y="270" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-6" value="&lt;span style=&quot;font-weight: normal&quot;&gt;No&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=center;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-6" value="&lt;span style=&quot;font-weight: normal&quot;&gt;No&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="112" y="1180" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-7" value="&lt;span style=&quot;font-weight: 400 ; text-align: center&quot;&gt;Does tbl_unit_sla_season have a record for this unit with value of effective = 1?&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=left;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-7" value="&lt;span style=&quot;font-weight: 400 ; text-align: center&quot;&gt;Does tbl_unit_sla_season have a record for this unit with value of effective = 1?&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="227" y="1170" width="190" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-8" value="&lt;span style=&quot;font-weight: normal&quot;&gt;Yes&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=center;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-8" value="&lt;span style=&quot;font-weight: normal&quot;&gt;Yes&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;fontStyle=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="297" y="1280" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-9" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-9" value="No" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="692.8" y="1060" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="gYBFZbuTnCWKFlB4koAg-10" value="Is the answer to any of these questions &quot;yes&quot;?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="gYBFZbuTnCWKFlB4koAg-10" value="Is the answer to any of these questions &quot;yes&quot;?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="657.8" y="955" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
