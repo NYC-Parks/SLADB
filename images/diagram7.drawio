@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-09-29T20:06:30.814Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="kH6vBYLJUyMgeWBgP4uq" version="13.7.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-30T16:19:26.249Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="szOiF1qyAZWMN1nz9y56" version="13.7.6" type="github">
   <diagram id="APbCHEt9h7LmyBrYfhhx" name="Page-1">
     <mxGraphModel dx="2272" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -37,7 +37,7 @@
         <mxCell id="HUFOrXZjp_os2G7rT3iw-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="TYA-corCzER_tpGZpnsk-24" target="XjfmwIq85a9qO-nbTn4X-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="TYA-corCzER_tpGZpnsk-24" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record into tbl_change_request_status with&lt;br&gt;- corresponding change_request_id&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- sla_change_status = 1 for &quot;submitted&quot;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- created_user to the&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: 400&quot;&gt;creating user&#39;s employee reference number (ERN)&lt;/span&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
+        <mxCell id="TYA-corCzER_tpGZpnsk-24" value="Insert:&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;new record into tbl_change_request_status with&lt;br&gt;- corresponding change_request_id&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- sla_change_status = the corresponding status&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;- created_user to the&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: 400&quot;&gt;creating user&#39;s employee reference number (ERN)&lt;/span&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;fontStyle=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="62.62" y="880" width="278.75" height="110" as="geometry" />
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TYA-corCzER_tpGZpnsk-11" target="TYA-corCzER_tpGZpnsk-17" edge="1">
@@ -45,9 +45,6 @@
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-11" value="Reject Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="205" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="utrAC_NS1D6aVvXHYf-W-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="TYA-corCzER_tpGZpnsk-17" target="utrAC_NS1D6aVvXHYf-W-9" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="TYA-corCzER_tpGZpnsk-17" value="&lt;div&gt;&lt;span&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;change request record in tbl_change_request with sla_change_status = 3 for &quot;rejected&quot;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="800" y="190" width="230" height="90" as="geometry" />
@@ -140,9 +137,6 @@
         </mxCell>
         <mxCell id="utrAC_NS1D6aVvXHYf-W-7" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;change request record in&lt;/span&gt;&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;span&gt;tbl_change_request with sla_change_status = 2 for &quot;approved&quot;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="800" y="305" width="230" height="90" as="geometry" />
-        </mxCell>
-        <mxCell id="utrAC_NS1D6aVvXHYf-W-9" value="No Transaction Required" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.octagon2;align=center;verticalAlign=middle;dx=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="1100" y="145" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="utrAC_NS1D6aVvXHYf-W-27" value="&lt;i&gt;In addition to being called by the trigger, this stored procedure is schedule to run once daily.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="347" y="450" width="120" height="80" as="geometry" />
@@ -246,9 +240,6 @@
         <mxCell id="HUFOrXZjp_os2G7rT3iw-4" value="Cancel Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="90" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="HUFOrXZjp_os2G7rT3iw-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="HUFOrXZjp_os2G7rT3iw-7" target="utrAC_NS1D6aVvXHYf-W-9" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="HUFOrXZjp_os2G7rT3iw-7" value="&lt;div&gt;&lt;span&gt;&lt;b&gt;Update:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;change request record in tbl_change_request with sla_change_status = 4 for &quot;cancelled&quot;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="797" y="75" width="230" height="90" as="geometry" />
         </mxCell>
@@ -303,13 +294,13 @@
         <mxCell id="gYBFZbuTnCWKFlB4koAg-4" value="Approve Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="600" y="320" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="RhcDBgVmTd3TejFWE7ym-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-4">
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RhcDBgVmTd3TejFWE7ym-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-3">
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RhcDBgVmTd3TejFWE7ym-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-2">
+        <mxCell id="RhcDBgVmTd3TejFWE7ym-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gYBFZbuTnCWKFlB4koAg-5" target="gYBFZbuTnCWKFlB4koAg-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="gYBFZbuTnCWKFlB4koAg-5" value="COO Focht Reviews Request" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#99CCFF;strokeColor=#6c8ebf;" parent="1" vertex="1">
