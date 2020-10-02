@@ -31,12 +31,12 @@ on sladb.dbo.tbl_change_request_status
 after insert as
 	begin
 
-		/*If new approvals have been made then execute the stored procedure.
-		if exists(select * from inserted where sla_change_status = 2)*/
-			--begin
+		/*If new approvals have been made then execute the stored procedure.*/
+		if exists(select * from inserted where sla_change_status = 2)
+			begin
 				/*After a new record is inserted into the tbl_change_request status table, execute the stored procedure
 				 to see if the row should be inserted into tbl_unit_sla_season immediately.*/
 				exec sladb.dbo.sp_i_tbl_unit_sla_season;
-			--end;
+			end;
 
 	end;

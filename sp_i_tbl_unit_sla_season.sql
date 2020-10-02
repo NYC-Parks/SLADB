@@ -27,8 +27,6 @@ go
 
 create or alter procedure dbo.sp_i_tbl_unit_sla_season as
 	begin
-		/*Execute the stored procedure to check for and flag any invalid change requests*/
-		exec sladb.dbo.sp_u_tbl_change_request;
 
 		begin transaction
 			insert into sladb.dbo.tbl_unit_sla_season(unit_id, sla_code, season_id, effective, effective_start_adj, change_request_id, created_date_utc)
