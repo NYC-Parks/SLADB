@@ -42,7 +42,5 @@ after insert as
 				from inserted	 	
 		commit;
 
-		/*Execute the stored procedure to checks the change request validity*/
 		exec sladb.dbo.sp_u_tbl_change_request;
-
 	end;

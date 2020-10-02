@@ -30,6 +30,7 @@ create or alter trigger dbo.trg_ai_tbl_change_request_status
 on sladb.dbo.tbl_change_request_status
 after insert as
 	begin
+
 		/*If new approvals have been made then execute the stored procedure.*/
 		if exists(select * from inserted where sla_change_status = 2)
 			begin
