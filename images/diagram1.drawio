@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-10-14T20:04:32.503Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="NzVI5wU3wEzBeWwiZ7Jl" version="13.7.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-14T20:04:55.216Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="P52d6IyDty7CwlDQO7a1" version="13.7.6" type="github">
   <diagram id="4DkwhPr2-WqgIGUP0eRN" name="Page-1">
-    <mxGraphModel dx="2844" dy="1588" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1185" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -98,7 +98,7 @@
           <mxGeometry x="724.9999999999999" y="539" width="120" height="112.5" as="geometry" />
         </mxCell>
         <mxCell id="XZEz-qlOAHaJMKjeeI-z-1" value="&lt;i&gt;The dates at the start&amp;nbsp;&lt;/i&gt;&lt;i&gt;(January 1)&lt;/i&gt;&lt;i&gt;&lt;br&gt;&amp;nbsp;and end (&lt;/i&gt;&lt;i&gt;December 31)&lt;/i&gt;&lt;i&gt;&lt;br&gt;of the calendar year are the dates used for a year round season.&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="2170" y="780.88" width="135" height="99.5" as="geometry" />
+          <mxGeometry x="1730" y="965.75" width="135" height="99.5" as="geometry" />
         </mxCell>
         <mxCell id="xaypJvQnQSg7XH9IyrJF-1" value="&lt;b&gt;Insert:&lt;/b&gt;&lt;br&gt;record for the new season in tbl_sla_season with:&lt;br&gt;- season_desc&lt;br&gt;- year_round&lt;br&gt;- default effective = 0&lt;br&gt;- effective_start" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=left;" parent="1" vertex="1">
           <mxGeometry x="182.32999999999998" y="170" width="170" height="120" as="geometry" />
