@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-14T20:04:55.216Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="P52d6IyDty7CwlDQO7a1" version="13.7.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-14T20:36:11.614Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="VR7UB4Y4olVW_e_wCh8H" version="13.7.6" type="github">
   <diagram id="4DkwhPr2-WqgIGUP0eRN" name="Page-1">
     <mxGraphModel dx="1185" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -241,8 +241,8 @@
         <mxCell id="D1ovcPBO3w_oDZcapM56-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="D1ovcPBO3w_oDZcapM56-13" target="D1ovcPBO3w_oDZcapM56-20" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="D1ovcPBO3w_oDZcapM56-13" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Insert:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;new record into tbl_sla_season_change with&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- new_season_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- old season_id&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1843.7399999999998" y="1348" width="241.25" height="75" as="geometry" />
+        <mxCell id="D1ovcPBO3w_oDZcapM56-13" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Insert:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;new record into tbl_sla_season_change with&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- new_season_id = the season_id of the newly inserted season&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- old season_id = the season_id of the season that is being replaced&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1843.74" y="1330" width="241.25" height="93" as="geometry" />
         </mxCell>
         <mxCell id="D1ovcPBO3w_oDZcapM56-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="D1ovcPBO3w_oDZcapM56-15" target="D1ovcPBO3w_oDZcapM56-23" parent="1">
           <mxGeometry relative="1" as="geometry">
@@ -270,8 +270,8 @@
         <mxCell id="D1ovcPBO3w_oDZcapM56-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="D1ovcPBO3w_oDZcapM56-23" target="D1ovcPBO3w_oDZcapM56-27" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="D1ovcPBO3w_oDZcapM56-23" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Insert:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;new record into tbl_change_request with&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- unit_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_code&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;-&amp;nbsp;&lt;/span&gt;&lt;span&gt;new_season_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective_start date of new season&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- change_request_justification&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1843.6" y="1646" width="241.25" height="100" as="geometry" />
+        <mxCell id="D1ovcPBO3w_oDZcapM56-23" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Insert:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;new record into tbl_change_request with&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- unit_id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- sla_code&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;- season_id =&amp;nbsp;&lt;/span&gt;&lt;span&gt;new_season_id from tbl_season_change&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- effective_start = date of new season&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;- change_request_justification&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97D077;strokeColor=#82b366;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1843.6" y="1630" width="241.25" height="120" as="geometry" />
         </mxCell>
         <mxCell id="D1ovcPBO3w_oDZcapM56-24" value="The justification in change_request_justification is auto-generated using the fn_season_change_justification function" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontStyle=2;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="2097.35" y="1652.25" width="258.27" height="67.5" as="geometry" />
@@ -322,6 +322,9 @@
         </mxCell>
         <mxCell id="D1ovcPBO3w_oDZcapM56-39" value="End" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="2372.9799999999996" y="1960.5" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="D1ovcPBO3w_oDZcapM56-46" value="A newly created season can have multiple records since it can replace more than one existing season." style="rounded=0;whiteSpace=wrap;html=1;align=left;fontStyle=2;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="2097.35" y="1332.88" width="122.65" height="87.25" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
