@@ -59,10 +59,10 @@ from units as l
 left join
 	 sladb.dbo.tbl_sla_season_date as r
 on l.season_id = r.season_id and
-   ((l.effective_start_adj between r.effective_start_adj and coalesce(r.effective_end_adj, cast(getdate() as date)) and
-     coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj) or
-   (l.effective_start_adj between r.effective_start_adj and r.effective_end_adj) or
-   (coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj))
+   ((l.effective_start_adj between r.effective_start_adj and r.effective_end_adj) or
+   (coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj) or
+   (r.effective_start_adj between l.effective_start_adj and l.effective_end_adj) or 
+   (coalesce(r.effective_end_adj, cast(getdate() as date)) between l.effective_start_adj and l.effective_end_adj)) 
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and
