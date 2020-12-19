@@ -23,6 +23,7 @@ with units as (
 select l.unit_id,
 	   l.unit_mrc as district,
 	   left(l.unit_mrc, 1) as borough,
+	   l.unit_desc,
 	   r.sla_code,
 	   r.season_id,
 	   r.effective,
@@ -42,6 +43,7 @@ where cast(unit_withdraw as date) >= '2014-01-01' or
 select top 100 percent l.borough,
 	   l.district,
 	   l.unit_id,
+	   l.unit_desc,
 	   /*If the unit effective_start_adj date is greater than that of the season, use the date from the unit otherwise
 	     use the date from the season.*/
 	   case when l.effective_start_adj > r.effective_start_adj then l.effective_start_adj
