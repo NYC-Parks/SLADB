@@ -26,21 +26,13 @@ go
 set quoted_identifier on;
 go
 
-create or alter trigger dbo.trg_ai_tbl_change_request
-on sladb.dbo.tbl_change_request
-after insert as 
-	begin
-
-		begin transaction
-			/*After a new record is submitted into the tbl_change_request, insert a corresponding record into the tbl_change_request_status table*/
-			insert into sladb.dbo.tbl_change_request_status(change_request_id, sla_change_status, created_user)
-				select change_request_id,
-					   sla_change_status,
-					   /*Insert a default value for the status_user right now. The true value will need to be pulled through active directory, 
-					   expertise of ITT required. It is stored in the employeeID attribute.*/
-					   edited_user as created_user
-				from inserted	 	
-		commit;
-
-		exec sladb.dbo.sp_u_tbl_change_request;
-	end;
+create or alter procedure dbo.sp_app_insert_change_request @unit_id nvarchar(30), 
+														   @sla_code int, 
+														   @season_id int, 
+														   @effective_start date, 
+														   @change_request_justification nvarchar(2000),
+														   @edited_user nvarchar(7) as 
+	begin transaction
+		insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start, change_request_justification, edited_user)
+			values(@unit_id, @sla_code, @season_id, @effective_start, @change_request_justification, @edited_user);
+	commit;

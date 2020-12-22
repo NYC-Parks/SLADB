@@ -40,7 +40,7 @@ for update as
 					   expertise of ITT required. It is stored in the employeeID attribute. If the sla_change_status is set to 4 = Invalid, then use
 					   SYSTEM as the user.*/
 					   case when l.sla_change_status = 4 then 'SYSTEM'
-							else '0000000' 
+							else l.edited_user 
 					   end as created_user
 				from inserted as l
 				inner join
