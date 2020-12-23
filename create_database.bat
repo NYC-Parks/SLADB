@@ -144,6 +144,25 @@ REM Create the jobs
 REM -------------------------------------------------------------------------
 REM sqlcmd -S . -E -i job_sladb.sql
 
+REM Create the app tables
+REM -------------------------------------------------------------------------
+sqlcmd -S . -E -i tbl_ref_app_perms.sql
+
+sqlcmd -S . -E -i tbl_ref_app_sla_change_status_perms.sql
+
+
+REM Create the app stored procedures
+REM -------------------------------------------------------------------------
+sqlcmd -S . -E -i sp_app_insert_change_request.sql
+
+sqlcmd -S . -E -i sp_app_update_change_request.sql
+
+sqlcmd -S . -E -i sp_app_get_change_requests.sql
+
+sqlcmd -S . -E -i sp_app_get_season_id.sql
+
+sqlcmd -S . -E -i sp_app_get_sla_code.sql
+
 
 REM Navigate to the folder with the data and run the batch file
 REM -------------------------------------------------------------------------

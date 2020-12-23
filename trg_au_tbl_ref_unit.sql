@@ -40,7 +40,7 @@ after update as
 		  0 and the effective_end date to the current date.*/
 		merge sladb.dbo.tbl_unit_sla_season as tgt using updates as src
 			on (tgt.unit_id = src.unit_id)
-			when matched and effective = 1 and effective_end is null
+			when matched and effective = 1 and effective_end_adj is null
 								/*If the saturday that follows the unit_withdraw date is less than today then set effective = 0*/
 				then update set tgt.effective = case when dbo.fn_getdate(src.unit_withdraw, 0) < cast(getdate() as date) then 0 else 1 end,
 						        tgt.effective_end_adj = dbo.fn_getdate(src.unit_withdraw, 0); 

@@ -50,14 +50,15 @@ instead of insert as
 
 		begin transaction
 			insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start,
-													 change_request_justification, effective_start_adj, sla_change_status)
+													 change_request_justification, effective_start_adj, sla_change_status, edited_user)
 			select unit_id,
 				   sla_code,
 				   season_id,
 				   effective_start,
 				   change_request_justification,
 				   dbo.fn_getdate(effective_start, 1) as effective_start_adj,
-				   sla_change_status
+				   sla_change_status,
+				   edited_user
 			from #inserts
 			/*Exclude any records that already have a change request submitted*/
 			where submitted_exist = 0;

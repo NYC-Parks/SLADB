@@ -26,7 +26,8 @@ if type_id('insert_change_request') is null
 				 season_id int not null,
 				 /*Make sure that the effective start date is greater than or equal to today's date.*/
 				 effective_start date not null,
-				 change_request_justification nvarchar(2000) not null);
+				 change_request_justification nvarchar(2000) not null,
+				 edited_user nvarchar(7) not null);
 
 go
 
@@ -49,7 +50,8 @@ begin
 												 season_id,
 												 /*Make sure that the effective start date is greater than or equal to today's date.*/
 												 effective_start,
-												 change_request_justification)
+												 change_request_justification,
+												 edited_user)
 			select * from @new_change_request;
 	commit;
 		
