@@ -4,3 +4,6 @@
 [submodule "IPM_Shared_Code_public"]
 	path = IPM_Shared_Code_public
 	url = git@github.com:NYCParks-data/IPM_Shared_Code_public.git
+[submodule "SLADB_Data"]
+	path = SLADB_Data
+	url = git@github.com:NYCParks-data/SLADB_Data.git
