@@ -27,7 +27,8 @@ set quoted_identifier on;
 go
 
 create or alter view dbo.vw_change_request_last_six_months as 
-	select l.unit_id,
+	select l.change_request_id,
+		   l.unit_id,
 		   r4.season_desc,
 		   r5.in_season_sla,
 		   r5.off_season_sla,
@@ -38,7 +39,7 @@ create or alter view dbo.vw_change_request_last_six_months as
 		   r2.created_date_utc as lastedit_date,
 		   r.created_user as submitted_user,
 		   r2.created_user as lastedit_user,
-		   r3.sla_change_status_desc as current_status,
+		   l.sla_change_status as current_status,
 		   left(r6.unit_mrc, 1) as borough
 	from sladb.dbo.tbl_change_request as l
 	left join
@@ -51,9 +52,9 @@ create or alter view dbo.vw_change_request_last_six_months as
 	/*Join to the change request status based on the most recent status. In these cases, the sla_change_status is equal.*/
 	on l.change_request_id = r2.change_request_id and
 	   l.sla_change_status = r2.sla_change_status
-	left join
+	/*left join
 		 sladb.dbo.tbl_ref_sla_change_status as r3
-	on l.sla_change_status = r3.sla_change_status
+	on l.sla_change_status = r3.sla_change_status*/
 	left join
 		 sladb.dbo.tbl_sla_season as r4
 	on l.season_id = r4.season_id
