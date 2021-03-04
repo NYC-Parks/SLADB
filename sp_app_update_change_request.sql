@@ -28,10 +28,12 @@ go
 
 create or alter procedure dbo.sp_app_update_change_request @change_request_id int, 
 														   @sla_change_status int, 
-														   @edited_user nvarchar(7) as 
+														   @edited_user nvarchar(7),
+														   @change_request_comments nvarchar(2000) = null as 
 	begin transaction
 		update sladb.dbo.tbl_change_request
 			set sla_change_status = @sla_change_status, 
-				edited_user = @edited_user
+				edited_user = @edited_user,
+				change_request_comments = @change_request_comments
 			where change_request_id = @change_request_id;
 	commit;
