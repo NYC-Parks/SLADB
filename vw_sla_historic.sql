@@ -30,9 +30,8 @@ select l.unit_id,
 	   coalesce(r.effective_start_adj, sladb.dbo.fn_getdate('2014-01-01', 1)) as effective_start_adj,
 	   /*coalesce(r.effective_end_adj, dbo.fn_getdate(cast(getdate() as date), 0)) as effective_end_adj
 	   coalesce(r.effective_start, '2014-01-01') as effective_start,*/ 
-	   case when r.effective_end_adj  >= cast(getdate() as date) then cast(getdate() as date)
-			else r.effective_end_adj
-	   end as effective_end_adj
+	   /*If the effective_end_adj date is null then set it equal to the current date*/
+	   coalesce(r.effective_end_adj, cast(getdate() as date)) as effective_end_adj
 from sladb.dbo.tbl_ref_unit as l
 left join
 	 sladb.dbo.tbl_unit_sla_season as r
@@ -62,9 +61,10 @@ left join
 	 sladb.dbo.tbl_sla_season_date as r
 on l.season_id = r.season_id and
    ((l.effective_start_adj between r.effective_start_adj and r.effective_end_adj) or
-   (coalesce(l.effective_end_adj, cast(getdate() as date)) between r.effective_start_adj and r.effective_end_adj) or
-   (r.effective_start_adj between l.effective_start_adj and l.effective_end_adj) or 
-   (coalesce(r.effective_end_adj, cast(getdate() as date)) between l.effective_start_adj and l.effective_end_adj)) 
+   (l.effective_end_adj between r.effective_start_adj and r.effective_end_adj) or  
+   (r.effective_start_adj between l.effective_start_adj and l.effective_end_adj) or
+   /*The effective end date in the season date table is between effective start and end dates in the unit sla season table*/
+   (r.effective_end_adj between l.effective_start_adj and l.effective_end_adj)) 
 left join
 	 sladb.dbo.tbl_ref_sla_translation as r2
 on l.sla_code = r2.sla_code and

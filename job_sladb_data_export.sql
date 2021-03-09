@@ -60,7 +60,7 @@ exec dbo.sp_add_jobstep
     @job_id = @job_id,  
     @step_name = N'CMD_export_tbl_change_request',  
     @subsystem = N'CmdExec',  
-    @command = N'cmd.exe /c "cd /d D: cd Projects\SLADB_Data\export_vw_change_request_export.bat"',
+    @command = N'cmd.exe /c "D:\Projects\SLADB_Data\export_vw_change_request_export.bat"',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
@@ -69,7 +69,7 @@ exec dbo.sp_add_jobstep
     @job_id = @job_id,  
     @step_name = N'CMD_export_tbl_change_request_status',  
     @subsystem = N'CmdExec',  
-    @command = N'cmd.exe /c "cd /d D: cd Projects\SLADB_Data\export_vw_change_request_status_export.bat"',
+    @command = N'cmd.exe /c "D:\Projects\SLADB_Data\export_vw_change_request_status_export.bat"',
 	@on_success_action = 1,
 	@on_fail_action = 2;
 
