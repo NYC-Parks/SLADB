@@ -23,7 +23,8 @@ go
 create or alter view dbo.vw_change_request_email as
 
 	with requests as(
-	select unit_id,
+	select change_request_id,
+		   unit_id,
 		   sla_code,
 		   season_id,
 		   effective_start_adj,
@@ -36,7 +37,8 @@ create or alter view dbo.vw_change_request_email as
 		  effective_start_adj >= cast(getdate() as date))
 	
 	,requests_current as(
-	select l.unit_id,
+	select null as change_request_id,
+		   l.unit_id,
 		   l.sla_code,
 		   l.season_id,
 		   null as effective_start_adj,
@@ -50,7 +52,8 @@ create or alter view dbo.vw_change_request_email as
 	on l.unit_id = r.unit_id
 	where l.effective = 1
 	union
-	select unit_id,
+	select change_request_id,
+		   unit_id,
 		   sla_code,
 		   season_id,
 		   effective_start_adj,
@@ -62,6 +65,7 @@ create or alter view dbo.vw_change_request_email as
 
 	select r4.sla_change_status_desc, /*Only email #2*/
 		   l.change_request_comments, /*Only email #2*/
+		   l.change_request_id,
 		   l.unit_id,
 		   r.unit_desc,
 		   r.unit_mrc as district,
