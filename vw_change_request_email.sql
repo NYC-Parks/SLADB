@@ -37,7 +37,7 @@ create or alter view dbo.vw_change_request_email as
 		  effective_start_adj >= cast(getdate() as date))
 	
 	,requests_current as(
-	select null as change_request_id,
+	select r.change_request_id as change_request_id,
 		   l.unit_id,
 		   l.sla_code,
 		   l.season_id,
@@ -69,6 +69,7 @@ create or alter view dbo.vw_change_request_email as
 		   l.unit_id,
 		   r.unit_desc,
 		   r.unit_mrc as district,
+		   r5.sector as sector,
 		   r3.season_desc as season_desc,
 		   r2.in_season_sla as in_season_sla,
 		   r2.off_season_sla as off_season_sla,
@@ -87,3 +88,11 @@ create or alter view dbo.vw_change_request_email as
 	left join
 		sladb.dbo.tbl_ref_sla_change_status as r4
 	on l.sla_change_status = r4.sla_change_status
+	left join
+		 (select *
+		  from [appdb].dailytasks_dev.dbo.ref_sector_districts
+		  where active = 1 and 
+				lower(sector) not like '%all' and
+				/*Exclude these two sectors to prevent duplication*/
+				lower(sector) not in('q-swfd', 'r-sob')) as r5
+	on r.unit_mrc = r5.district
