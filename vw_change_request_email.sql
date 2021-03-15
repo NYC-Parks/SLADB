@@ -74,6 +74,7 @@ create or alter view dbo.vw_change_request_email as
 		   r2.in_season_sla as in_season_sla,
 		   r2.off_season_sla as off_season_sla,
 		   l.effective_start_adj,
+		   r6.created_user,
 		   l.record_type
 	from requests_current as l
 	left join
@@ -96,3 +97,7 @@ create or alter view dbo.vw_change_request_email as
 				/*Exclude these two sectors to prevent duplication*/
 				lower(sector) not in('q-swfd', 'r-sob')) as r5
 	on r.unit_mrc = r5.district
+	left join
+		 sladb.dbo.tbl_change_request_status as r6
+	on l.change_request_id = r6.change_request_id
+	where r6.sla_change_status = 1

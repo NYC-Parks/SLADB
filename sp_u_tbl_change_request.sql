@@ -57,4 +57,13 @@ create or alter procedure dbo.sp_u_tbl_change_request as
 				   /*Invalidate any record where the unit_status becomes D or decommissioned*/
 				   r3.unit_status = 'D')
 		commit;
+
+		begin transaction
+			/*Update the effective start adjusted date if current date is greater than the expected effective start adjusted date and the change request
+			  has a status of 1 or submitted. This means that the approval is delayed, so if the record is approved the changes will never be retroactive.*/
+			update sladb.dbo.tbl_change_request
+				set effective_start_adj = sladb.dbo.fn_getdate(cast(getdate() as date),  1)
+				where sla_change_status = 1 and 
+					  effective_start_adj <= cast(getdate() as date)
+		commit;
 	end;
