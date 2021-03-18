@@ -2,3 +2,4 @@
 create_database_copy.bat
 data/insert_data_copy.bat
 db_permissions.sql
+db_configure_email.sql

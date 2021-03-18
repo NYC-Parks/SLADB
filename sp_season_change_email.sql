@@ -28,46 +28,35 @@ go
 
 create or alter procedure dbo.sp_season_change_email as
 	begin
-		declare @email_table table(season_desc,
-								
-								   effective_start_adj,
-								   unit_id,
-								   unit_desc,
-								   unit_mrc,
-								   in_season_sla,
-								   off_season_sla
-		select l.date_category_id, 
-			   r.season_desc, 
-			   l.effective_start_adj, 
-			   r2.unit_id, 
-			   r3.unit_desc, 
-			   r3.unit_mrc, 
-			   r4.sla_id as current_sla,
-			   r5.sla_id as upcoming_sla
-		from sladb.dbo.tbl_sla_season_date as l
-		left join
-			 sladb.dbo.tbl_sla_season as r
-		on l.season_id = r.season_id
-		left join
-			 sladb.dbo.tbl_unit_sla_season as r2
-		on l.season_id = r2.season_id
-		left join
-			 sladb.dbo.tbl_ref_unit as r3
-		on r2.unit_id = r3.unit_id
-		left join
-			sladb.dbo.tbl_ref_sla_translation as r4
-		on r2.sla_code = r4.sla_code and
-		   l.date_category_id != r4.date_category_id
-		left join
-			sladb.dbo.tbl_ref_sla_translation as r5
-		on r2.sla_code = r5.sla_code and
-		   l.date_category_id = r5.date_category_id
-		where datediff(week, cast(getdate() as date), l.effective_start_adj) = 7/*2*/ and
-			  r2.effective = 1
+
+	declare @xml nvarchar(max) = cast((select unit_id as 'td', '', unit_desc as 'td', '', unit_mrc as 'td', '', current_sla as 'td', '', upcoming_sla as 'td' 
+									   from sladb.dbo.vw_season_change_email 
+									   for xml path('tr'), elements) as nvarchar(max));
+
+
+	declare @effective_start_adj nvarchar(10) = (select distinct cast(format(effective_start_adj, 'MM/dd/yyyy') as nvarchar(10)) from sladb.dbo.vw_season_change_email);
+	declare @season_desc nvarchar(128) = (select distinct season_desc from sladb.dbo.vw_season_change_email);
+
+
+	declare @body nvarchar(max) = '<html>
+										<body>' +
+										'The following sites, that are part of the ' + @season_desc + ' season will be having their SLAs changed on ' + @effective_start_adj + '.' +
+										'<br>
+												<table border = 1>
+													<tr><th align = "left"> Site </th><th align = "left"> Site Description </th><th align = "left"> District </th><th align = "left"> Current SLA </th><th align = "left"> Upcoming SLA </th></tr>'
+													+ @xml +
+												'</table>
+										<br>
+										Thank you,
+										<br>
+										The Daily Task Helpdesk
+										</body>
+									</html>'
 
 	--declare @body nvarchar(5000);
 	exec msdb.dbo.sp_send_dbmail @profile_name = 'SLADB_Email', 
-								 @recipients = 'TESTTESTSTEST@parks.nyc.gov', 
-								 @subject = 'testing db mail', 
-								 @body = 'Test body.'
+								 @recipients = 'daniel.gallagher@parks.nyc.gov; sara.esquibel@parks.nyc.gov', 
+								 @subject = 'Seasonal SLA Changes', 
+								 @body = @body,
+								 @body_format = 'HTML'
 	end;
