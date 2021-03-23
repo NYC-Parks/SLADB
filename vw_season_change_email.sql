@@ -32,7 +32,8 @@ create or alter view dbo.vw_season_change_email as
 			   l.effective_start_adj, 
 			   r2.unit_id, 
 			   r3.unit_desc, 
-			   r3.unit_mrc, 
+			   r3.unit_mrc as district,
+			   r6.sector,
 			   r4.sla_id as current_sla,
 			   r5.sla_id as upcoming_sla
 		from sladb.dbo.tbl_sla_season_date as l
@@ -53,6 +54,14 @@ create or alter view dbo.vw_season_change_email as
 			sladb.dbo.tbl_ref_sla_translation as r5
 		on r2.sla_code = r5.sla_code and
 		   l.date_category_id = r5.date_category_id
+		left join
+			(select *
+			 from [appdb].dailytasks_dev.dbo.ref_sector_districts
+			 where active = 1 and 
+				   lower(sector) not like '%all' and
+				   /*Exclude these two sectors to prevent duplication*/
+				   lower(sector) not in('q-swfd', 'r-sob')) as r6
+		on r3.unit_mrc = r6.district
 		where --datediff(day, cast(getdate() as date), l.effective_start_adj) = 14 and
-			  datediff(week, cast(getdate() as date), l.effective_start_adj) = 7 and
+			  datediff(week, cast(getdate() as date), l.effective_start_adj) = 6 and
 			  r2.effective = 1;
