@@ -30,4 +30,4 @@ create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) pr
 										  sla_change_status int not null foreign key references sladb.dbo.tbl_ref_sla_change_status(sla_change_status) default 1,
 										  edited_user nvarchar(7) not null,
 										  constraint ck_change_request_effective_start check (effective_start >= cast(getdate() as date)),
-										  constraint unq_change_request unique(unit_id, effective_start_adj, sla_change_status));
+										  /*constraint unq_change_request unique(unit_id, effective_start_adj, sla_change_status)*/);

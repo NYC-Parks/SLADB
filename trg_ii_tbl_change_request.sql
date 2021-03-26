@@ -38,34 +38,43 @@ instead of insert as
 		  by the new change requests already have existing change requests with a status of 1 or submitted. Ideally
 		  any existing change must be dealt with first.*/
 		select distinct l.*,
-			   case when r.sla_change_status = 1 then 1
-					else 0
-			   end as submitted_exist
+							/*If a change request with status 1:submitted exists, then flag it*/
+						case when r.sla_change_status = 1 then 1
+							/*If a change request with status 2:approved exists and it has the same effective_start_adj date then flag it*/
+							 when r.sla_change_status = 2 and r.effective_start_adj = l.effective_start_adj then 1
+							 /*Otherwise don't flag the record*/
+							 else 0
+						end as submitted_exist
 		into #inserts
 		from inserted as l
 		left join
 			 sladb.dbo.tbl_change_request as r
 		on l.unit_id = r.unit_id;
 
-
-		begin transaction
-			insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start,
-													 change_request_justification, effective_start_adj, sla_change_status, edited_user)
-			select unit_id,
-				   sla_code,
-				   season_id,
-				   effective_start,
-				   change_request_justification,
-				   dbo.fn_getdate(effective_start, 1) as effective_start_adj,
-				   sla_change_status,
-				   edited_user
-			from #inserts
-			/*Exclude any records that already have a change request submitted*/
-			where submitted_exist = 0;
-		commit;
-
+		/*If records exist with flag, then generate an error*/
 		if exists(select * from #inserts where submitted_exist = 1)
-			raiserror('Warning, an existing change request has already been submitted for this unit and has not been approved.', 1, 1)
+			raiserror('Warning, an existing change request has already been submitted for this unit and has not yet been approved.', 14, 1)
+		
+		/*If there is no error, then complete the insert*/
+		if @@error = 0
+			begin
+				begin transaction
+					insert into sladb.dbo.tbl_change_request(unit_id, sla_code, season_id, effective_start,
+															 change_request_justification, effective_start_adj, sla_change_status, edited_user)
+					select unit_id,
+						   sla_code,
+						   season_id,
+						   effective_start,
+						   change_request_justification,
+						   dbo.fn_getdate(effective_start, 1) as effective_start_adj,
+						   sla_change_status,
+						   edited_user
+					from #inserts
+					/*Exclude any records that already have a change request submitted*/
+					where submitted_exist = 0;
+				commit;
+			end;
+
 	end;
 
 
