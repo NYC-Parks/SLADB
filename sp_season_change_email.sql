@@ -30,7 +30,7 @@ create or alter procedure dbo.sp_season_change_email as
 	begin
 	if (select count(*) from sladb.dbo.vw_season_change_email) >= 1
 		begin
-			declare @xml nvarchar(max) = cast((select unit_id as 'td', '', unit_desc as 'td', '', unit_mrc as 'td', '', current_sla as 'td', '', upcoming_sla as 'td' 
+			declare @xml nvarchar(max) = cast((select district as 'td', '', sector as 'td', '', unit_id as 'td', '', unit_desc as 'td', '', current_sla as 'td', '', upcoming_sla as 'td' 
 											   from sladb.dbo.vw_season_change_email
 											   for xml path('tr'), elements) as nvarchar(max));
 
@@ -38,7 +38,8 @@ create or alter procedure dbo.sp_season_change_email as
 			declare @effective_start_adj nvarchar(10) = (select distinct cast(format(effective_start_adj, 'MM/dd/yyyy') as nvarchar(10)) from sladb.dbo.vw_season_change_email);
 			declare @season_desc nvarchar(128) = (select distinct season_desc from sladb.dbo.vw_season_change_email);
 
-
+			--select distinct left(district, 1) from sladb.dbo.vw_season_change_email
+			
 			declare @body nvarchar(max) = '<html>
 												<body>' +
 												'Hello,
@@ -46,7 +47,7 @@ create or alter procedure dbo.sp_season_change_email as
 												Please note that the following properties in [borough x] will an undergo an SLA change for ' + @season_desc + '  starting on' + @effective_start_adj + '.' +
 												'<br>
 														<table border = 1>
-															<tr><th align = "left"> Site </th><th align = "left"> Site Description </th><th align = "left"> District </th><th align = "left"> Current SLA </th><th align = "left"> Upcoming SLA </th></tr>'
+															<tr><th align = "left"> District </th><th align = "left"> Sector </th><th align = "left"> Site </th><th align = "left"> Site Description </th><th align = "left"> Current SLA </th><th align = "left"> Upcoming SLA </th></tr>'
 															+ @xml +
 														'</table>
 												<br>
