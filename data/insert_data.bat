@@ -41,19 +41,23 @@ sqlcmd -S . -E -i trg_fu_tbl_change_request.sql
 
 REM Populate tbl_change_request with all historic change request, auto-approving them in order
 
-sqlcmd -S . -E -i insert_tbl_change_request_historic_original.sql
+REM sqlcmd -S . -E -i insert_tbl_change_request_historic_original.sql
 
-sqlcmd -S . -E -i insert_tbl_change_request_historic_update.sql
+REM sqlcmd -S . -E -i insert_tbl_change_request_historic_update.sql
 
-sqlcmd -S . -E -i insert_tbl_change_request_historic_nypause1.sql
+REM sqlcmd -S . -E -i insert_tbl_change_request_historic_nypause1.sql
 
-sqlcmd -S . -E -i insert_tbl_change_request_historic_nypause2.sql
+REM sqlcmd -S . -E -i insert_tbl_change_request_historic_nypause2.sql
 
-sqlcmd -S . -E -i insert_tbl_change_request_historic_endnypause.sql
+REM sqlcmd -S . -E -i insert_tbl_change_request_historic_endnypause.sql
 
-sqlcmd -S . -E -i update_tbl_change_request_status.sql
+REM sqlcmd -S . -E -i update_tbl_change_request_status.sql
 
-sqlcmd -S . -E -i update_tbl_unit_sla_season.sql
+REM sqlcmd -S . -E -i update_tbl_unit_sla_season.sql
+
+sqlcmd -S . -E -i insert_tbl_change_request.sql
+
+sqlcmd -S . -E -i insert_tbl_change_request_status.sql
 
 REM navigate a directory up
 
