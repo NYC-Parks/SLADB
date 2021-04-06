@@ -19,22 +19,50 @@
 ***********************************************************************************************************************/
 use sladb
 go
+
+/*Turn all the triggers off for tbl_change_request*/
+disable trigger dbo.trg_ai_tbl_change_request_status on dbo.tbl_change_request_status;
+go
+
+/*Turn identity insert on*/
+set identity_insert sladb.dbo.tbl_change_request_status on;
+go
+
+/*Open the sym key*/
 open symmetric key sladb_symkey
 	decryption by certificate sladb_cert;
 
-select change_request_id,
-	   unit_id,
-	   sla_code,
-	   season_id,
-	   effective_start,
-	   effective_start_adj,
-	   change_request_justification,
-	   change_request_comments,
-	   sla_change_status,
-	   edited_user
-from sladb.dbo.vw_change_request_export
-for json path;
 
+	begin transaction
+		insert into sladb.dbo.tbl_change_request(change_request_status_id,
+												 change_request_id,
+												 sla_change_status,
+												 created_date_utc,
+												 created_user)
+
+			/*Read the json data file, decrypt the edited_user column*/
+			select change_request_status_id,
+				   change_request_id,
+				   sla_change_status,
+				   created_date_utc,
+				   convert(nvarchar(7), decryptbykey(created_user)) as created_user
+			from openjson((select cast(bulkcolumn as nvarchar(max))
+							from openrowset(bulk 'D:/Projects/SLADB_Data/tbl_change_request_status.json', single_clob) as j))
+							with(change_request_status_id int,
+								 change_request_id int,
+								 sla_change_status int, 
+								 created_date_utc datetime,
+								 created_user varbinary(max));
+	commit;
 go
+/*Close the sym key*/
 close symmetric key sladb_symkey;
+go
 
+/*Turn identity insert off*/
+set identity_insert sladb.dbo.tbl_change_request_status off;
+go
+
+/*Enable all the triggers on tbl_change_request_status*/
+enable trigger dbo.trg_ai_tbl_change_request_status on dbo.tbl_change_request_status;
+go
