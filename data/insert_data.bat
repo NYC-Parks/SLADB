@@ -3,11 +3,9 @@ REM Execute the script to populate tbl_ref_sal_season_day_rank because tbl_ref_c
 sqlcmd -S . -E -i insert_tbl_ref_sla_season_day_rank.sql
 
 
-REM Execute the stored procedures to populate the tbl_ref_calendar and tbl_ref_unit tables
+REM Execute the stored procedures to populate the tbl_ref_calendar
 
 sqlcmd -S . -E -Q "exec sladb.dbo.sp_i_tbl_ref_calendar;"
-
-sqlcmd -S . -E -Q "exec sladb.dbo.sp_m_tbl_ref_unit;"
 
 
 REM Execute the scripts to populate the other reference tables
@@ -55,6 +53,8 @@ REM sqlcmd -S . -E -i update_tbl_change_request_status.sql
 
 REM sqlcmd -S . -E -i update_tbl_unit_sla_season.sql
 
+sqlcmd -S . -E -i insert_tbl_ref_unit.sql
+
 sqlcmd -S . -E -i insert_tbl_change_request.sql
 
 sqlcmd -S . -E -i insert_tbl_change_request_status.sql
@@ -68,6 +68,10 @@ REM Restore the proper logic for validation script
 sqlcmd -S . -E -i sp_u_tbl_change_request.sql
 
 sqlcmd -S . -E -i trg_fu_tbl_change_request.sql
+
+REM Run the merge to update the unit data
+
+sqlcmd -S . -E -Q "exec sladb.dbo.sp_m_tbl_ref_unit;"
 
 pause
 
