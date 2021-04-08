@@ -33,11 +33,9 @@ after insert as
 		/*Since the new record already would have been inserted by the insert on the tbl_change_request status table, find existing 
 		  effective record for that unit and set the effective value to 0 and the effective_date to today.*/
 		begin transaction;
-			update u
-			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla. The effective_start_adj
-			- 1 should always be a Saturday and less than today, but add logic to make sure when setting the value of effective.*/
-			set u.effective = case when dateadd(day, -1, s.effective_start_adj) < cast(getdate() as date) then 0 else 1 end,
-				u.effective_end_adj = dateadd(day, -1, s.effective_start_adj)
+			;with change_requests as(
+			select u.change_request_id,
+				   s.effective_start_adj
 			/*Join the inserted records with the tbl_unit_sla_season based on the unit_id to get all records associated
 			  with the inserted unit(s).*/
 			from sladb.dbo.tbl_unit_sla_season as u
@@ -54,7 +52,17 @@ after insert as
 			  that unit and the count of the total number of effective = 1 rows is greater than 1. These are the records where the effective
 			  value should be changed to equal 0.*/
 			where s1.row_rank = s1.n and
-				  s1.n > 1;
+				  s1.n > 1)
+
+			update sladb.dbo.tbl_unit_sla_season
+			/*Set the value of effective = 0 and the effective_end date equal to the effective_start of the new sla. The effective_start_adj
+			- 1 should always be a Saturday and less than today, but add logic to make sure when setting the value of effective.*/
+			set effective = case when dateadd(day, -1, s.effective_start_adj) < cast(getdate() as date) then 0 else 1 end,
+				effective_end_adj = dateadd(day, -1, s.effective_start_adj)
+			from sladb.dbo.tbl_unit_sla_season as u
+			inner join
+				  change_requests as s
+			on u.change_request_id = s.change_request_id
 		commit;
 
 	end;
