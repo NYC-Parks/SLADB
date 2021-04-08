@@ -20,6 +20,8 @@
 use sladb
 go
 
+set nocount on;
+
 /*Turn all the triggers off for tbl_change_request
 disable trigger dbo.trg_ai_tbl_change_request_status on dbo.tbl_change_request_status;
 go*/
@@ -49,15 +51,6 @@ from openjson((select cast(bulkcolumn as nvarchar(max))
 						sla_change_status int, 
 						created_date_utc datetime,
 						created_user varbinary(max))
-
-/*select r.*
-into #change_status_inserts
-from sladb.dbo.tbl_change_request as l
-inner join
-	 #change_status as r
-on l.change_request_id = r.change_request_id and
-   l.sla_change_status = r.sla_change_status
-where l.sla_change_status = 2*/
 
 declare @min_id int = (select min(change_request_status_id) from #change_status);
 
