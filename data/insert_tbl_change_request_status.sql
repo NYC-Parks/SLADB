@@ -38,11 +38,12 @@ if object_id('tempdb..#change_status') is not null
 	 drop table #change_status;
 
 /*Read the json data file, decrypt the edited_user column*/
-select change_request_status_id,
-		change_request_id,
-		sla_change_status,
-		created_date_utc,
-		isnull(convert(nvarchar(7), decryptbykey(created_user)), '0000000') as created_user
+select l.change_request_status_id,
+	   l.change_request_id,
+	   l.sla_change_status,
+	   l.created_date_utc,
+	   isnull(convert(nvarchar(7), decryptbykey(l.created_user)), '0000000') as created_user,
+	   row_number() over(partition by r.unit_id order by r.unit_id, r.effective_start_adj) as unit_rank
 into #change_status
 from openjson((select cast(bulkcolumn as nvarchar(max))
 				from openrowset(bulk 'D:/Projects/SLADB_Data/tbl_change_request_status.json', single_clob) as j))
@@ -50,18 +51,21 @@ from openjson((select cast(bulkcolumn as nvarchar(max))
 						change_request_id int,
 						sla_change_status int, 
 						created_date_utc datetime,
-						created_user varbinary(max))
+						created_user varbinary(max)) as l
+left join
+	 sladb.dbo.tbl_change_request as r
+on l.change_request_id = r.change_request_id
 
-declare @min_id int = (select min(change_request_status_id) from #change_status);
+declare @min_rank int = (select min(unit_rank) from #change_status);
 
-declare @max_id int = (select max(change_request_status_id) from #change_status);
+declare @max_rank int = (select max(unit_rank) from #change_status);
 
-declare @i int = @min_id;
+declare @i int = @min_rank;
 
-while @i <= @max_id
+while @i <= @max_rank
 	begin
 		print @i
-		if exists(select * from #change_status where change_request_status_id = @i)
+		if exists(select * from #change_status where unit_rank = @i)
 			begin
 				begin transaction
 					insert into sladb.dbo.tbl_change_request_status(change_request_status_id,
@@ -75,7 +79,7 @@ while @i <= @max_id
 							   created_date_utc,
 							   created_user
 						from #change_status
-						where change_request_status_id = @i
+						where unit_rank = @i
 				commit;
 			end;
 		set @i = @i + 1
