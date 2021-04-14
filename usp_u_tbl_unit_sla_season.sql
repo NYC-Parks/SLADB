@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_u_tbl_unit_sla_season as
+create or alter procedure dbo.usp_u_tbl_unit_sla_season as
 	/*Set the value of effective to 0 if AND ONLY if the effective_end_adj date is less than today for
 	  records that are currently effective.*/
 	begin transaction
