@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_app_insert_change_request @unit_id nvarchar(30), 
+create or alter procedure dbo.usp_app_insert_change_request @unit_id nvarchar(30), 
 														   @sla_code int, 
 														   @season_id int, 
 														   @effective_start date, 

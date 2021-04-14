@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_season_change_email as
+create or alter procedure dbo.usp_season_change_email as
 	begin
 	if (select count(*) from sladb.dbo.vw_season_change_email) >= 1
 		begin

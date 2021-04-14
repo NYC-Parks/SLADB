@@ -18,7 +18,7 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_change_request(change_request_id int identity(1,1) primary key,
-										  unit_id nvarchar(30) not null foreign key references sladb.dbo.tbl_ref_unit(unit_id),
+										  unit_id nvarchar(30) not null foreign key references sladb.dbo.tbl_ref_unit(unit_id) on update cascade,
 										  sla_code int not null foreign key references sladb.dbo.tbl_ref_sla_code(sla_code),
 										  season_id int not null foreign key references sladb.dbo.tbl_sla_season(season_id),
 										  /*Make sure that the effective start date is greater than or equal to today's date.*/

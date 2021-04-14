@@ -31,7 +31,7 @@ if type_id('insert_change_request') is null
 
 go
 
-create or alter procedure dbo.sp_insert_change_request @new_change_request insert_change_request readonly,
+create or alter procedure dbo.usp_insert_change_request @new_change_request insert_change_request readonly,
 													   @auto_approve int = 1 as
 
 begin

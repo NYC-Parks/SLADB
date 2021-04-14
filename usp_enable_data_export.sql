@@ -20,5 +20,5 @@
 use sladb
 go
 
-create or alter procedure dbo.sp_enable_data_export as
+create or alter procedure dbo.usp_enable_data_export as
 	exec msdb.dbo.sp_update_job @job_name = 'job_sladb_data_export', @enabled = 1;

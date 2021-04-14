@@ -31,4 +31,4 @@ update u
 	on s.unit_id = u.unit_id;
 commit;
 
-exec sladb.dbo.sp_u_tbl_unit_sla_season
+exec sladb.dbo.usp_u_tbl_unit_sla_season

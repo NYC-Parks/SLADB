@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_m_tbl_ref_unit as
+create or alter procedure dbo.usp_m_tbl_ref_unit as
 	begin transaction;
 		/*Select data from r5objects in AMPS into a common table expression (CTE)*/
 		with ampsunits as(

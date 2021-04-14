@@ -25,7 +25,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_i_tbl_unit_sla_season as
+create or alter procedure dbo.usp_i_tbl_unit_sla_season as
 	begin
 
 		begin transaction

@@ -18,7 +18,7 @@
 																													   												
 ***********************************************************************************************************************/
 create table sladb.dbo.tbl_unit_sla_season(sla_season_id int identity(1,1) primary key,
-										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id) not null,
+										   unit_id nvarchar(30) foreign key references sladb.dbo.tbl_ref_unit(unit_id) on update cascade not null,
 										   /*Require an not null constraint because this should never be null!*/
 										   sla_code int foreign key references sladb.dbo.tbl_ref_sla_code(sla_code) not null, 
 										   season_id int foreign key references sladb.dbo.tbl_sla_season(season_id) not null,

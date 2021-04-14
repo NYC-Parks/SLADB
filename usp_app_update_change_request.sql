@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_app_update_change_request @change_request_id int, 
+create or alter procedure dbo.usp_app_update_change_request @change_request_id int, 
 														   @sla_change_status int, 
 														   @edited_user nvarchar(7),
 														   @change_request_comments nvarchar(2000) = null as 

@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_u_tbl_sla_season as
+create or alter procedure dbo.usp_u_tbl_sla_season as
 	begin
 		/*If a season has reached it's effective_end date and effective = 1 then set the value of effective = 0
 		  and set the updated_date_utc.*/

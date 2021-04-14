@@ -42,7 +42,7 @@ after insert as
 				from inserted	 	
 		commit;
 
-		exec sladb.dbo.sp_u_tbl_change_request;
+		exec sladb.dbo.usp_u_tbl_change_request;
 
-		exec sladb.dbo.sp_enable_data_export;
+		--exec sladb.dbo.usp_enable_data_export;
 	end;

@@ -25,7 +25,7 @@ declare @new_season as insert_new_season,
 insert into @new_season(season_desc, year_round, effective_start)
 	values('Year-round, not seasonal', 1, '2014-01-01');
 
-exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;
+exec sladb.dbo.usp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;
 
 delete from @new_season;
 delete from @new_season_definition;
@@ -37,7 +37,7 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 								   day_rank_id, date_type_id)
 	values(1, 'May', 1, null, null,  1),
 		  (1, 'October', 1, null, null,  2);
-exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;
+exec sladb.dbo.usp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;
 
 delete from @new_season;
 delete from @new_season_definition;
@@ -50,4 +50,4 @@ insert into @new_season_definition(date_ref_fixed, month_name_desc, date_ref_day
 	values(1, 'March', 1, null, null,  1),
 		  (1, 'October', 31, null, null,  2);
 
-exec sladb.dbo.sp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;
+exec sladb.dbo.usp_insert_season @new_season = @new_season, @new_season_definition = @new_season_definition;

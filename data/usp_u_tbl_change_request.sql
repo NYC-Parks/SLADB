@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_u_tbl_change_request as 
+create or alter procedure dbo.usp_u_tbl_change_request as 
 	begin
 		begin transaction
 			update u

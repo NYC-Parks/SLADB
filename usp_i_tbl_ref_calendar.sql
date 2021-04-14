@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_i_tbl_ref_calendar as
+create or alter procedure dbo.usp_i_tbl_ref_calendar as
 set nocount on;
 begin
 	declare @calendar table(ref_date date not null);

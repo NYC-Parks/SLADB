@@ -58,63 +58,72 @@ exec dbo.sp_add_jobserver
 /*Insert the new records into the calendar reference table*/
 exec dbo.sp_add_jobstep  
     @job_id = @job_id,  
-    @step_name = N'sp_i_tbl_ref_calendar',  
+    @step_name = N'usp_i_tbl_ref_calendar',  
     @subsystem = N'TSQL',  
-    @command = N'exec sladb.dbo.sp_i_tbl_ref_calendar',
+    @command = N'exec sladb.dbo.usp_i_tbl_ref_calendar',
+	@on_success_action = 3,
+	@on_fail_action = 3;
+
+/*Do the updates of unit_id units reference table (if applicable)*/
+exec dbo.sp_add_jobstep  
+	@job_id = @job_id,  
+	@step_name = N'usp_u_tbl_ref_unit',  
+	@subsystem = N'TSQL',  
+	@command = N'exec sladb.dbo.usp_u_tbl_ref_unit',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
 /*Do the merge with the units reference table*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_m_tbl_ref_unit',  
+	@step_name = N'usp_m_tbl_ref_unit',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_m_tbl_ref_unit',
+	@command = N'exec sladb.dbo.usp_m_tbl_ref_unit',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
 /*Update the season table to set seasons to effective or ineffective*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_u_tbl_sla_season',  
+	@step_name = N'usp_u_tbl_sla_season',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_u_tbl_sla_season',
+	@command = N'exec sladb.dbo.usp_u_tbl_sla_season',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
 /*Do the merge into the season dates table*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_m_tbl_sla_season_date',  
+	@step_name = N'usp_m_tbl_sla_season_date',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_m_tbl_sla_season_date',
+	@command = N'exec sladb.dbo.usp_m_tbl_sla_season_date',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
 /*Update the change requests to ensure validity*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_u_tbl_change_request',  
+	@step_name = N'usp_u_tbl_change_request',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_u_tbl_change_request',
+	@command = N'exec sladb.dbo.usp_u_tbl_change_request',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 	
 /*Insert any new records into the unit, sla, season table that have been in holding*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_i_tbl_unit_sla_season',  
+	@step_name = N'usp_i_tbl_unit_sla_season',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_i_tbl_unit_sla_season',
+	@command = N'exec sladb.dbo.usp_i_tbl_unit_sla_season',
 	@on_success_action = 3,
 	@on_fail_action = 3;
 
 /*Update the effective value in tbl_unit_sla_season*/
 exec dbo.sp_add_jobstep  
 	@job_id = @job_id,  
-	@step_name = N'sp_u_tbl_unit_sla_season',  
+	@step_name = N'usp_u_tbl_unit_sla_season',  
 	@subsystem = N'TSQL',  
-	@command = N'exec sladb.dbo.sp_u_tbl_unit_sla_season',
+	@command = N'exec sladb.dbo.usp_u_tbl_unit_sla_season',
 	@on_success_action = 1,
 	@on_fail_action = 2;
 

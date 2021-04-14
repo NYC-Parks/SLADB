@@ -36,7 +36,7 @@ if type_id('insert_new_season_definition') is null
 
 go 
 
-create or alter procedure dbo.sp_insert_season @new_season insert_new_season readonly, 
+create or alter procedure dbo.usp_insert_season @new_season insert_new_season readonly, 
 											   @new_season_definition insert_new_season_definition readonly as
 begin
 	begin transaction;

@@ -26,7 +26,7 @@ go
 set quoted_identifier on;
 go
 
-create or alter procedure dbo.sp_m_tbl_sla_season_date  as
+create or alter procedure dbo.usp_m_tbl_sla_season_date  as
 begin
 
 	if object_id('tempdb..#seasondates') is not null 

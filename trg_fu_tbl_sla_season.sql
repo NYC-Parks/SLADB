@@ -42,8 +42,8 @@ for update as
 		commit;
 
 		/*Execute the stored procedure to update the value of effective to 0 along with the updated_date_utc columns, if applicable.*/
-		exec sladb.dbo.sp_u_tbl_sla_season;
+		exec sladb.dbo.usp_u_tbl_sla_season;
 		
 		/*Call the stored procedure that will update the date values in the tbl_sla_season table.*/
-		exec sladb.dbo.sp_m_tbl_sla_season_date;
+		exec sladb.dbo.usp_m_tbl_sla_season_date;
 	end;

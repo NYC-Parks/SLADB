@@ -99,23 +99,25 @@ sqlcmd -S . -E -i fn_sla_code_valid.sql
 
 REM Create all of the stored procedures.
 REM -------------------------------------------------------------------------
-sqlcmd -S . -E -i sp_i_tbl_ref_calendar.sql
+sqlcmd -S . -E -i usp_i_tbl_ref_calendar.sql
 
-sqlcmd -S . -E -i sp_m_tbl_ref_unit.sql
+sqlcmd -S . -E -i usp_m_tbl_ref_unit.sql
 
-sqlcmd -S . -E -i sp_m_tbl_sla_season_date.sql
+sqlcmd -S . -E -i usp_m_tbl_sla_season_date.sql
 
-sqlcmd -S . -E -i sp_u_tbl_change_request.sql
+sqlcmd -S . -E -i usp_u_tbl_change_request.sql
 
-sqlcmd -S . -E -i sp_i_tbl_unit_sla_season.sql
+sqlcmd -S . -E -i usp_i_tbl_unit_sla_season.sql
 
-sqlcmd -S . -E -i sp_u_tbl_sla_season.sql
+sqlcmd -S . -E -i usp_u_tbl_sla_season.sql
 
-sqlcmd -S . -E -i sp_u_tbl_unit_sla_season.sql
+sqlcmd -S . -E -i usp_u_tbl_unit_sla_season.sql
 
-sqlcmd -S . -E -i sp_insert_change_request.sql
+sqlcmd -S . -E -i usp_insert_change_request.sql
 
-sqlcmd -S . -E -i sp_insert_season.sql
+sqlcmd -S . -E -i usp_insert_season.sql
+
+sqlcmd -S . -E -i usp_u_tbl_ref_unit.sql
 
 
 REM Create all of the triggers.
@@ -154,9 +156,9 @@ REM sqlcmd -S . -E -i job_sladb.sql
 
 REM Create the app stored procedures
 REM -------------------------------------------------------------------------
-sqlcmd -S . -E -i sp_app_insert_change_request.sql
+sqlcmd -S . -E -i usp_app_insert_change_request.sql
 
-sqlcmd -S . -E -i sp_app_update_change_request.sql
+sqlcmd -S . -E -i usp_app_update_change_request.sql
 
 
 REM Assign Permissions
