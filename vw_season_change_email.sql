@@ -56,7 +56,7 @@ create or alter view dbo.vw_season_change_email as
 		   l.date_category_id = r5.date_category_id
 		left join
 			(select *
-			 from [appdb].dailytasks_dev.dbo.ref_sector_districts
+			 from [appdb].dailytasks.dbo.ref_sector_districts
 			 where active = 1 and 
 				   lower(sector) not like '%all' and
 				   /*Exclude these two sectors to prevent duplication*/

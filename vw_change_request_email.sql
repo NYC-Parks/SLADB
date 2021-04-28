@@ -91,7 +91,7 @@ create or alter view dbo.vw_change_request_email as
 	on l.sla_change_status = r4.sla_change_status
 	left join
 		 (select *
-		  from [appdb].dailytasks_dev.dbo.ref_sector_districts
+		  from [appdb].dailytasks.dbo.ref_sector_districts
 		  where active = 1 and 
 				lower(sector) not like '%all' and
 				/*Exclude these two sectors to prevent duplication*/
