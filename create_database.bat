@@ -91,6 +91,8 @@ sqlcmd -S . -E -i vw_change_request_last_six_months.sql
 
 sqlcmd -S . -E -i vw_change_request_email.sql
 
+sqlcmd -S . -E -i vw_sla_code_current.sql
+
 
 REM Run scripts to create additional functions
 REM -------------------------------------------------------------------------
