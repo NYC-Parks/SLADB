@@ -42,7 +42,7 @@ go
 /*Create a parameter to store the job_id*/
 declare @job_id uniqueidentifier;
 declare @owner sysname;
-exec master.dbo.sp_sql_owner @file_path = 'D:\Projects', @result = @owner output;
+exec master.dbo.usp_sql_owner @file_path = 'D:\Projects', @result = @owner output;
 
 /*Create the job*/
 exec dbo.sp_add_job @job_name = N'job_sladb', 
