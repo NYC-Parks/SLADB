@@ -59,7 +59,7 @@ cd ..
 
 REM Restore the proper logic for validation script
 
-sqlcmd -S . -E -i sp_i_tbl_unit_sla_season.sql
+sqlcmd -S . -E -i usp_i_tbl_unit_sla_season.sql
 
 REM sqlcmd -S . -E -i usp_u_tbl_change_request.sql
 
