@@ -27,6 +27,12 @@ set quoted_identifier on;
 go
 
 create or alter view dbo.vw_sla_current as
-	select *
-	from sladb.dbo.vw_sla_historic
-	where cast(getdate() as date) between effective_start_adj and effective_end_adj;
+	select r.*
+	from sladb.dbo.tbl_ref_unit as l
+	left join
+		 sladb.dbo.vw_sla_historic as r
+	on l.unit_id = r.unit_id
+	/*Only include the record that is currently effective, so seasonal records will show up with the SLA today OR show any units that are active
+	  unit_status = I that have no assigned sla_id.*/ 
+	where (cast(getdate() as date) between effective_start_adj and effective_end_adj) or
+		  (r.sla_id is null and l.unit_status = 'I')

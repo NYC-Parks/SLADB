@@ -28,7 +28,9 @@ go
 
 create or alter view dbo.vw_sla_code_current as 
 	select l.unit_id,
+		   r3.unit_desc,
 		   r.season_desc,
+		   r4.sla_id as current_sla,
 		   r2.in_season_sla,
 		   r2.off_season_sla,
 		   l.effective_start_adj,
@@ -36,12 +38,15 @@ create or alter view dbo.vw_sla_code_current as
 		   r3.unit_mrc as district
 	from sladb.dbo.tbl_unit_sla_season as l
 	left join
-			sladb.dbo.tbl_sla_season as r
+		  sladb.dbo.tbl_sla_season as r
 	on l.season_id = r.season_id
 	left join
-			sladb.dbo.vw_sla_code_pivot as r2
+		 sladb.dbo.vw_sla_code_pivot as r2
 	on l.sla_code = r2.sla_code
 	left join
-			sladb.dbo.tbl_ref_unit as r3
+		 sladb.dbo.tbl_ref_unit as r3
 	on l.unit_id = r3.unit_id
+	left join
+		 sladb.dbo.vw_sla_current as r4
+	on l.unit_id = r4.unit_id
 	where l.effective = 1
